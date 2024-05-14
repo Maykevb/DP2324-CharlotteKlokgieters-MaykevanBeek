@@ -1,2 +1,11 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using System;
+
+public class Program
+{
+    static void Main(String[] args)
+    {
+        GameController gameController = new GameController();
+        gameController.loadBoard(SudokuType.FOUR_BY_FOUR); 
+        gameController.displayBoard();
+    }
+}
