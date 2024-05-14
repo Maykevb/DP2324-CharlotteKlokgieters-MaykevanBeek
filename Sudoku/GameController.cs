@@ -15,7 +15,6 @@ public class GameController
 
 	public void loadBoard(SudokuType type)
 	{
-		Console.WriteLine(type);
 		importer.readSudokuFromFile(type);
     }
 

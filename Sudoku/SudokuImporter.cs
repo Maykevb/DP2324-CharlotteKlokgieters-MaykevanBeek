@@ -1,37 +1,63 @@
 ﻿namespace Sudoku
 {
+    using Sudoku.models.BoardComponent;
     using System;
     using System.IO;
     using System.Linq;
+    using System.Runtime.CompilerServices;
 
     public class SudokuImporter
     {
-        public void readSudokuFromFile(SudokuType type)
+        public SudokuBoard? readSudokuFromFile(SudokuType type)
         {
-            string folderPath = $"resources/{type.ToString()}";
-            Console.WriteLine(folderPath);
+            string folderPath = $"../../../resources/{type.ToString()}";
             if (Directory.Exists(folderPath))
             {
                 string[] files = Directory.GetFiles(folderPath);
 
-                Console.WriteLine("test" + files.Length);
                 if (files.Length > 0)
                 {
                     Random random = new Random();
                     string sudokuFile = files[random.Next(files.Length)];
-                    createBoard(sudokuFile);
+                    string sudoku = File.ReadAllText(sudokuFile);
+                    return createBoard(sudoku, type);
                 }
             }
+
+            return null;
         }
 
-        private void createBoard(string sudokuFile)
+        private SudokuBoard createBoard(string sudoku, SudokuType type)
         {
-            Console.WriteLine(sudokuFile);
+            SudokuBoard board = new SudokuBoard();
+
+            if (type != SudokuType.JIGSAW)
+            {
+                board.Cells = createCells(sudoku);
+            } else
+            {
+                board.Cells = createJigsawCells(sudoku);
+            }
+        
+            return board;
         }
 
-        private void createCells()
+        private List<SudokuCell> createCells(string sudoku)
         {
+            List<SudokuCell> cells = new List<SudokuCell>();
 
+            for(int i = 0; i < sudoku.Length; i++)
+            {
+                SudokuCell cell = new SudokuCell(sudoku[i], true);
+                cells.Add(cell);
+            }
+
+            return cells;
+        }
+
+        private List<SudokuCell> createJigsawCells(string sudoku)
+        {
+            return new List<SudokuCell>();
         }
     }
 }
