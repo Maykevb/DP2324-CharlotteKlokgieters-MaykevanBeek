@@ -14,19 +14,19 @@ public class Program
 
     static SudokuType GetSudokuTypeFromUser()
     {
-        Console.WriteLine("Kies het type Sudoku:");
-        Console.WriteLine("1. Vier bij vier");
-        Console.WriteLine("2. Zes bij zes");
-        Console.WriteLine("3. Negen bij negen");
+        Console.WriteLine("Choose the type of Sudoku:");
+        Console.WriteLine("1. Four by Four");
+        Console.WriteLine("2. Six by Six");
+        Console.WriteLine("3. Nine by Nine");
         Console.WriteLine("4. Samurai");
         Console.WriteLine("5. Jigsaw");
-        Console.Write("Voer het nummer in van het gewenste type: ");
+        Console.Write("Enter the number corresponding to the desired type: ");
 
         int choice;
         while (!int.TryParse(Console.ReadLine(), out choice) || choice < 1 || choice > 5)
         {
-            Console.WriteLine("Ongeldige invoer. Voer een nummer in tussen 1 en 5.");
-            Console.Write("Voer het nummer in van het gewenste type: ");
+            Console.WriteLine("Invalid input. Please enter a number between 1 and 5.");
+            Console.Write("Enter the number corresponding to the desired type: ");
         }
 
         return (SudokuType)(choice - 1);

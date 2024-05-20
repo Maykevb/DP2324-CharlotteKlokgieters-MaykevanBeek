@@ -57,7 +57,24 @@
 
         private List<SudokuCell> createJigsawCells(string sudoku)
         {
-            return new List<SudokuCell>();
+            List<SudokuCell> cells = new List<SudokuCell>();
+            string cleanedSudoku = sudoku.Replace("SumoCueV1=", "");
+
+            string[] cellData = sudoku.Split('=');
+
+            foreach (var data in cellData)
+            {
+                if (data.Length < 3) continue; 
+
+                char value = data[0];
+                char block = data[2];
+
+                SudokuCell cell = new SudokuCell(value, true, block);
+
+                cells.Add(cell);
+            }
+
+            return cells;
         }
     }
 }
