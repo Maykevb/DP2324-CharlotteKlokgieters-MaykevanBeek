@@ -1,16 +1,36 @@
 using Sudoku;
+using Sudoku.renderers;
 
 public class GameController
 {
     private SudokuImporter importer;
-    /*	private SudokuBoard board;
-		private BoardRenderer renderer;*/
-    /*	private BoardFactory boardFactory;*/
+	/*private SudokuBoard board;*/
+	private iBoardRenderer renderer;
+	private BoardFactory boardFactory;
 
-    public GameController()
+	public GameController()
 	{
 		this.importer = new SudokuImporter();
-		/*this.boardFactory = new BoardFactory();*/
+		this.boardFactory = new BoardFactory();
+	}
+
+	public Boolean loadRenderer(SudokuType name)
+	{
+		string rendererName = name.ToString();
+
+		if(name == SudokuType.FOUR_BY_FOUR || name == SudokuType.SIX_BY_SIX || name == SudokuType.NINE_BY_NINE)
+		{
+            rendererName = "STANDARD";
+		}
+
+        if (boardFactory.Prototypes.ContainsKey(rendererName))
+        {
+			renderer = boardFactory.createRenderer(rendererName);
+
+			return true;
+        } 
+
+		return false;
 	}
 
 	public void loadBoard(SudokuType type)
@@ -24,6 +44,11 @@ public class GameController
 	}
 
 	public void solveBoard()
+	{
+
+	}
+
+	public void fillCell(int row, int column, int value)
 	{
 
 	}

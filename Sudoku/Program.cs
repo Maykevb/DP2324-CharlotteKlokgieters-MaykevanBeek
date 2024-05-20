@@ -4,8 +4,10 @@ public class Program
 {
     static void Main(String[] args)
     {
-        GameController gameController = new GameController();
         SudokuType selectedType = GetSudokuTypeFromUser();
+
+        GameController gameController = new GameController();
+        gameController.loadRenderer(selectedType);
         gameController.loadBoard(selectedType); 
         gameController.displayBoard();
     }
