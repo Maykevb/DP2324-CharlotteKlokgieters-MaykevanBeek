@@ -34,7 +34,8 @@
             if (type != SudokuType.JIGSAW)
             {
                 board.Cells = createCells(sudoku);
-            } else
+            } 
+            else
             {
                 board.Cells = createJigsawCells(sudoku);
             }
@@ -46,13 +47,16 @@
         {
             List<SudokuCell> cells = new List<SudokuCell>();
 
-            for(int i = 0; i < sudoku.Length; i++)
+            for (int i = 0; i < sudoku.Length; i++)
             {
-                SudokuCell cell = new SudokuCell(sudoku[i], true);
-                cells.Add(cell);
-            }
+				// Convert the character to an integer
+				int cellValue = sudoku[i] - '0';
 
-            return cells;
+				SudokuCell cell = new SudokuCell(cellValue, true);
+                cells.Add(cell);
+			}
+
+			return cells;
         }
 
         private List<SudokuCell> createJigsawCells(string sudoku)

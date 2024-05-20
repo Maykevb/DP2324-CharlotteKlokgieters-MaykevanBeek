@@ -9,7 +9,7 @@ public class Program
         GameController gameController = new GameController();
         gameController.loadRenderer(selectedType);
         gameController.loadBoard(selectedType); 
-        gameController.displayBoard();
+        gameController.displayBoard(selectedType);
     }
 
     static SudokuType GetSudokuTypeFromUser()
