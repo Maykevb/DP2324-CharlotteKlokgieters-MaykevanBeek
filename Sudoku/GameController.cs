@@ -15,7 +15,7 @@ public class GameController
 		this.boardFactory = new BoardFactory();
 	}
 
-	public Boolean loadRenderer(SudokuType name)
+	public void loadRenderer(SudokuType name)
 	{
 		string rendererName = name.ToString();
 
@@ -24,14 +24,7 @@ public class GameController
             rendererName = "STANDARD";
 		}
 
-        if (boardFactory.Prototypes.ContainsKey(rendererName))
-        {
-			renderer = boardFactory.createRenderer(rendererName);
-
-			return true;
-        } 
-
-		return false;
+		renderer = boardFactory.createRenderer(rendererName);
 	}
 
 	public void loadBoard(SudokuType type)

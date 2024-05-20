@@ -12,11 +12,19 @@ namespace Sudoku.models.BoardComponent
         private int value;
         private bool isFixed;
         private int[] notes = new int[9];
+        private int? block;
 
         public SudokuCell(int value, bool isFixed)
         {
             this.value = value;
             this.isFixed = isFixed;
+        }
+
+        public SudokuCell(int value, bool isFixed, char block)
+        {
+            this.value = value;
+            this.isFixed = isFixed;
+            this.block = block;
         }
 
         public void Accept(iBoardVisitor visitor)
@@ -40,6 +48,12 @@ namespace Sudoku.models.BoardComponent
         {
             get { return notes; }
             set { notes = value; }
+        }
+
+        public int? Block
+        {
+            get { return block; }
+            set { block = value; }
         }
     }
 }
