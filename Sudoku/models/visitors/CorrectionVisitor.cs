@@ -11,12 +11,12 @@ namespace Sudoku.models.visitors
     {
         public void Visit(SudokuCell cell)
         {
-            
+
         }
 
         public void Visit(SudokuBoard board)
         {
-            
+
         }
     }
 }
