@@ -16,7 +16,7 @@ namespace Sudoku.renderers
             return new SamuraiRenderer();
         }
 
-		public void drawBoard(SudokuBoard board, int squareLength, int squareHeight)
+		/*public void drawBoard(SudokuBoard board, int squareLength, int squareHeight)
 		{
 			Console.WriteLine();
 			writeRowSeperator(rowLength, 0);
@@ -97,6 +97,6 @@ namespace Sudoku.renderers
 			}
 
 			Console.WriteLine();
-		}
+		}*/
 	}
 }

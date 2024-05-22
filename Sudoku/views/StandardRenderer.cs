@@ -18,8 +18,8 @@ namespace Sudoku.renderers
 		{
 			double rowLength = Math.Sqrt(board.Cells.Count);
 
-			Console.WriteLine();
-			writeRowSeperator(rowLength, 0);
+			/*Console.WriteLine();*/
+			DrawSeparator(rowLength, 0);
 
 			for (int i = 0; i < board.Cells.Count; i++)
 			{
@@ -28,28 +28,20 @@ namespace Sudoku.renderers
 					Console.Write("|");
 				}
 
-				if (board.Cells[i].Value == 0)
-				{
-					Console.Write(" ");
-				}
-				else
-				{
-					Console.Write(board.Cells[i].Value);
-				}
+				DrawCell(board.Cells[i].Value);
 
-				if ((i + 1) % squareLength == 0 && !((i + 1) % rowLength == 0) || 
-					(i + 1) % (squareHeight * squareLength) == 0)
+				if ((i + 1) % squareLength == 0 && !((i + 1) % rowLength == 0) || (i + 1) % (squareHeight * squareLength) == 0)
 				{
 					Console.Write('|');
 				}
 
 				if ((i + 1) % rowLength == 0 && (i + 1) % (squareHeight * rowLength) == 0 && i == board.Cells.Count - 1) 
 				{
-					writeRowSeperator(rowLength, 2);
+					DrawSeparator(rowLength, 2);
 				}
 				else if ((i + 1) % rowLength == 0 && (i + 1) % (squareHeight * rowLength) == 0)
 				{
-					writeRowSeperator(rowLength, 1);
+					DrawSeparator(rowLength, 1);
 				}
 				else if ((i + 1) % rowLength == 0)
 				{
@@ -58,45 +50,39 @@ namespace Sudoku.renderers
 			}
 		}
 
-		// 0 = top, 1 = middle, 2 = bottom
-		public void writeRowSeperator(double rowLength, int place)
+		public void DrawCell(int value)
 		{
-			Console.WriteLine();
-
-			switch (place)
-			{
-				case 0:
-					Console.Write('┌');
-					break;
-				case 1:
-				default:
-					Console.Write('├');
-					break;
-				case 2:
-					Console.Write('└');
-					break;
-			} 
-
-			for (int j = 0; j < rowLength + (rowLength % 2 + 1); j++)
-			{
-				Console.Write("-");
-			}
-
-			switch (place)
-			{
-				case 0:
-					Console.Write('┐');
-					break;
-				case 1:
-				default:
-					Console.Write('┤');
-					break;
-				case 2:
-					Console.Write('┘');
-					break;
-			}
-			
-			Console.WriteLine();
+			Console.Write(value == 0 ? " " : value.ToString());
 		}
+
+		public void DrawSeparator(double rowLength, int place) 
+		{
+            char startChar, endChar;
+            switch (place)
+            {
+                case (int)SeparatorType.TOP:
+                    startChar = '┌';
+                    endChar = '┐';
+                    break;
+                case (int)SeparatorType.BOTTOM:
+                    startChar = '└';
+                    endChar = '┘';
+                    break;
+                case (int) SeparatorType.MIDDLE:
+                default:
+                    startChar = '├';
+                    endChar = '┤';
+                    break;
+                
+            }
+
+            StringBuilder rowSeparator = new StringBuilder();
+			rowSeparator.AppendLine();
+            rowSeparator.Append(startChar);
+            rowSeparator.Append(new string('-', (int)(rowLength + (rowLength % 2 + 1))));
+            rowSeparator.Append(endChar);
+
+            Console.WriteLine(rowSeparator.ToString());
+        }
 	}
 }
