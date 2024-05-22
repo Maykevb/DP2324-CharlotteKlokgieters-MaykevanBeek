@@ -14,7 +14,13 @@ namespace Sudoku.renderers
 
         }
 
-        public void clearBoard()
+		public void writeRowSeperator(double rowLength, int place)
+        {
+
+        }
+
+
+		public void clearBoard()
         {
             // TODO
         }

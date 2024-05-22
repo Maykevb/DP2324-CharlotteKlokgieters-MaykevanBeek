@@ -9,7 +9,7 @@ namespace Sudoku.renderers
 {
     public class StandardRenderer : iBoardRenderer
     {
-        public object Clone()
+		public object Clone()
         {
             return new StandardRenderer();
         }
@@ -19,7 +19,7 @@ namespace Sudoku.renderers
 			double rowLength = Math.Sqrt(board.Cells.Count);
 
 			Console.WriteLine();
-			writeRowSeperator(rowLength);
+			writeRowSeperator(rowLength, 0);
 
 			for (int i = 0; i < board.Cells.Count; i++)
 			{
@@ -43,32 +43,59 @@ namespace Sudoku.renderers
 					Console.Write('|');
 				}
 
-				if ((i + 1) % rowLength == 0 && (i + 1) % (squareHeight * rowLength) == 0)
+				if ((i + 1) % rowLength == 0 && (i + 1) % (squareHeight * rowLength) == 0 && i == board.Cells.Count - 1) 
 				{
-					writeRowSeperator(rowLength);
+					writeRowSeperator(rowLength, 2);
+				}
+				else if ((i + 1) % rowLength == 0 && (i + 1) % (squareHeight * rowLength) == 0)
+				{
+					writeRowSeperator(rowLength, 1);
 				}
 				else if ((i + 1) % rowLength == 0)
 				{
 					Console.WriteLine();
 				}
-				/*else if (i == board.Cells.Count - 1)
-				{
-					writeRowSeperator(rowLength);
-				}*/
 			}
 		}
 
-		public void writeRowSeperator(double rowLength)
+		// 0 = top, 1 = middle, 2 = bottom
+		public void writeRowSeperator(double rowLength, int place)
 		{
 			Console.WriteLine();
-			Console.Write('|');
+
+			switch (place)
+			{
+				case 0:
+					Console.Write('┌');
+					break;
+				case 1:
+				default:
+					Console.Write('├');
+					break;
+				case 2:
+					Console.Write('└');
+					break;
+			} 
 
 			for (int j = 0; j < rowLength + (rowLength % 2 + 1); j++)
 			{
 				Console.Write("-");
 			}
 
-			Console.Write('|');
+			switch (place)
+			{
+				case 0:
+					Console.Write('┐');
+					break;
+				case 1:
+				default:
+					Console.Write('┤');
+					break;
+				case 2:
+					Console.Write('┘');
+					break;
+			}
+			
 			Console.WriteLine();
 		}
 	}
