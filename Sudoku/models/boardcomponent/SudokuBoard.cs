@@ -11,7 +11,6 @@ namespace Sudoku.models.BoardComponent
         public SudokuBoard()
         {
             this.state = new DefinitiveState();
-            this.state.Handle(this);
         }
 
         public void Accept(iBoardVisitor visitor)

@@ -11,7 +11,9 @@ namespace Sudoku.models.states
     {
         public void Handle(SudokuBoard board)
         {
-            Console.WriteLine("Board is now in note state. You can now add, remove and see all notes");
+            string message = "Board is now in note state. You can now add, remove and see all notes.";
+            string line = new string('-', 70);
+            Console.WriteLine($"\n{line}\n{message}\n{line}");
         }
 
         public iBoardState goNext()

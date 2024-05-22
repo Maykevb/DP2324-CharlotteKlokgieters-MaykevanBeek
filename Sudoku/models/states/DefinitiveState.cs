@@ -11,7 +11,9 @@ namespace Sudoku.models.states
     {
         public void Handle(SudokuBoard board)
         {
-            Console.WriteLine("Board is now in definitive state. You can now fill Sudoku cells.");
+            string message = "Board is now in definitive state. You can now fill Sudoku cells.";
+            string line = new string('-', 70);
+            Console.WriteLine($"\n{line}\n{message}\n{line}");
         }
 
         public iBoardState goNext()

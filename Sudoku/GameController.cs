@@ -39,7 +39,7 @@ public class GameController
 
 	public void displayBoard(SudokuType type)
 	{
-		switch (type)
+        switch (type)
 		{
 			case SudokuType.FOUR_BY_FOUR:
 				renderer.DrawBoard(board, 2, 2);
@@ -59,10 +59,17 @@ public class GameController
 				renderer.DrawBoard(board, 0, 0);
 				break;
 		}
-		
 	}
 
-	public void solveBoard()
+	public void drawStart()
+	{
+        string line = new string('-', 70);
+        Console.WriteLine($"\n{line}\nLet the game begin!\n{line}");
+
+        board.State.Handle(board);
+    }
+
+    public void solveBoard()
 	{
 
 	}
