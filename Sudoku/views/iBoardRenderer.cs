@@ -14,7 +14,7 @@ namespace Sudoku.renderers
 
         }
 
-		public void DrawSeparator(double rowLength, int place)
+		public void DrawSeparator(double rowLength)
         {
 
         }

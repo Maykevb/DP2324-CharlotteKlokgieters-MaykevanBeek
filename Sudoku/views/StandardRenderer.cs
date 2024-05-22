@@ -18,7 +18,7 @@ namespace Sudoku.renderers
 		{
 			double rowLength = Math.Sqrt(board.Cells.Count);
 
-			DrawSeparator(rowLength, 0);
+			DrawSeparator(rowLength, squareLength);
 
 			for (int i = 0; i < board.Cells.Count; i++)
 			{
@@ -34,13 +34,9 @@ namespace Sudoku.renderers
 					Console.Write('|');
 				}
 
-				if ((i + 1) % rowLength == 0 && (i + 1) % (squareHeight * rowLength) == 0 && i == board.Cells.Count - 1) 
+				if ((i + 1) % rowLength == 0 && (i + 1) % (squareHeight * rowLength) == 0) 
 				{
-					DrawSeparator(rowLength, 2);
-				}
-				else if ((i + 1) % rowLength == 0 && (i + 1) % (squareHeight * rowLength) == 0)
-				{
-					DrawSeparator(rowLength, 1);
+					DrawSeparator(rowLength, squareLength);
 				}
 				else if ((i + 1) % rowLength == 0)
 				{
@@ -54,33 +50,11 @@ namespace Sudoku.renderers
 			Console.Write(value == 0 ? " " : value.ToString());
 		}
 
-		public void DrawSeparator(double rowLength, int place) 
+		public void DrawSeparator(double rowLength, int squareLength) 
 		{
-            char startChar, endChar;
-            switch (place)
-            {
-                case (int)SeparatorType.TOP:
-                    startChar = '┌';
-                    endChar = '┐';
-                    break;
-                case (int)SeparatorType.BOTTOM:
-                    startChar = '└';
-                    endChar = '┘';
-                    break;
-                case (int) SeparatorType.MIDDLE:
-                default:
-                    startChar = '├';
-                    endChar = '┤';
-                    break;
-                
-            }
-
             StringBuilder rowSeparator = new StringBuilder();
 			rowSeparator.AppendLine();
-            rowSeparator.Append(startChar);
-            rowSeparator.Append(new string('-', (int)(rowLength + (rowLength % 2 + 1))));
-            rowSeparator.Append(endChar);
-
+            rowSeparator.Append(new string('-', (int)(rowLength + (rowLength / squareLength) + 1))); 
             Console.WriteLine(rowSeparator.ToString());
         }
 	}

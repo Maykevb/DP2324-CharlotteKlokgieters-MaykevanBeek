@@ -18,7 +18,7 @@
                 if (files.Length > 0)
                 {
                     Random random = new Random();
-                    string sudokuFile = files[random.Next(files.Length)];
+                    string sudokuFile = files[0]; //TODO
                     string sudoku = File.ReadAllText(sudokuFile);
                     return createBoard(sudoku, type);
                 }
@@ -50,10 +50,11 @@
             for (int i = 0; i < sudoku.Length; i++)
             {
 				// Convert the character to an integer
-				int cellValue = sudoku[i] - '0';
-
-				SudokuCell cell = new SudokuCell(cellValue, true);
-                cells.Add(cell);
+				if (int.TryParse(sudoku[i].ToString(), out int cellValue))
+				{
+					SudokuCell cell = new SudokuCell(cellValue, true);
+					cells.Add(cell);
+				}
 			}
 
 			return cells;
