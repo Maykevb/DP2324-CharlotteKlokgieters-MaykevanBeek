@@ -9,7 +9,7 @@ namespace Sudoku.renderers
 {
     public interface iBoardRenderer : ICloneable
     {
-        public void drawBoard(SudokuBoard board, int squareLength, int squareHeight)
+        public void DrawBoard(SudokuBoard board, int squareLength, int squareHeight)
         {
 
         }

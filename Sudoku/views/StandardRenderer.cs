@@ -14,11 +14,10 @@ namespace Sudoku.renderers
             return new StandardRenderer();
         }
 
-		public void drawBoard(SudokuBoard board, int squareLength, int squareHeight)
+		public void DrawBoard(SudokuBoard board, int squareLength, int squareHeight)
 		{
 			double rowLength = Math.Sqrt(board.Cells.Count);
 
-			/*Console.WriteLine();*/
 			DrawSeparator(rowLength, 0);
 
 			for (int i = 0; i < board.Cells.Count; i++)
