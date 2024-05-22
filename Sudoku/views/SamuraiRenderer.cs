@@ -13,14 +13,12 @@ namespace Sudoku.renderers
 		private static readonly int ROW_LENGTH = 9;
 		private static readonly int TWO_ROWS = ROW_LENGTH * 2; //18
 		private static readonly int	THREE_ROWS_NO_SPACE = TWO_ROWS + 3; //21
-		private static readonly int ROW_LENGTH_WITH_SEPERATORS = ROW_LENGTH + 2; //11
-		private static readonly int WRITE_LINE_LENGTH = 33;
 		private static readonly int SIDE_SPACE = 8;
 
-		private static readonly int START_MID_SUDOKU = TWO_ROWS * 6; //108
-		private static readonly int END_SIDE_SUDOKUS = START_MID_SUDOKU + THREE_ROWS_NO_SPACE * 3; //
-		private static readonly int START_SIDE_SUDOKUS = END_SIDE_SUDOKUS + ROW_LENGTH * 3; //
-		private static readonly int END_MID_SUDOKU = START_SIDE_SUDOKUS + THREE_ROWS_NO_SPACE * 3; //
+		private static readonly int START_MID_SUDOKU = TWO_ROWS * 6; 
+		private static readonly int END_SIDE_SUDOKUS = START_MID_SUDOKU + THREE_ROWS_NO_SPACE * 3; 
+		private static readonly int START_SIDE_SUDOKUS = END_SIDE_SUDOKUS + ROW_LENGTH * 3; 
+		private static readonly int END_MID_SUDOKU = START_SIDE_SUDOKUS + THREE_ROWS_NO_SPACE * 3; 
 
 		private int row_counter = 0;
 
@@ -38,52 +36,34 @@ namespace Sudoku.renderers
 			{
 				DrawOneCharacter(board, i, squareLength, squareHeight);
 
-				if (((i + 1) % (TWO_ROWS * squareLength) == 0 && (i < START_MID_SUDOKU || i > END_MID_SUDOKU)) &&
-					((i + 1) % START_MID_SUDOKU == 0)
-					/*|| ((i + 1) % END_MID_SUDOKU == 0)*/
-					) //
+				if (((i + 1) % (TWO_ROWS * squareLength) == 0 && (i < START_MID_SUDOKU)) &&
+					((i + 1) % START_MID_SUDOKU == 0)) 
 				{
-
-
-					Console.Write("."); //TODO begin here when beginnning again
-
-
 					DrawSeparator(THREE_ROWS_NO_SPACE, squareLength, false);
 				}
-				else
-				if ((i + 1) % (TWO_ROWS * squareLength) == 0 && i < START_MID_SUDOKU)
+				else if ((i + 1) % (TWO_ROWS * squareLength) == 0 && i < START_MID_SUDOKU)
 				{
 					DrawSeparator(ROW_LENGTH, squareLength, true); 
 				}
-				else
-				if ((i - END_MID_SUDOKU + 1) % (TWO_ROWS * squareLength) == 0 && i > END_MID_SUDOKU)
+				else if ((i - END_MID_SUDOKU + 1) % (TWO_ROWS * squareLength) == 0 && i > END_MID_SUDOKU)
 				{
 					DrawSeparator(ROW_LENGTH, squareLength, true);
 				}
-				else
-				if (((i + 1) % TWO_ROWS == 0 && (i + 1) != (START_MID_SUDOKU + TWO_ROWS))
-					&& !(i >= START_MID_SUDOKU && i <= END_MID_SUDOKU)
-					)
+				else if (((i + 1) % TWO_ROWS == 0 && (i + 1) != (START_MID_SUDOKU + TWO_ROWS))
+					&& !(i >= START_MID_SUDOKU && i <= END_MID_SUDOKU))
 				{
 					if (i < END_MID_SUDOKU)
 					{
 						Console.WriteLine();
 						row_counter++;
 					} 
-					/*else if (i > END_MID_SUDOKU && (i + 1 - END_MID_SUDOKU % TWO_ROWS == 0))
-					{
-						Console.WriteLine();
-						row_counter++;
-					}*/
 					else
 					{
-						
 						DrawEmptyRow(squareLength);
 					}
 				}
 				else if ((i + 1) % ROW_LENGTH == 0 && (i + 1) != (START_MID_SUDOKU + ROW_LENGTH) &&
-					(i + 1) != (START_MID_SUDOKU + TWO_ROWS) &&
-					(i < START_MID_SUDOKU || i > END_MID_SUDOKU)) // i + 1 ?
+					(i + 1) != (START_MID_SUDOKU + TWO_ROWS) && (i < START_MID_SUDOKU || i > END_MID_SUDOKU)) 
 				{
 					if (i > END_MID_SUDOKU)
 					{
@@ -95,8 +75,6 @@ namespace Sudoku.renderers
 					}					
 				}
 			}
-
-			DrawSeparator(ROW_LENGTH, squareLength, true);
 		}
 
 		public void DrawSeparator(double rowLength, int squareLength, bool middleEmpty)
@@ -134,7 +112,7 @@ namespace Sudoku.renderers
 
 		public void DrawCell(int value)
 		{
-			Console.Write(value == 0 ? "0" : value.ToString()); //todo 0 to space
+			Console.Write(value == 0 ? " " : value.ToString()); 
 		}
 
 		public void DrawOneCharacter(SudokuBoard board, int i, int squareLength, int squareHeight)
@@ -158,31 +136,19 @@ namespace Sudoku.renderers
 			{
 				Console.Write("|");
 			}
-			/*else if ((i + 1 >= END_SIDE_SUDOKUS && i + 1 <= START_SIDE_SUDOKUS) && 
-				(i - END_SIDE_SUDOKUS % ROW_LENGTH == 0 || i - END_SIDE_SUDOKUS % TWO_ROWS == 0))
-			{
-				Console.Write(";|");
-			}*/
 
 			DrawCell(board.Cells[i].Value);
 
 			if ((i < START_MID_SUDOKU || i > END_MID_SUDOKU) && 
 				((i + 1) % squareLength == 0 && (i + 1) != (START_MID_SUDOKU + TWO_ROWS)))
 			{
-				Console.Write("|"); //TODO
+				Console.Write("|"); 
 			}
 			else 
 			if ((i >= START_MID_SUDOKU && i <= END_MID_SUDOKU) && ((i + 1 - START_MID_SUDOKU) % squareLength == 0))
 			{
 				Console.Write("|");
 			}
-
-
-
-			/*if ((i >= START_SIDE_SUDOKUS && i <= END_MID_SUDOKU) && ((i + 1 - START_SIDE_SUDOKUS) % THREE_ROWS_NO_SPACE == 0))
-			{
-				Console.WriteLine();
-			}*/
 
 			if ((i + 1) % END_MID_SUDOKU == 0)
 			{
@@ -201,21 +167,12 @@ namespace Sudoku.renderers
 					row_counter++;
 				}
 			}
-			/*else if ((i + 1 >= END_SIDE_SUDOKUS && i + 1 <= START_SIDE_SUDOKUS))
-			{
-				Console.WriteLine(i); //todo
-				row_counter++;
-			}*/
-
-			// i + 1 ?
-			else if ((i >= START_MID_SUDOKU && i <= END_SIDE_SUDOKUS) && 
-				(i + 1 - START_MID_SUDOKU) % THREE_ROWS_NO_SPACE == 0)
+			else if ((i >= START_MID_SUDOKU && i <= END_SIDE_SUDOKUS) && (i + 1 - START_MID_SUDOKU) % THREE_ROWS_NO_SPACE == 0)
 			{
 				Console.WriteLine(); 
 				row_counter++;
 			}
-			else if ((i >= START_SIDE_SUDOKUS && i <= END_MID_SUDOKU) && 
-				(i + 1 - START_SIDE_SUDOKUS) % THREE_ROWS_NO_SPACE == 0 &&
+			else if ((i >= START_SIDE_SUDOKUS && i <= END_MID_SUDOKU) && (i + 1 - START_SIDE_SUDOKUS) % THREE_ROWS_NO_SPACE == 0 &&
 				(i + 1) % END_MID_SUDOKU != 0)
 			{
 				Console.WriteLine();

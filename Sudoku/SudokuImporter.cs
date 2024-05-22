@@ -5,9 +5,12 @@
     using System.IO;
     using System.Linq;
     using System.Runtime.CompilerServices;
+	using System.Text;
 
     public class SudokuImporter
     {
+		private static readonly int SAMURAI_SINGLE_ROW = 9;
+
         public SudokuBoard? readSudokuFromFile(SudokuType type)
         {
             string folderPath = $"../../../resources/{type.ToString()}";
@@ -18,7 +21,7 @@
                 if (files.Length > 0)
                 {
                     Random random = new Random();
-                    string sudokuFile = files[0]; //TODO
+                    string sudokuFile = files[random.Next(files.Length)]; 
                     string sudoku = File.ReadAllText(sudokuFile);
                     return createBoard(sudoku, type);
                 }
@@ -31,19 +34,61 @@
         {
             SudokuBoard board = new SudokuBoard();
 
-            if (type != SudokuType.JIGSAW)
+            switch (type)
             {
-                board.Cells = createCells(sudoku);
-            } 
-            else
-            {
-                board.Cells = createJigsawCells(sudoku);
-            }
+                case SudokuType.JIGSAW:
+					board.Cells = createJigsawCells(sudoku);
+                    break;
+                case SudokuType.SAMURAI:
+					board.Cells = createSamuraiCells(sudoku);
+                    break;
+                default:
+					board.Cells = createCells(sudoku);
+                    break;
+			}
         
             return board;
         }
 
-        private List<SudokuCell> createCells(string sudoku)
+		private List<SudokuCell> createSamuraiCells(string sudoku)
+        {
+			string[] lines = sudoku.Split('\n');
+
+			//TODO
+			string line1 = lines[0];
+			string line2 = lines[1];
+			string line3 = lines[2];
+			string line4 = lines[3];
+			string line5 = lines[4];
+
+			string result = "";
+
+			for (int i = 0; i < 6; i++)
+			{
+				result += line1.Substring((i * 9), 9) + line2.Substring((i * 9), 9);
+			}
+
+			result += line1.Substring(54, 9) + line3.Substring(3, 3) + line2.Substring(54, 9);
+			result += line1.Substring(63, 9) + line3.Substring(3 + 9, 3) + line2.Substring(63, 9);
+			result += line1.Substring(72, 9) + line3.Substring(3 + 18, 3) + line2.Substring(72, 9);
+
+			result += line3.Substring(27, 27);
+
+			result += line4.Substring(0, 9) + line3.Substring(3 + 27 + 27, 3) + line5.Substring(0, 9);
+			result += line4.Substring(9, 9) + line3.Substring(3 + 36 + 27, 3) + line5.Substring(9, 9);
+			result += line4.Substring(18, 9) + line3.Substring(3 + 45 + 27, 3) + line5.Substring(18, 9);
+
+			for (int i = 3; i < 9; i++)
+			{
+				result += line4.Substring((i * 9), 9) + line5.Substring((i * 9), 9);
+			}
+
+            List<SudokuCell> cells = createCells(result);
+			return cells;
+		}
+
+
+		private List<SudokuCell> createCells(string sudoku)
         {
             List<SudokuCell> cells = new List<SudokuCell>();
 
@@ -81,5 +126,5 @@
 
             return cells;
         }
-    }
+	}
 }
