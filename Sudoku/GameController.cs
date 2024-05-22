@@ -59,14 +59,16 @@ public class GameController
 				renderer.DrawBoard(board, 0, 0);
 				break;
 		}
-	}
+
+		board.State.doAction(board);
+    }
 
 	public void drawStart()
 	{
         string line = new string('-', 70);
         Console.WriteLine($"\n{line}\nLet the game begin!\n{line}");
 
-        board.State.Handle(board);
+        board.State.Handle();
     }
 
     public void solveBoard()
