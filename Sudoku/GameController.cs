@@ -29,7 +29,7 @@ public class GameController
 
 	public void loadBoard(SudokuType type)
 	{
-		board = importer.readSudokuFromFile(type);
+		board = importer.ReadSudokuFromFile(type);
 
 		if (board == null)
 		{
