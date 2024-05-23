@@ -48,36 +48,33 @@ namespace Sudoku.renderers
 					continue;
 				}
 				
-				if (((i + 1) % TWO_ROWS == 0 && (i + 1) != (START_MID_SUDOKU + TWO_ROWS))
-					&& !(i >= START_MID_SUDOKU && i <= END_MID_SUDOKU))
+				if (((i + 1) % TWO_ROWS == 0 && (i + 1) != (START_MID_SUDOKU + TWO_ROWS))&& !(i >= START_MID_SUDOKU && i <= END_MID_SUDOKU))
 				{
-					if (i < END_MID_SUDOKU)
-					{
-						Console.WriteLine();
-						row_counter++;
-					} 
-					else
-					{
-						DrawEmptyRow(squareLength);
-					}
-				}
-				else if ((i + 1) % ROW_LENGTH == 0 && (i + 1) != (START_MID_SUDOKU + ROW_LENGTH) &&
-					(i + 1) != (START_MID_SUDOKU + TWO_ROWS) && (i < START_MID_SUDOKU || i > END_MID_SUDOKU)) 
+					HandleGridLine(i, squareLength, '<');
+					continue;
+                }
+				
+				if ((i + 1) % ROW_LENGTH == 0 && (i + 1) != (START_MID_SUDOKU + ROW_LENGTH) &&(i + 1) != (START_MID_SUDOKU + TWO_ROWS) && (i < START_MID_SUDOKU || i > END_MID_SUDOKU)) 
 				{
-					if (i > END_MID_SUDOKU)
-					{
-						Console.WriteLine();
-						row_counter++;
-					}
-					else
-					{
-						DrawEmptyRow(squareLength);
-					}					
-				}
+                    HandleGridLine(i, squareLength, '>');
+                }
 			}
 		}
 
-		public void DrawSeparator(double rowLength, int squareLength, bool middleEmpty)
+        private void HandleGridLine(int i, int squareLength, char type)
+        {
+            if ((type == '<' && i < END_MID_SUDOKU) || (type == '>' && i > END_MID_SUDOKU))
+            {
+                Console.WriteLine();
+                row_counter++;
+            }
+            else
+            {
+                DrawEmptyRow(squareLength);
+            }
+        }
+
+        private void DrawSeparator(double rowLength, int squareLength, bool middleEmpty)
 		{
 			row_counter++;
 
@@ -94,7 +91,7 @@ namespace Sudoku.renderers
 			Console.WriteLine(rowSeparator.ToString());
 		}
 
-		public void DrawLineRow(int length) 
+        private void DrawLineRow(int length) 
 		{
 			for (int j = 0; j < length; j++)
 			{
@@ -102,7 +99,7 @@ namespace Sudoku.renderers
 			}
 		}
 
-		public void DrawEmptyRow(int length)
+		private void DrawEmptyRow(int length)
 		{
 			for (int j = 0; j < length; j++)
 			{
@@ -110,12 +107,12 @@ namespace Sudoku.renderers
 			}
 		}
 
-		public void DrawCell(int value)
+        private void DrawCell(int value)
 		{
 			Console.Write(value == 0 ? " " : value.ToString()); 
 		}
 
-        public void DrawOneCharacter(SudokuBoard board, int i, int squareLength, int squareHeight)
+        private void DrawOneCharacter(SudokuBoard board, int i, int squareLength, int squareHeight)
         {
             DrawEmptyRowIfNeeded(i);
             DrawVerticalSeparatorStart(i, squareLength);
