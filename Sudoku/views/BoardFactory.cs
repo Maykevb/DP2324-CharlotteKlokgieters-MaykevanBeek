@@ -18,7 +18,7 @@ namespace Sudoku.renderers
             addRenderType("SAMURAI", new SamuraiRenderer());
             addRenderType("STANDARD", new StandardRenderer());
         }   
-       
+
         public void addRenderType(String name, iBoardRenderer renderer)
         {
             prototypes[name] = renderer;
