@@ -20,7 +20,7 @@ namespace Sudoku.models.BoardComponent
             this.isFixed = isFixed;
         }
 
-        public SudokuCell(int value, bool isFixed, char block)
+        public SudokuCell(int value, bool isFixed, int block)
         {
             this.value = value;
             this.isFixed = isFixed;

@@ -51,7 +51,6 @@ public class GameController
 				renderer.DrawBoard(board, 3, 3);
 				break;
 			case SudokuType.SAMURAI:
-				//TODO
 				renderer.DrawBoard(board, 3, 3);
 				break;
 			case SudokuType.JIGSAW:

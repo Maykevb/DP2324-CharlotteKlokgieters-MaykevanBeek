@@ -21,8 +21,8 @@
                 if (files.Length > 0)
                 {
                     Random random = new Random();
-                    string sudokuFile = files[random.Next(files.Length)]; 
-                    string sudoku = File.ReadAllText(sudokuFile);
+                    string sudokuFile = files[1]; //TODO random.Next(files.Length) 0 works
+					string sudoku = File.ReadAllText(sudokuFile);
                     return CreateBoard(sudoku, type);
                 }
             }
@@ -108,15 +108,23 @@
         {
             List<SudokuCell> cells = new List<SudokuCell>();
             string cleanedSudoku = sudoku.Replace("SumoCueV1=", "");
-
-            string[] cellData = sudoku.Split('=');
+            string[] cellData = cleanedSudoku.Split('=');
 
             foreach (var data in cellData)
             {
-                if (data.Length < 3) continue; 
+                if (data.Length < 3) continue;
 
-                char value = data[0];
-                char block = data[2];
+                int value = -1;
+				if (int.TryParse(data[0].ToString(), out int cellValue))
+                {
+					value = cellValue;
+				}
+
+				int block = -1;
+				if (int.TryParse(data[2].ToString(), out int cellValue2))
+				{
+					block = cellValue2;
+				}
 
                 SudokuCell cell = new SudokuCell(value, true, block);
 

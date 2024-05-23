@@ -118,7 +118,7 @@ namespace Sudoku.renderers
 
         private void DrawEmptyRowIfNeeded(int i)
         {
-            if (row_counter >= 10 && row_counter <= 12 && (i % ROW_LENGTH == 0 || i % TWO_ROWS == 0))
+            if (row_counter >= 10 && row_counter <= 12 && (i % ROW_LENGTH == 0 || i % TWO_ROWS == 0)) //TODO static ints
             {
                 DrawEmptyRow(SIDE_SPACE);
             }
