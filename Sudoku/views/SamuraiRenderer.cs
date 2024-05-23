@@ -7,7 +7,7 @@ namespace Sudoku.renderers
     {		
 		private static readonly int ROW_LENGTH = 9; //One sudoku row		
 		private static readonly int TWO_ROWS = ROW_LENGTH * 2; //Two sudoku rows
-		private static readonly int	TWO_ROWS_WITH_SPACE = TWO_ROWS + 3; //Two sudoku rows + 3 spaces
+		private static readonly int	TWO_ROWS_WITH_SPACE = TWO_ROWS + 3; //Two sudoku rows + 3 spaces (in the middle)
 		private static readonly int SIDE_SPACE = 8; //The amount of spaces on the side of the middle of the middle sudoku
 
 		private static readonly int START_MID_SUDOKU = TWO_ROWS * 6; //At what point the row with the middle sudoku starts

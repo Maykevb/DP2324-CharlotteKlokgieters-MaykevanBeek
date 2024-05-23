@@ -1,5 +1,4 @@
 ﻿using Sudoku.models.BoardComponent;
-using System.Text;
 
 namespace Sudoku.renderers
 {
@@ -43,17 +42,17 @@ namespace Sudoku.renderers
 			}
 		}
 
-		public void DrawVerticalSeperator()
+		private void DrawVerticalSeperator()
 		{
             Console.Write("|");
         }
 
-		public void DrawCell(int value)
+		private void DrawCell(int value)
 		{
 			Console.Write(value == 0 ? " " : value.ToString());
 		}
 
-		public void DrawHorizontalSeparator(double rowLength, int squareLength) 
+		private void DrawHorizontalSeparator(double rowLength, int squareLength) 
 		{
 			Console.WriteLine("\n" + new string('-', (int)(rowLength + (rowLength / squareLength) + 1)));
 		}

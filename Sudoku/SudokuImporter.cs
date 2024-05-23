@@ -111,12 +111,14 @@
             {
                 if (data.Length < 3) continue;
 
-                int value = -1;
+				// Convert the character to an integer
+				int value = -1;
 				if (int.TryParse(data[0].ToString(), out int cellValue))
                 {
 					value = cellValue;
 				}
 
+				// Convert the character to an integer
 				int block = -1;
 				if (int.TryParse(data[2].ToString(), out int cellValue2))
 				{

@@ -33,13 +33,13 @@ public class GameController
 
 		if (board == null)
 		{
-			// TODO error file cant be found
+			//TODO error file cant be found
 		}
     }
 
 	public void displayBoard(SudokuType type)
 	{
-        switch (type)
+        switch (type) //TODO make static ints for the numbers
 		{
 			case SudokuType.FOUR_BY_FOUR:
 				renderer.DrawBoard(board, 2, 2);
@@ -54,7 +54,6 @@ public class GameController
 				renderer.DrawBoard(board, 3, 3);
 				break;
 			case SudokuType.JIGSAW:
-				//TODO
 				renderer.DrawBoard(board, 0, 0);
 				break;
 		}

@@ -1,9 +1,4 @@
 ﻿using Sudoku.models.BoardComponent;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Sudoku.renderers
 {
@@ -18,8 +13,7 @@ namespace Sudoku.renderers
         {
 			double rowLength = Math.Sqrt(board.Cells.Count);
 
-			DrawHorizontalSeparator(rowLength * 2, 1); //TODO
-			
+			DrawHorizontalSeparatorEdge(rowLength * 2, 1);
 
 			for (int i = 0; i < board.Cells.Count; i++)
 			{
@@ -41,65 +35,69 @@ namespace Sudoku.renderers
 
 				if ((i + 1) % rowLength == 0 && (i + 1) < board.Cells.Count)
 				{
-					Console.WriteLine();
-					Console.Write("|"); //TODO
-
-
-					bool same = false;
-					for (int j = Convert.ToInt32(rowLength); j > 0; j--)
-					{
-						if ((i + Convert.ToInt32(rowLength)) <= board.Cells.Count && board.Cells[i + 1 - j].Block == board.Cells[i + 1 + (Convert.ToInt32(rowLength) - j)].Block)
-						{
-							if (same)
-							{
-								Console.Write(" ");
-							}
-
-							Console.Write(" ");
-							same = true;
-
-							if (i + 1 != board.Cells.Count && ((i + 2 + (Convert.ToInt32(rowLength) - j)) < board.Cells.Count) && board.Cells[i + 1 + (Convert.ToInt32(rowLength) - j)].Block != board.Cells[i + 2 + (Convert.ToInt32(rowLength) - j)].Block && (i + 2 + (Convert.ToInt32(rowLength) - j)) % rowLength != 0)
-							{
-								Console.Write("|");
-								same = false;
-							}
-
-							if (i + 1 != board.Cells.Count && ((i + 2 + (Convert.ToInt32(rowLength) - j)) < board.Cells.Count) && board.Cells[i + 1 + (Convert.ToInt32(rowLength) - j)].Block == board.Cells[i + 2 + (Convert.ToInt32(rowLength) - j)].Block && board.Cells[i + 1 - j].Block != board.Cells[i + 2 - j].Block)
-							{
-								Console.Write("-");
-							}
-						}
-						else
-						{
-							Console.Write("-"); 
-							same = false;
-
-							if ((((i + 1 + (Convert.ToInt32(rowLength) - j)) % rowLength == 0) || ((i + 2 + (Convert.ToInt32(rowLength) - j)) % rowLength != 0)) && ((i + 1 + Convert.ToInt32(rowLength)) < board.Cells.Count && board.Cells[i + 1 + (Convert.ToInt32(rowLength) - j)].Block != board.Cells[i + 2 + (Convert.ToInt32(rowLength) - j)].Block))
-							{
-								Console.Write("|");
-							}
-							else if (!((i + 1 + Convert.ToInt32(rowLength)) < board.Cells.Count && board.Cells[i + 1 + (Convert.ToInt32(rowLength) - j)].Block != board.Cells[i + 2 + (Convert.ToInt32(rowLength) - j)].Block) && (i + 2 + (Convert.ToInt32(rowLength) - j) < board.Cells.Count))
-							{							
-								Console.Write("-"); 
-							}
-						}
-					}
-
-					Console.WriteLine("|"); //TODO
+					DrawHorizontalSeparator(i, board, rowLength);
 				}
 			}
 
-			DrawHorizontalSeparator(rowLength * 2, 1); //TODO
+			DrawHorizontalSeparatorEdge(rowLength * 2, 1); 
 		}
 
-		public void DrawHorizontalSeparator(double rowLength, int extras)
+		private void DrawHorizontalSeparatorEdge(double rowLength, int extraSeparators)
 		{
-			Console.WriteLine("\n" + new string('-', (int)(rowLength + extras)));
+			Console.WriteLine("\n" + new string('-', (int)(rowLength + extraSeparators)));
 		}
 
-		public void DrawCell(int value)
+		private void DrawCell(int value)
 		{
-			Console.Write(value == 0 ? "0" : value.ToString()); //TODO 0 to space
+			Console.Write(value == 0 ? " " : value.ToString()); 
+		}
+
+		private void DrawHorizontalSeparator(int i, SudokuBoard board, double rowLength)
+		{
+			Console.WriteLine();
+			Console.Write("|");
+
+			bool lastNumbersAlsoInBlock = false;
+			for (int j = Convert.ToInt32(rowLength); j > 0; j--)
+			{
+				if ((i + Convert.ToInt32(rowLength)) <= board.Cells.Count && board.Cells[i + 1 - j].Block == board.Cells[i + 1 + (Convert.ToInt32(rowLength) - j)].Block)
+				{
+					if (lastNumbersAlsoInBlock)
+					{
+						Console.Write(" ");
+					}
+
+					Console.Write(" ");
+					lastNumbersAlsoInBlock = true;
+
+					if (i + 1 != board.Cells.Count && ((i + 2 + (Convert.ToInt32(rowLength) - j)) < board.Cells.Count) && board.Cells[i + 1 + (Convert.ToInt32(rowLength) - j)].Block != board.Cells[i + 2 + (Convert.ToInt32(rowLength) - j)].Block && (i + 2 + (Convert.ToInt32(rowLength) - j)) % rowLength != 0)
+					{
+						Console.Write("|");
+						lastNumbersAlsoInBlock = false;
+					}
+
+					if (i + 1 != board.Cells.Count && ((i + 2 + (Convert.ToInt32(rowLength) - j)) < board.Cells.Count) && board.Cells[i + 1 + (Convert.ToInt32(rowLength) - j)].Block == board.Cells[i + 2 + (Convert.ToInt32(rowLength) - j)].Block && board.Cells[i + 1 - j].Block != board.Cells[i + 2 - j].Block)
+					{
+						Console.Write("-");
+					}
+				}
+				else
+				{
+					Console.Write("-");
+					lastNumbersAlsoInBlock = false;
+
+					if ((((i + 1 + (Convert.ToInt32(rowLength) - j)) % rowLength == 0) || ((i + 2 + (Convert.ToInt32(rowLength) - j)) % rowLength != 0)) && ((i + 1 + Convert.ToInt32(rowLength)) < board.Cells.Count && board.Cells[i + 1 + (Convert.ToInt32(rowLength) - j)].Block != board.Cells[i + 2 + (Convert.ToInt32(rowLength) - j)].Block))
+					{
+						Console.Write("|");
+					}
+					else if (!((i + 1 + Convert.ToInt32(rowLength)) < board.Cells.Count && board.Cells[i + 1 + (Convert.ToInt32(rowLength) - j)].Block != board.Cells[i + 2 + (Convert.ToInt32(rowLength) - j)].Block) && (i + 2 + (Convert.ToInt32(rowLength) - j) < board.Cells.Count))
+					{
+						Console.Write("-");
+					}
+				}
+			}
+
+			Console.WriteLine("|");
 		}
 	}
 }
