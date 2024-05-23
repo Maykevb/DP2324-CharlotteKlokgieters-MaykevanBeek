@@ -1,102 +1,158 @@
 ﻿using Sudoku.models.BoardComponent;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Sudoku.renderers
 {
     public class SamuraiRenderer : iBoardRenderer
-    {
-		private static readonly int ROW_LENGTH = 9;
+    {		
+		private static readonly int ROW_LENGTH = 9; //One sudoku row		
+		private static readonly int TWO_ROWS = ROW_LENGTH * 2; //Two sudoku rows
+		private static readonly int	TWO_ROWS_WITH_SPACE = TWO_ROWS + 3; //Two sudoku rows + 3 spaces
+		private static readonly int SIDE_SPACE = 8; //The amount of spaces on the side of the middle of the middle sudoku
+
+		private static readonly int START_MID_SUDOKU = TWO_ROWS * 6; //At what point the row with the middle sudoku starts
+		private static readonly int END_SIDE_SUDOKUS = START_MID_SUDOKU + TWO_ROWS_WITH_SPACE * 3; //At what point the side sudokus have ended and you only have to print the middle sudoku
+		private static readonly int START_SIDE_SUDOKUS = END_SIDE_SUDOKUS + ROW_LENGTH * 3; //At what point the side sudokus start again, while you also still have the middle sudoku that has to be printed
+		private static readonly int END_MID_SUDOKU = START_SIDE_SUDOKUS + TWO_ROWS_WITH_SPACE * 3; //At what point the rows with the middles sudoku have completely ended and you only have to print the last of the side sudokus
+
+		private int row_counter = 0;
 
 		public object Clone()
         {
             return new SamuraiRenderer();
         }
 
-		/*public void drawBoard(SudokuBoard board, int squareLength, int squareHeight)
+		public void DrawBoard(SudokuBoard board, int squareLength, int squareHeight)
 		{
-			Console.WriteLine();
-			writeRowSeperator(rowLength, 0);
+			DrawSeparator(ROW_LENGTH, squareLength, true);
 
 			for (int i = 0; i < board.Cells.Count; i++)
 			{
-				if (i % rowLength == 0)
-				{
-					Console.Write("|");
-				}
+				DrawOneCharacter(board, i, squareLength, squareHeight);
 
-				if (board.Cells[i].Value == 0)
+				if (((i + 1) % (TWO_ROWS * squareLength) == 0 && (i < START_MID_SUDOKU)) && ((i + 1) % START_MID_SUDOKU == 0)) 
 				{
-					Console.Write(" ");
+					DrawSeparator(TWO_ROWS_WITH_SPACE, squareLength, false);
+					continue;
 				}
-				else
+				
+				if (((i + 1) % (TWO_ROWS * squareLength) == 0 && i < START_MID_SUDOKU) || 
+					((i - END_MID_SUDOKU + 1) % (TWO_ROWS * squareLength) == 0 && i > END_MID_SUDOKU))
 				{
-					Console.Write(board.Cells[i].Value);
+					DrawSeparator(ROW_LENGTH, squareLength, true); 
+					continue;
 				}
-
-				if ((i + 1) % squareLength == 0 && !((i + 1) % rowLength == 0) ||
-					(i + 1) % (squareHeight * squareLength) == 0)
+				
+				if (((i + 1) % TWO_ROWS == 0 && (i + 1) != (START_MID_SUDOKU + TWO_ROWS))&& !(i >= START_MID_SUDOKU && i <= END_MID_SUDOKU))
 				{
-					Console.Write('|');
-				}
-
-				if ((i + 1) % rowLength == 0 && (i + 1) % (squareHeight * rowLength) == 0 && i == board.Cells.Count - 1)
+					HandleGridLine(i, squareLength, '<');
+					continue;
+                }
+				
+				if ((i + 1) % ROW_LENGTH == 0 && (i + 1) != (START_MID_SUDOKU + ROW_LENGTH) &&(i + 1) != (START_MID_SUDOKU + TWO_ROWS) && (i < START_MID_SUDOKU || i > END_MID_SUDOKU)) 
 				{
-					writeRowSeperator(rowLength, 2);
-				}
-				else if ((i + 1) % rowLength == 0 && (i + 1) % (squareHeight * rowLength) == 0)
-				{
-					writeRowSeperator(rowLength, 1);
-				}
-				else if ((i + 1) % rowLength == 0)
-				{
-					Console.WriteLine();
-				}
+                    HandleGridLine(i, squareLength, '>');
+                }
 			}
 		}
 
-		// 0 = top, 1 = middle, 2 = bottom
-		public void writeRowSeperator(double rowLength, int place)
+        private void HandleGridLine(int i, int squareLength, char type)
+        {
+            if ((type == '<' && i < END_MID_SUDOKU) || (type == '>' && i > END_MID_SUDOKU))
+            {
+                Console.WriteLine();
+                row_counter++;
+            }
+            else
+            {
+                DrawEmptyRow(squareLength);
+            }
+        }
+
+        private void DrawSeparator(double rowLength, int squareLength, bool middleEmpty)
 		{
-			Console.WriteLine();
+			row_counter++;
 
-			switch (place)
+			StringBuilder rowSeparator = new StringBuilder();
+			rowSeparator.AppendLine();
+			rowSeparator.Append(new string('-', (int)(rowLength + (rowLength / squareLength) + 1))); 
+
+			if (middleEmpty)
 			{
-				case 0:
-					Console.Write('┌');
-					break;
-				case 1:
-				default:
-					Console.Write('├');
-					break;
-				case 2:
-					Console.Write('└');
-					break;
+				rowSeparator.Append(new string(' ', squareLength));
+				rowSeparator.Append(new string('-', (int)(rowLength + (rowLength / squareLength) + 1))); 
 			}
+			
+			Console.WriteLine(rowSeparator.ToString());
+		}
 
-			for (int j = 0; j < rowLength + (rowLength % 2 + 1); j++)
+        private void DrawLineRow(int length) 
+		{
+			for (int j = 0; j < length; j++)
 			{
 				Console.Write("-");
 			}
+		}
 
-			switch (place)
+		private void DrawEmptyRow(int length)
+		{
+			for (int j = 0; j < length; j++)
 			{
-				case 0:
-					Console.Write('┐');
-					break;
-				case 1:
-				default:
-					Console.Write('┤');
-					break;
-				case 2:
-					Console.Write('┘');
-					break;
+				Console.Write(" "); 
 			}
+		}
 
-			Console.WriteLine();
-		}*/
-	}
+        private void DrawCell(int value)
+		{
+			Console.Write(value == 0 ? " " : value.ToString()); 
+		}
+
+        private void DrawOneCharacter(SudokuBoard board, int i, int squareLength, int squareHeight)
+        {
+            DrawEmptyRowIfNeeded(i);
+            DrawVerticalSeparatorStart(i, squareLength);
+            DrawCell(board.Cells[i].Value);
+            DrawVerticalSeperatorMidOrEnd(i, squareLength);
+            MoveToNextRowIfNeeded(i, squareLength);
+        }
+
+        private void DrawEmptyRowIfNeeded(int i)
+        {
+            if (row_counter >= 10 && row_counter <= 12 && (i % ROW_LENGTH == 0 || i % TWO_ROWS == 0))
+            {
+                DrawEmptyRow(SIDE_SPACE);
+            }
+        }
+
+        private void DrawVerticalSeparatorStart(int i, int squareLength)
+        {
+            if (((i < START_MID_SUDOKU || i > END_MID_SUDOKU) && (i % ROW_LENGTH == 0 || i % TWO_ROWS == 0)) || ((i >= START_MID_SUDOKU && i <= END_MID_SUDOKU) && (((i - START_MID_SUDOKU) % TWO_ROWS_WITH_SPACE == 0 && i < END_SIDE_SUDOKUS) || (i >= END_SIDE_SUDOKUS && i <= START_SIDE_SUDOKUS && (i - END_SIDE_SUDOKUS) % ROW_LENGTH == 0))) || ((i >= START_SIDE_SUDOKUS && i <= END_MID_SUDOKU) && ((i - START_SIDE_SUDOKUS) % TWO_ROWS_WITH_SPACE == 0)))
+            {
+                Console.Write("|");
+            }
+        }
+
+        private void DrawVerticalSeperatorMidOrEnd(int i, int squareLength)
+        {
+            if (((i < START_MID_SUDOKU || i > END_MID_SUDOKU) && ((i + 1) % squareLength == 0 && (i + 1) != (START_MID_SUDOKU + TWO_ROWS))) || ((i >= START_MID_SUDOKU && i <= END_MID_SUDOKU) && ((i + 1 - START_MID_SUDOKU) % squareLength == 0)))
+            {
+                Console.Write("|");
+            }
+        }
+
+        private void MoveToNextRowIfNeeded(int i, int squareLength)
+        {
+            if (((i + 1) % END_MID_SUDOKU == 0) || (((i + 1 >= END_SIDE_SUDOKUS && i + 1 <= START_SIDE_SUDOKUS) && (i + 1 - END_SIDE_SUDOKUS) % ROW_LENGTH == 0) && (row_counter == 9 || row_counter == 12)))
+            {
+                DrawSeparator(TWO_ROWS_WITH_SPACE, squareLength, false);
+                return;
+            }
+
+            if (((i + 1 >= END_SIDE_SUDOKUS && i + 1 <= START_SIDE_SUDOKUS) && (i + 1 - END_SIDE_SUDOKUS) % ROW_LENGTH == 0) || ((i >= START_MID_SUDOKU && i <= END_SIDE_SUDOKUS) && (i + 1 - START_MID_SUDOKU) % TWO_ROWS_WITH_SPACE == 0) || ((i >= START_SIDE_SUDOKUS && i <= END_MID_SUDOKU) && (i + 1 - START_SIDE_SUDOKUS) % TWO_ROWS_WITH_SPACE == 0 && (i + 1) % END_MID_SUDOKU != 0))
+            {
+                Console.WriteLine();
+                row_counter++;
+            }
+        }
+    }
 }
