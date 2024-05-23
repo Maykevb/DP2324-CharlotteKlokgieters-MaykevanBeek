@@ -67,18 +67,14 @@
 
             for (int i = 0; i < square_length; i++)
             {
-				result += lines[0].Substring((i + amount_shared_rows) * row_length, row_length) 
-                    + lines[2].Substring(square_length + (i * row_length), square_length) 
-                    + lines[1].Substring((i + amount_shared_rows) * row_length, row_length);
+				result += lines[0].Substring((i + amount_shared_rows) * row_length, row_length) + lines[2].Substring(square_length + (i * row_length), square_length) + lines[1].Substring((i + amount_shared_rows) * row_length, row_length);
 			}
 
 			result += lines[2].Substring(cell_amount_mid, cell_amount_mid);
 
 			for (int i = 0; i < square_length; i++)
 			{
-				result += lines[3].Substring((i * row_length), row_length) 
-                    + lines[2].Substring(square_length + (cell_amount_mid + (i * row_length)) + cell_amount_mid, square_length) 
-                    + lines[4].Substring((i * row_length), row_length);
+				result += lines[3].Substring((i * row_length), row_length) + lines[2].Substring(square_length + (cell_amount_mid + (i * row_length)) + cell_amount_mid, square_length) + lines[4].Substring((i * row_length), row_length);
 			}
 
 			for (int i = 3; i < row_length; i++)
