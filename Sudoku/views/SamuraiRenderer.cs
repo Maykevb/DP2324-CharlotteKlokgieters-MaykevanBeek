@@ -86,14 +86,6 @@ namespace Sudoku.renderers
 			Console.WriteLine(rowSeparator.ToString());
 		}
 
-        private void DrawLineRow(int length) 
-		{
-			for (int j = 0; j < length; j++)
-			{
-				Console.Write("-");
-			}
-		}
-
 		private void DrawEmptyRow(int length)
 		{
 			for (int j = 0; j < length; j++)

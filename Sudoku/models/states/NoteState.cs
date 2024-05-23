@@ -9,7 +9,7 @@ namespace Sudoku.models.states
 {
     public class NoteState : iBoardState
     {
-        public void Handle()
+        public void PrintState()
         {
             string message = "Board is now in note state. You can now add, remove and see all notes." +
                 "\n--> Press [/] to go to the correction state or press [+] to go to the definitive state";
@@ -17,12 +17,7 @@ namespace Sudoku.models.states
             Console.WriteLine($"\n{line}\n{message}\n{line}");
         }
 
-        public iBoardState goNext()
-        {
-            return new DefinitiveState();
-        }
-
-        public void doAction(SudokuBoard board)
+        public void DoAction(SudokuBoard board)
         {
             string message = "Place a note by typing row-column-value (seperated by -)";
             string line = new string('-', 70);

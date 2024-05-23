@@ -4,9 +4,8 @@ namespace Sudoku.models.states
 {
     public interface iBoardState
     {
-        public void Handle();
-        iBoardState goNext();
+        public void PrintState();
 
-        public void doAction(SudokuBoard board);
+        public void DoAction(SudokuBoard board);
     }
 }

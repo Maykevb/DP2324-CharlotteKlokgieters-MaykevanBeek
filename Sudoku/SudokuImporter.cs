@@ -11,7 +11,7 @@
     {
 		private static readonly int SAMURAI_SINGLE_ROW = 9;
 
-        public SudokuBoard? ReadSudokuFromFile(SudokuType type)
+        public SudokuBoard? ReadSudokuFromFile(SudokuType type, GameController gameController)
         {
             string folderPath = $"../../../resources/{type.ToString()}";
             if (Directory.Exists(folderPath))
@@ -23,16 +23,16 @@
                     Random random = new Random();
                     string sudokuFile = files[random.Next(files.Length)]; 
                     string sudoku = File.ReadAllText(sudokuFile);
-                    return CreateBoard(sudoku, type);
+                    return CreateBoard(gameController, sudoku, type);
                 }
             }
 
             return null;
         }
 
-        private SudokuBoard CreateBoard(string sudoku, SudokuType type)
+        private SudokuBoard CreateBoard(GameController gameController, string sudoku, SudokuType type)
         {
-            SudokuBoard board = new SudokuBoard();
+            SudokuBoard board = new SudokuBoard(gameController, type);
 
             switch (type)
             {
@@ -93,12 +93,16 @@
 
             for (int i = 0; i < sudoku.Length; i++)
             {
-				// Convert the character to an integer
-				if (int.TryParse(sudoku[i].ToString(), out int cellValue))
+				if (int.TryParse(sudoku[i].ToString(), out int cellValue) && cellValue != 0)
 				{
 					SudokuCell cell = new SudokuCell(cellValue, true);
 					cells.Add(cell);
-				}
+				} 
+                else if (int.TryParse(sudoku[i].ToString(), out int cellValue2) && cellValue2 == 0)
+                {
+                    SudokuCell cell = new SudokuCell(cellValue2, false);
+                    cells.Add(cell);
+                }
 			}
 
 			return cells;

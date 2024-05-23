@@ -29,7 +29,7 @@ public class GameController
 
 	public void loadBoard(SudokuType type)
 	{
-		board = importer.ReadSudokuFromFile(type);
+		board = importer.ReadSudokuFromFile(type, this);
 
 		if (board == null)
 		{
@@ -51,7 +51,6 @@ public class GameController
 				renderer.DrawBoard(board, 3, 3);
 				break;
 			case SudokuType.SAMURAI:
-				//TODO
 				renderer.DrawBoard(board, 3, 3);
 				break;
 			case SudokuType.JIGSAW:
@@ -60,7 +59,7 @@ public class GameController
 				break;
 		}
 
-		board.State.doAction(board);
+		board.State.DoAction(board);
     }
 
 	public void drawStart()
@@ -68,7 +67,7 @@ public class GameController
         string line = new string('-', 70);
         Console.WriteLine($"\n{line}\nLet the game begin!\n{line}");
 
-        board.State.Handle();
+        board.State.PrintState();
     }
 
     public void solveBoard()
