@@ -3,9 +3,6 @@
     using Sudoku.models.BoardComponent;
     using System;
     using System.IO;
-    using System.Linq;
-    using System.Runtime.CompilerServices;
-	using System.Text;
 
     public class SudokuImporter
     {
@@ -21,7 +18,7 @@
                 if (files.Length > 0)
                 {
                     Random random = new Random();
-                    string sudokuFile = files[1]; //TODO random.Next(files.Length) 0 works
+                    string sudokuFile = files[random.Next(files.Length)]; 
 					string sudoku = File.ReadAllText(sudokuFile);
                     return CreateBoard(sudoku, type);
                 }

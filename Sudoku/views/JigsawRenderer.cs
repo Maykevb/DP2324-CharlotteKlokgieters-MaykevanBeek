@@ -31,10 +31,8 @@ namespace Sudoku.renderers
 				DrawCell(board.Cells[i].Value);
 
 				if (i + 1 != board.Cells.Count && board.Cells[i].Block == board.Cells[i + 1].Block)
-				{
-					Console.ForegroundColor = ConsoleColor.Black;
-					Console.Write("|");
-					Console.ForegroundColor = ConsoleColor.White;
+				{				
+					Console.Write(" ");
 				}
 				else
 				{
@@ -50,69 +48,39 @@ namespace Sudoku.renderers
 					bool same = false;
 					for (int j = Convert.ToInt32(rowLength); j > 0; j--)
 					{
-						if ((i + Convert.ToInt32(rowLength)) <= board.Cells.Count &&
-							board.Cells[i + 1 - j].Block == board.Cells[i + 1 + (Convert.ToInt32(rowLength) - j)].Block)
+						if ((i + Convert.ToInt32(rowLength)) <= board.Cells.Count && board.Cells[i + 1 - j].Block == board.Cells[i + 1 + (Convert.ToInt32(rowLength) - j)].Block)
 						{
 							if (same)
 							{
-								Console.ForegroundColor = ConsoleColor.Black;
-								Console.Write("-");
-								Console.ForegroundColor = ConsoleColor.White;
+								Console.Write(" ");
 							}
 
-							//TODO space instead of -
-							Console.ForegroundColor = ConsoleColor.Black;
-							Console.Write("-");
-							Console.ForegroundColor = ConsoleColor.White;
+							Console.Write(" ");
 							same = true;
 
-							
-
-							if (i + 1 != board.Cells.Count &&
-								board.Cells[i + 1 + (Convert.ToInt32(rowLength) - j)].Block !=
-								board.Cells[i + 2 + (Convert.ToInt32(rowLength) - j)].Block 
-								&&
-								(i + 2 + (Convert.ToInt32(rowLength) - j)) % rowLength != 0
-								)
+							if (i + 1 != board.Cells.Count && ((i + 2 + (Convert.ToInt32(rowLength) - j)) < board.Cells.Count) && board.Cells[i + 1 + (Convert.ToInt32(rowLength) - j)].Block != board.Cells[i + 2 + (Convert.ToInt32(rowLength) - j)].Block && (i + 2 + (Convert.ToInt32(rowLength) - j)) % rowLength != 0)
 							{
 								Console.Write("|");
 								same = false;
 							}
 
-							if (i + 1 != board.Cells.Count &&
-								board.Cells[i + 1 + (Convert.ToInt32(rowLength) - j)].Block == board.Cells[i + 2 + (Convert.ToInt32(rowLength) - j)].Block &&
-								board.Cells[i + 1 - j].Block != board.Cells[i + 2 - j].Block
-								)
+							if (i + 1 != board.Cells.Count && ((i + 2 + (Convert.ToInt32(rowLength) - j)) < board.Cells.Count) && board.Cells[i + 1 + (Convert.ToInt32(rowLength) - j)].Block == board.Cells[i + 2 + (Convert.ToInt32(rowLength) - j)].Block && board.Cells[i + 1 - j].Block != board.Cells[i + 2 - j].Block)
 							{
 								Console.Write("-");
 							}
 						}
 						else
 						{
-							
 							Console.Write("-"); 
 							same = false;
 
-							if ((i + 1 + Convert.ToInt32(rowLength)) < board.Cells.Count && 
-								board.Cells[i + 1 + (Convert.ToInt32(rowLength) - j)].Block != 
-								board.Cells[i + 2 + (Convert.ToInt32(rowLength) - j)].Block)
+							if ((((i + 1 + (Convert.ToInt32(rowLength) - j)) % rowLength == 0) || ((i + 2 + (Convert.ToInt32(rowLength) - j)) % rowLength != 0)) && ((i + 1 + Convert.ToInt32(rowLength)) < board.Cells.Count && board.Cells[i + 1 + (Convert.ToInt32(rowLength) - j)].Block != board.Cells[i + 2 + (Convert.ToInt32(rowLength) - j)].Block))
 							{
-								if ((i + 1 + (Convert.ToInt32(rowLength) - j)) % rowLength == 0)
-								{
-									Console.Write("|");
-								}
-								else if ((i + 2 + (Convert.ToInt32(rowLength) - j)) % rowLength != 0)
-								{
-									Console.Write("|");
-								}
+								Console.Write("|");
 							}
-							else
-							{
-								if (i + 2 + (Convert.ToInt32(rowLength) - j) < board.Cells.Count)
-								{
-									Console.Write("-"); 
-								}
-
+							else if (!((i + 1 + Convert.ToInt32(rowLength)) < board.Cells.Count && board.Cells[i + 1 + (Convert.ToInt32(rowLength) - j)].Block != board.Cells[i + 2 + (Convert.ToInt32(rowLength) - j)].Block) && (i + 2 + (Convert.ToInt32(rowLength) - j) < board.Cells.Count))
+							{							
+								Console.Write("-"); 
 							}
 						}
 					}
@@ -122,22 +90,6 @@ namespace Sudoku.renderers
 			}
 
 			DrawHorizontalSeparator(rowLength * 2, 1); //TODO
-		}
-
-		private void DrawLineRow(int length)
-		{
-			for (int j = 0; j < length; j++)
-			{
-				Console.Write("-");
-			}
-		}
-
-		private void DrawEmptyRow(int length)
-		{
-			for (int j = 0; j < length; j++)
-			{
-				Console.Write(" ");
-			}
 		}
 
 		public void DrawHorizontalSeparator(double rowLength, int extras)
