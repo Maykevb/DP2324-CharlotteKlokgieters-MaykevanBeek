@@ -1,4 +1,5 @@
 ﻿using Sudoku.models.BoardComponent;
+using System.Text;
 
 namespace Sudoku.renderers
 {
