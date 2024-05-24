@@ -14,15 +14,17 @@ namespace Sudoku.renderers
             return new SamuraiRenderer();
         }
 
-		// board[0] = upper left, board[1] = upper right, board[2] = middle, board[3] = lower left, board[4] = lower right
+		//board[0] = upper left, board[1] = upper right, board[2] = middle, board[3] = lower left, board[4] = lower right
 		public void DrawBoard(SudokuGroup board, int squareLength, int squareHeight)
 		{
 			int rowLength = Convert.ToInt32(Math.Sqrt(board.Components[0].Components.Count));
 
 			DrawSeparator(rowLength, squareLength, true);		
 			
+			//Draw the first 9 rows -> entire upper sudokus and a little of the middle
 			for (int j = 0; j < rowLength; j++)
 			{
+				//Draw upper left sudoku
 				DrawSeparator();
 				for (int i = 0; i < rowLength; i++)
 				{
@@ -30,6 +32,7 @@ namespace Sudoku.renderers
 					DrawSquareSeparator(i, squareLength);
 				}
 
+				//Draw middle sudoku
 				if (j < NON_MID_ROWS)
 				{
 					DrawEmptyRow(squareLength);
@@ -42,6 +45,7 @@ namespace Sudoku.renderers
 					}
 				}
 
+				//Draw upper right sudoku
 				DrawSeparator();
 				for (int i = 0; i < rowLength; i++)
 				{
@@ -49,6 +53,7 @@ namespace Sudoku.renderers
 					DrawSquareSeparator(i, squareLength);
 				}
 
+				//Draw row separators
 				if ((j + 1) % squareLength != 0) 
 				{
 					DrawLine();
@@ -62,7 +67,8 @@ namespace Sudoku.renderers
 					DrawSeparator(rowLength, squareLength, false);
 				}
 			}
-	
+
+			//Draw the middle of the middle sudoku
 			for (int j = 0; j < MID_ONLY_ROWS; j++)
 			{
 				DrawEmptyRow(SIDE_SPACE); 
@@ -84,8 +90,10 @@ namespace Sudoku.renderers
 				}
 			}
 
+			//Draw the last 9 rows -> entire lower sudokus and a little of the middle
 			for (int j = 0; j < rowLength; j++)
 			{
+				//Draw lower left sudoku
 				DrawSeparator();
 				for (int i = 0; i < rowLength; i++)
 				{
@@ -93,6 +101,7 @@ namespace Sudoku.renderers
 					DrawSquareSeparator(i, squareLength);
 				}
 
+				//Draw middle sudoku
 				if (j >= MID_ONLY_ROWS)
 				{
 					DrawEmptyRow(squareLength);
@@ -105,6 +114,7 @@ namespace Sudoku.renderers
 					}
 				}
 
+				//Draw lower right sudoku
 				DrawSeparator();
 				for (int i = 0; i < rowLength; i++)
 				{
@@ -112,6 +122,7 @@ namespace Sudoku.renderers
 					DrawSquareSeparator(i, squareLength);
 				}
 
+				//Draw row separators
 				if ((j + 1) % squareLength != 0) 
 				{
 					DrawLine();
