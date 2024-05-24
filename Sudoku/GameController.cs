@@ -10,7 +10,7 @@ public class GameController
 	private static readonly int SQUARE_9X9 = 3;
 	private static readonly int SQUARE_JIGSAW = 0;
 
-	private static readonly int START_LINE_LENGTH = 70;
+	public static readonly int START_LINE_LENGTH = 70;
 
 	private SudokuImporter importer;
 	private SudokuGroup board;

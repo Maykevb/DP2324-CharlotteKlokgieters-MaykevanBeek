@@ -6,8 +6,6 @@
 
     public class SudokuImporter
     {
-		private static readonly int SAMURAI_SINGLE_ROW = 9;
-
         public SudokuGroup? ReadSudokuFromFile(SudokuType type)
         {
             string folderPath = $"../../../resources/{type.ToString()}";
