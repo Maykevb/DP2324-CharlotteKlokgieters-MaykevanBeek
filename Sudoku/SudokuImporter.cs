@@ -18,7 +18,7 @@
                 if (files.Length > 0)
                 {
                     Random random = new Random();
-                    string sudokuFile = files[0]; // TODO random.Next(files.Length)
+                    string sudokuFile = files[random.Next(files.Length)]; 
 					string sudoku = File.ReadAllText(sudokuFile);
                     return CreateBoard(sudoku, type);
                 }
@@ -38,7 +38,6 @@
 					break;
                 case SudokuType.SAMURAI:
 					board.Components = CreateSamuraiBoards(sudoku);
-					/*board.Cells = CreateSamuraiBoards(sudoku);*/
 					break;
                 default:
 					board.Components = CreateCells(sudoku);
@@ -50,39 +49,6 @@
 
 		private List<iBoardComponent> CreateSamuraiBoards(string sudoku)
         {
-			/*const int row_length = 9;
-            const int amount_shared_rows = 6;
-            const int square_length = 3;
-            const int cell_amount_mid = row_length * square_length;
-
-			string[] lines = sudoku.Split('\n');
-			string result = "";
-
-			for (int i = 0; i < amount_shared_rows; i++)
-			{
-				result += lines[0].Substring((i * row_length), row_length) + lines[1].Substring((i * row_length), row_length);
-			}
-
-            for (int i = 0; i < square_length; i++)
-            {
-				result += lines[0].Substring((i + amount_shared_rows) * row_length, row_length) + lines[2].Substring(square_length + (i * row_length), square_length) + lines[1].Substring((i + amount_shared_rows) * row_length, row_length);
-			}
-
-			result += lines[2].Substring(cell_amount_mid, cell_amount_mid);
-
-			for (int i = 0; i < square_length; i++)
-			{
-				result += lines[3].Substring((i * row_length), row_length) + lines[2].Substring(square_length + (cell_amount_mid + (i * row_length)) + cell_amount_mid, square_length) + lines[4].Substring((i * row_length), row_length);
-			}
-
-			for (int i = 3; i < row_length; i++)
-			{
-				result += lines[3].Substring((i * row_length), row_length) + lines[4].Substring((i * row_length), row_length);
-			}
-
-            List<SudokuCell> cells = CreateCells(result);
-			return cells;*/
-
 			string[] lines = sudoku.Split('\n');
 
 			List<iBoardComponent> boards = new List<iBoardComponent>();
