@@ -156,7 +156,7 @@ namespace Sudoku.renderers
 
         private void DrawCell(int value)
 		{
-			Console.Write(value == 0 ? "0" : value.ToString());  //TODO
+			Console.Write(value == 0 ? " " : value.ToString()); 
 		}
 
 		private void DrawSquareSeparator(int i, int squareLength)
