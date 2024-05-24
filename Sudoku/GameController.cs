@@ -5,7 +5,7 @@ using Sudoku.renderers;
 public class GameController
 {
     private SudokuImporter importer;
-	private SudokuBoard board;
+	private SudokuGroup board;
 	private iBoardRenderer renderer;
 	private BoardFactory boardFactory;
 

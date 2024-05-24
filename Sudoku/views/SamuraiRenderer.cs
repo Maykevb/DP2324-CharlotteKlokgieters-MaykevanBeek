@@ -22,11 +22,161 @@ namespace Sudoku.renderers
             return new SamuraiRenderer();
         }
 
-		public void DrawBoard(SudokuBoard board, int squareLength, int squareHeight)
+		public void DrawBoard(SudokuGroup board, int squareLength, int squareHeight)
 		{
-			DrawSeparator(ROW_LENGTH, squareLength, true);
+			// board[0] = linksboven
+			// board[1] = rechtsboven
+			// board[2] = midden
+			// board[3] = linksonder
+			// board[4] = rechtsonder
 
-			for (int i = 0; i < board.Cells.Count; i++)
+			DrawSeparator(ROW_LENGTH, squareLength, true);		
+			
+			for (int j = 0; j < ROW_LENGTH; j++)
+			{
+				Console.Write("█");
+				for (int i = 0; i < ROW_LENGTH; i++)
+				{
+					DrawCell(board.Components[0].Components[i + (ROW_LENGTH * j)].Value);
+
+					if ((i + 1) % 3 == 0)
+					{
+						Console.Write("█");
+					}
+				}
+
+				if (j < 6)
+				{
+					DrawEmptyRow(3);
+				}
+				else
+				{
+					Console.ForegroundColor = ConsoleColor.Green;
+					for (int i = 3; i < 6; i++) //TODO
+					{					
+						DrawCell(board.Components[2].Components[i + (ROW_LENGTH * (j - 6))].Value);
+					}
+					Console.ForegroundColor = ConsoleColor.White;
+				}
+
+				Console.Write("█");
+				for (int i = 0; i < ROW_LENGTH; i++)
+				{
+					DrawCell(board.Components[1].Components[i + (ROW_LENGTH * j)].Value);
+
+					if ((i + 1) % 3 == 0)
+					{
+						Console.Write("█");
+					}
+				}
+
+				if ((j + 1) % 3 != 0) // TODO static int
+				{
+					Console.WriteLine();
+				}
+				else if (j == 2)
+				{
+					DrawSeparator(ROW_LENGTH, squareLength, true);
+				}
+				else
+				{
+					DrawSeparator(ROW_LENGTH, squareLength, false);
+				}
+			}
+	
+			for (int j = 0; j < 3; j++)
+			{
+				DrawEmptyRow(8); // TODO static int
+				Console.Write("█");
+
+				Console.ForegroundColor = ConsoleColor.Green;
+				for (int i = 0; i < ROW_LENGTH; i++)
+				{				
+					DrawCell(board.Components[2].Components[i + (ROW_LENGTH * 3) + (ROW_LENGTH * j)].Value);
+
+					if ((i + 1) % 3 == 0)
+					{
+						Console.ForegroundColor = ConsoleColor.White;
+						Console.Write("█");
+						Console.ForegroundColor = ConsoleColor.Green;
+					}
+				}
+				Console.ForegroundColor = ConsoleColor.White;
+
+				if (j == 2) // TODO static int
+				{
+					DrawSeparator(ROW_LENGTH, squareLength, false);
+				}
+				else
+				{
+					Console.WriteLine();
+				}
+			}
+
+			for (int j = 0; j < ROW_LENGTH; j++)
+			{
+				Console.Write("█");
+				for (int i = 0; i < ROW_LENGTH; i++)
+				{
+					DrawCell(board.Components[3].Components[i + (ROW_LENGTH * j)].Value);
+
+					if ((i + 1) % 3 == 0)
+					{
+						Console.Write("█");
+					}
+				}
+
+				if (j >= 3)
+				{
+					DrawEmptyRow(3);
+				}
+				else
+				{
+					Console.ForegroundColor = ConsoleColor.Green;
+					for (int i = 3; i < 6; i++) //TODO
+					{
+						DrawCell(board.Components[2].Components[i + (ROW_LENGTH * 6) + (ROW_LENGTH * j)].Value);
+
+
+						/*DrawCell(board.Components[2].Components[i + (ROW_LENGTH * (j - 6))].Value);*/
+					}
+					Console.ForegroundColor = ConsoleColor.White;
+				}
+
+				Console.Write("█");
+				for (int i = 0; i < ROW_LENGTH; i++)
+				{
+					DrawCell(board.Components[4].Components[i + (ROW_LENGTH * j)].Value);
+
+					if ((i + 1) % 3 == 0)
+					{
+						Console.Write("█");
+					}
+				}
+
+				if ((j + 1) % 3 != 0) // TODO static int
+				{
+					Console.WriteLine();
+				}
+				else if (j == 2)
+				{
+					DrawSeparator(ROW_LENGTH, squareLength, false);
+				}
+				else
+				{
+					DrawSeparator(ROW_LENGTH, squareLength, true);
+				}
+			}
+			 
+			
+			
+
+
+
+
+			/*DrawSeparator(ROW_LENGTH, squareLength, true);
+
+			for (int i = 0; i < board.Components.Count; i++)
 			{
 				DrawOneCharacter(board, i, squareLength, squareHeight);
 
@@ -53,7 +203,7 @@ namespace Sudoku.renderers
 				{
                     HandleGridLine(i, squareLength, '>');
                 }
-			}
+			}*/
 		}
 
         private void HandleGridLine(int i, int squareLength, char type)
@@ -69,19 +219,23 @@ namespace Sudoku.renderers
             }
         }
 
-        private void DrawSeparator(double rowLength, int squareLength, bool middleEmpty)
+        private void DrawSeparator(int rowLength, int squareLength, bool middleEmpty)
 		{
 			row_counter++;
 
 			StringBuilder rowSeparator = new StringBuilder();
 			rowSeparator.AppendLine();
-			rowSeparator.Append(new string('-', (int)(rowLength + (rowLength / squareLength) + 1))); 
-
+			
 			if (middleEmpty)
 			{
+				rowSeparator.Append(new string('█', (rowLength + (rowLength / squareLength) + 1)));
 				rowSeparator.Append(new string(' ', squareLength));
-				rowSeparator.Append(new string('-', (int)(rowLength + (rowLength / squareLength) + 1))); 
-			}
+				rowSeparator.Append(new string('█', (rowLength + (rowLength / squareLength) + 1))); 
+			} 
+			else
+			{
+				rowSeparator.Append(new string('█', (rowLength * 2 + 11))); // TODO 11
+			} 
 			
 			Console.WriteLine(rowSeparator.ToString());
 		}
@@ -90,7 +244,7 @@ namespace Sudoku.renderers
 		{
 			for (int j = 0; j < length; j++)
 			{
-				Console.Write("-");
+				Console.Write("-"); // TODO
 			}
 		}
 
@@ -104,14 +258,14 @@ namespace Sudoku.renderers
 
         private void DrawCell(int value)
 		{
-			Console.Write(value == 0 ? " " : value.ToString()); 
+			Console.Write(value == 0 ? "0" : value.ToString());  //TODO
 		}
 
-        private void DrawOneCharacter(SudokuBoard board, int i, int squareLength, int squareHeight)
+        private void DrawOneCharacter(SudokuGroup board, int i, int squareLength, int squareHeight)
         {
             DrawEmptyRowIfNeeded(i);
             DrawVerticalSeparatorStart(i, squareLength);
-            DrawCell(board.Cells[i].Value);
+            DrawCell(board.Components[i].Value);
             DrawVerticalSeperatorMidOrEnd(i, squareLength);
             MoveToNextRowIfNeeded(i, squareLength);
         }

@@ -22,7 +22,7 @@ namespace Sudoku.models.states
             return new DefinitiveState();
         }
 
-        public void doAction(SudokuBoard board)
+        public void doAction(SudokuGroup board)
         {
             string message = "Place a note by typing row-column-value (seperated by -)";
             string line = new string('-', 70);

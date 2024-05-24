@@ -22,7 +22,7 @@ namespace Sudoku.models.states
             return new CorrectionState();
         }
 
-        public void doAction(SudokuBoard board)
+        public void doAction(SudokuGroup board)
         {
             string message = "Fill a cell by typing row-column-value (seperated by -)";
             string line = new string('-', 70);
@@ -30,7 +30,7 @@ namespace Sudoku.models.states
             FillCell(board);
         }
 
-        public void FillCell(SudokuBoard board)
+        public void FillCell(SudokuGroup board)
         {
             string input = Console.ReadLine() ?? "";
 
@@ -38,7 +38,7 @@ namespace Sudoku.models.states
 
         }
 
-        public void CheckState(string input, SudokuBoard board)
+        public void CheckState(string input, SudokuGroup board)
         {
             if (input != null && (input.ToLower() == "/" || input == "-"))
             {

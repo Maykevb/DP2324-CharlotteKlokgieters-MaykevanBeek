@@ -14,7 +14,7 @@ namespace Sudoku.models.visitors
 
         }
 
-        public void Visit(SudokuBoard board)
+        public void Visit(SudokuGroup board)
         {
 
         }

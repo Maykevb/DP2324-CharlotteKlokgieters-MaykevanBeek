@@ -9,20 +9,20 @@ namespace Sudoku.renderers
             return new StandardRenderer();
         }
 
-		public void DrawBoard(SudokuBoard board, int squareLength, int squareHeight)
+		public void DrawBoard(SudokuGroup board, int squareLength, int squareHeight)
 		{
-			double rowLength = Math.Sqrt(board.Cells.Count);
+			int rowLength = Convert.ToInt32(Math.Sqrt(board.Components.Count));
 
 			DrawHorizontalSeparator(rowLength, squareLength);
 
-			for (int i = 0; i < board.Cells.Count; i++)
+			for (int i = 0; i < board.Components.Count; i++)
 			{
 				if (i % rowLength == 0)
 				{
 					DrawVerticalSeperator();
                 }
 
-				DrawCell(board.Cells[i].Value);
+				DrawCell(board.Components[i].Value);
 
 				if ((i + 1) % squareLength == 0 && !((i + 1) % rowLength == 0) || (i + 1) % (squareHeight * squareLength) == 0)
 				{
@@ -44,7 +44,7 @@ namespace Sudoku.renderers
 
 		private void DrawVerticalSeperator()
 		{
-            Console.Write("|");
+            Console.Write("█");
         }
 
 		private void DrawCell(int value)
@@ -52,9 +52,9 @@ namespace Sudoku.renderers
 			Console.Write(value == 0 ? " " : value.ToString());
 		}
 
-		private void DrawHorizontalSeparator(double rowLength, int squareLength) 
+		private void DrawHorizontalSeparator(int rowLength, int squareLength) 
 		{
-			Console.WriteLine("\n" + new string('-', (int)(rowLength + (rowLength / squareLength) + 1)));
+			Console.WriteLine("\n" + new string('█', rowLength + (rowLength / squareLength) + 1));
 		}
 	}
 }

@@ -9,42 +9,57 @@ namespace Sudoku.renderers
             return new JigsawRenderer();
         }
 
-		public void DrawBoard(SudokuBoard board, int squareLength, int squareHeight)
+		public void DrawBoard(SudokuGroup board, int squareLength, int squareHeight)
         {
-			double rowLength = Math.Sqrt(board.Cells.Count);
+			int rowLength = Convert.ToInt32(Math.Sqrt(board.Components.Count)); 
 
 			DrawHorizontalSeparatorEdge(rowLength * 2, 1);
 
-			for (int i = 0; i < board.Cells.Count; i++)
+			for (int i = 0; i < board.Components.Count; i++)
 			{
 				if ((i % rowLength == 0 || i % rowLength * 2 == 0))
 				{
-					Console.Write("|");
+					DrawSeperator();
 				}
 
-				DrawCell(board.Cells[i].Value);
+				DrawCell(board.Components[i].Value);
 
-				if (i + 1 != board.Cells.Count && board.Cells[i].Block == board.Cells[i + 1].Block)
-				{				
-					Console.Write(" ");
+				if (i + 1 != board.Components.Count && board.Components[i].Block == board.Components[i + 1].Block)
+				{
+					DrawSpace();
 				}
 				else
 				{
-					Console.Write("|");
+					DrawSeperator(); 
 				}
 
-				if ((i + 1) % rowLength == 0 && (i + 1) < board.Cells.Count)
+				if ((i + 1) % rowLength == 0 && (i + 1) < board.Components.Count)
 				{
-					DrawHorizontalSeparator(i, board, rowLength);
+					DrawHorizontalSeparatorLine(i, board, rowLength);
 				}
 			}
 
 			DrawHorizontalSeparatorEdge(rowLength * 2, 1); 
 		}
 
-		private void DrawHorizontalSeparatorEdge(double rowLength, int extraSeparators)
+		private void DrawSeperator()
 		{
-			Console.WriteLine("\n" + new string('-', (int)(rowLength + extraSeparators)));
+			Console.Write("█");
+		}
+
+		private void DrawSpace()
+		{
+			Console.Write(" ");
+		}
+
+		private void StartNewLine()
+		{
+			Console.WriteLine();
+		}
+
+		private void DrawHorizontalSeparatorEdge(int rowLength, int extraSeparators)
+		{
+			Console.WriteLine("\n" + new string('█', rowLength + extraSeparators)); 
 		}
 
 		private void DrawCell(int value)
@@ -52,52 +67,86 @@ namespace Sudoku.renderers
 			Console.Write(value == 0 ? " " : value.ToString()); 
 		}
 
-		private void DrawHorizontalSeparator(int i, SudokuBoard board, double rowLength)
+		private void DrawHorizontalSeparatorLine(int i, SudokuGroup board, int rowLength)
 		{
-			Console.WriteLine();
-			Console.Write("|");
+			StartNewLine();
+			DrawSeperator();
 
 			bool lastNumbersAlsoInBlock = false;
-			for (int j = Convert.ToInt32(rowLength); j > 0; j--)
+			for (int j = rowLength; j > 0; j--)
 			{
-				if ((i + Convert.ToInt32(rowLength)) <= board.Cells.Count && board.Cells[i + 1 - j].Block == board.Cells[i + 1 + (Convert.ToInt32(rowLength) - j)].Block)
+				if ((i + rowLength) <= board.Components.Count && IfBlockPrevRowIsSameAsThisRow(i, j, rowLength, board))
 				{
 					if (lastNumbersAlsoInBlock)
 					{
-						Console.Write(" ");
+						DrawSpace();
 					}
 
-					Console.Write(" ");
+					DrawSpace();
 					lastNumbersAlsoInBlock = true;
 
-					if (i + 1 != board.Cells.Count && ((i + 2 + (Convert.ToInt32(rowLength) - j)) < board.Cells.Count) && board.Cells[i + 1 + (Convert.ToInt32(rowLength) - j)].Block != board.Cells[i + 2 + (Convert.ToInt32(rowLength) - j)].Block && (i + 2 + (Convert.ToInt32(rowLength) - j)) % rowLength != 0)
+					if (IfValidIndex(i, j, rowLength, board) && !IfBlockIsSame(i, j, rowLength, board) && (i + 2 + (rowLength - j)) % rowLength != 0)
 					{
-						Console.Write("|");
+						DrawSeperator(); 
 						lastNumbersAlsoInBlock = false;
+						continue;
 					}
 
-					if (i + 1 != board.Cells.Count && ((i + 2 + (Convert.ToInt32(rowLength) - j)) < board.Cells.Count) && board.Cells[i + 1 + (Convert.ToInt32(rowLength) - j)].Block == board.Cells[i + 2 + (Convert.ToInt32(rowLength) - j)].Block && board.Cells[i + 1 - j].Block != board.Cells[i + 2 - j].Block)
+					if (IfValidIndex(i, j, rowLength, board) && IfBlockIsSame(i, j, rowLength, board) && !IfBlockIsSameAsPrevRow(i, j, board))
 					{
-						Console.Write("-");
+						DrawSeperator(); 
 					}
 				}
 				else
 				{
-					Console.Write("-");
+					DrawSeperator(); 
 					lastNumbersAlsoInBlock = false;
 
-					if ((((i + 1 + (Convert.ToInt32(rowLength) - j)) % rowLength == 0) || ((i + 2 + (Convert.ToInt32(rowLength) - j)) % rowLength != 0)) && ((i + 1 + Convert.ToInt32(rowLength)) < board.Cells.Count && board.Cells[i + 1 + (Convert.ToInt32(rowLength) - j)].Block != board.Cells[i + 2 + (Convert.ToInt32(rowLength) - j)].Block))
+					if (IfValuesAreInSameRow(i, j, rowLength) && (IfNotEndOfBoard(i, rowLength, board) && !IfBlockIsSame(i, j, rowLength, board)))
 					{
-						Console.Write("|");
+						DrawSeperator(); 
+						continue;
 					}
-					else if (!((i + 1 + Convert.ToInt32(rowLength)) < board.Cells.Count && board.Cells[i + 1 + (Convert.ToInt32(rowLength) - j)].Block != board.Cells[i + 2 + (Convert.ToInt32(rowLength) - j)].Block) && (i + 2 + (Convert.ToInt32(rowLength) - j) < board.Cells.Count))
+
+					if (!(IfNotEndOfBoard(i, rowLength, board) && !IfBlockIsSame(i, j, rowLength, board)) && IfValidIndex(i, j, rowLength, board))
 					{
-						Console.Write("-");
+						DrawSeperator();
 					}
 				}
 			}
 
-			Console.WriteLine("|");
+			DrawSeperator();
+			StartNewLine();
+		}
+
+		private bool IfBlockPrevRowIsSameAsThisRow(int i, int j, int rowLength, SudokuGroup board)
+		{
+			return (board.Components[i + 1 - j].Block == board.Components[i + 1 + (rowLength - j)].Block);
+		}
+
+		private bool IfValuesAreInSameRow(int i, int j, int rowLength)
+		{
+			return (((i + 1 + (rowLength - j)) % rowLength == 0) || ((i + 2 + (rowLength - j)) % rowLength != 0));
+		}
+
+		private bool IfValidIndex(int i, int j, int rowLength, SudokuGroup board)
+		{
+			return (i + 1 != board.Components.Count && ((i + 2 + (rowLength - j)) < board.Components.Count));
+		}
+
+		private bool IfNotEndOfBoard(int i, int rowLength, SudokuGroup board)
+		{
+			return ((i + 1 + rowLength) < board.Components.Count);
+		}
+
+		private bool IfBlockIsSame(int i, int j, int rowLength, SudokuGroup board)
+		{
+			return (board.Components[i + 1 + (rowLength - j)].Block == board.Components[i + 2 + (rowLength - j)].Block);
+		}
+
+		private bool IfBlockIsSameAsPrevRow(int i, int j, SudokuGroup board)
+		{
+			return (board.Components[i + 1 - j].Block == board.Components[i + 2 - j].Block);
 		}
 	}
 }

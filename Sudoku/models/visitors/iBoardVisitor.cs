@@ -10,6 +10,6 @@ namespace Sudoku.models.visitors
     public interface iBoardVisitor
     {
         void Visit(SudokuCell cell);
-        void Visit(SudokuBoard board);
+        void Visit(SudokuGroup board);
     }
 }

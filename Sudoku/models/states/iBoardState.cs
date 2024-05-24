@@ -7,6 +7,6 @@ namespace Sudoku.models.states
         public void Handle();
         iBoardState goNext();
 
-        public void doAction(SudokuBoard board);
+        public void doAction(SudokuGroup board);
     }
 }

@@ -22,7 +22,7 @@ namespace Sudoku.models.states
             return new NoteState();
         }
 
-        public void doAction(SudokuBoard board)
+        public void doAction(SudokuGroup board)
         {
             string message = "Green == correct | Red == incorrect";
             string line = new string('-', 70);
