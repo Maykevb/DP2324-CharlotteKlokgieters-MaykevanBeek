@@ -1,17 +1,13 @@
 ﻿namespace Sudoku
 {
-    using Sudoku.models.BoardComponent;
+    using Sudoku.models.SudokuComponent;
     using System;
     using System.IO;
-    using System.Linq;
-    using System.Runtime.CompilerServices;
-	using System.Text;
 
     public class SudokuImporter
     {
-		private static readonly int SAMURAI_SINGLE_ROW = 9;
+        public SudokuGroup? ReadSudokuFromFile(SudokuType type, GameController gameController)
 
-        public SudokuBoard? ReadSudokuFromFile(SudokuType type, GameController gameController)
         {
             string folderPath = $"../../../resources/{type.ToString()}";
             if (Directory.Exists(folderPath))
@@ -22,6 +18,7 @@
                 {
                     Random random = new Random();
                     string sudokuFile = files[random.Next(files.Length)]; 
+
                     string sudoku = File.ReadAllText(sudokuFile);
                     return CreateBoard(gameController, sudoku, type);
                 }
@@ -30,66 +27,47 @@
             return null;
         }
 
-        private SudokuBoard CreateBoard(GameController gameController, string sudoku, SudokuType type)
+
+        private SudokuGroup CreateBoard(GameController gameController, string sudoku, SudokuType type)
         {
-            SudokuBoard board = new SudokuBoard(gameController, type);
+			SudokuGroup board = new SudokuGroup(gameController, type);
 
             switch (type)
             {
                 case SudokuType.JIGSAW:
-					board.Cells = CreateJigsawCells(sudoku);
-                    break;
+					board.Components = CreateJigsawCells(sudoku);
+					break;
                 case SudokuType.SAMURAI:
-					board.Cells = CreateSamuraiCells(sudoku);
-                    break;
+					board.Components = CreateSamuraiBoards(sudoku, gameController, type);
+					break;
                 default:
-					board.Cells = CreateCells(sudoku);
+					board.Components = CreateCells(sudoku);
                     break;
 			}
         
             return board;
         }
 
-		private List<SudokuCell> CreateSamuraiCells(string sudoku)
+		private List<iSudokuComponent> CreateSamuraiBoards(string sudoku, GameController gameController, SudokuType type)
         {
-            const int row_length = 9;
-            const int amount_shared_rows = 6;
-            const int square_length = 3;
-            const int cell_amount_mid = row_length * square_length;
-
 			string[] lines = sudoku.Split('\n');
-			string result = "";
 
-			for (int i = 0; i < amount_shared_rows; i++)
-			{
-				result += lines[0].Substring((i * row_length), row_length) + lines[1].Substring((i * row_length), row_length);
-			}
+			List<iSudokuComponent> boards = new List<iSudokuComponent>();
 
-            for (int i = 0; i < square_length; i++)
+			for (int i = 0; i < lines.Length; i++)
             {
-				result += lines[0].Substring((i + amount_shared_rows) * row_length, row_length) + lines[2].Substring(square_length + (i * row_length), square_length) + lines[1].Substring((i + amount_shared_rows) * row_length, row_length);
+				SudokuGroup board = new SudokuGroup(gameController, type);
+				board.Components = CreateCells(lines[i]);
+				boards.Add(board);
 			}
 
-			result += lines[2].Substring(cell_amount_mid, cell_amount_mid);
-
-			for (int i = 0; i < square_length; i++)
-			{
-				result += lines[3].Substring((i * row_length), row_length) + lines[2].Substring(square_length + (cell_amount_mid + (i * row_length)) + cell_amount_mid, square_length) + lines[4].Substring((i * row_length), row_length);
-			}
-
-			for (int i = 3; i < row_length; i++)
-			{
-				result += lines[3].Substring((i * row_length), row_length) + lines[4].Substring((i * row_length), row_length);
-			}
-
-            List<SudokuCell> cells = CreateCells(result);
-			return cells;
+			return boards;
 		}
 
 
-		private List<SudokuCell> CreateCells(string sudoku)
+		private List<iSudokuComponent> CreateCells(string sudoku)
         {
-            List<SudokuCell> cells = new List<SudokuCell>();
+			List<iSudokuComponent> cells = new List<iSudokuComponent>();
 
             for (int i = 0; i < sudoku.Length; i++)
             {
@@ -108,19 +86,29 @@
 			return cells;
         }
 
-        private List<SudokuCell> CreateJigsawCells(string sudoku)
+        private List<iSudokuComponent> CreateJigsawCells(string sudoku)
         {
-            List<SudokuCell> cells = new List<SudokuCell>();
+			List<iSudokuComponent> cells = new List<iSudokuComponent>();
             string cleanedSudoku = sudoku.Replace("SumoCueV1=", "");
-
-            string[] cellData = sudoku.Split('=');
+            string[] cellData = cleanedSudoku.Split('=');
 
             foreach (var data in cellData)
             {
-                if (data.Length < 3) continue; 
+                if (data.Length < 3) continue;
 
-                char value = data[0];
-                char block = data[2];
+				// Convert the character to an integer
+				int value = -1;
+				if (int.TryParse(data[0].ToString(), out int cellValue))
+                {
+					value = cellValue;
+				}
+
+				// Convert the character to an integer
+				int block = -1;
+				if (int.TryParse(data[2].ToString(), out int cellValue2))
+				{
+					block = cellValue2;
+				}
 
                 SudokuCell cell = new SudokuCell(value, true, block);
 

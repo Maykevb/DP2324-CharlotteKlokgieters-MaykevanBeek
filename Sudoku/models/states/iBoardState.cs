@@ -1,4 +1,4 @@
-﻿using Sudoku.models.BoardComponent;
+﻿using Sudoku.models.SudokuComponent;
 
 namespace Sudoku.models.states
 {
@@ -6,6 +6,6 @@ namespace Sudoku.models.states
     {
         public void PrintState();
 
-        public void DoAction(SudokuBoard board);
+        public void DoAction(SudokuGroup board);
     }
 }

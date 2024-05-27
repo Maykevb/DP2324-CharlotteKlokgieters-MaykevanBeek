@@ -1,4 +1,4 @@
-﻿using Sudoku.models.BoardComponent;
+﻿using Sudoku.models.SudokuComponent;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +14,7 @@ namespace Sudoku.models.visitors
 
         }
 
-        public void Visit(SudokuBoard board)
+        public void Visit(SudokuGroup board)
         {
 
         }

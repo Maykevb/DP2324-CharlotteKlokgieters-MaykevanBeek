@@ -1,11 +1,19 @@
 using Sudoku;
-using Sudoku.models.BoardComponent;
+using Sudoku.models.SudokuComponent;
 using Sudoku.renderers;
 
 public class GameController
 {
-    private SudokuImporter importer;
-	private SudokuBoard board;
+	private static readonly int SQUARE_4X4 = 2;
+	private static readonly int LENGTH_6X6 = 3;
+	private static readonly int HEIGHT_6X6 = 2;
+	private static readonly int SQUARE_9X9 = 3;
+	private static readonly int SQUARE_JIGSAW = 0;
+
+	public static readonly int START_LINE_LENGTH = 70;
+
+	private SudokuImporter importer;
+	private SudokuGroup board;
 	private iBoardRenderer renderer;
 	private BoardFactory boardFactory;
 
@@ -33,7 +41,7 @@ public class GameController
 
 		if (board == null)
 		{
-			// TODO error file cant be found
+			//TODO error file cant be found
 		}
     }
 
@@ -42,20 +50,19 @@ public class GameController
         switch (type)
 		{
 			case SudokuType.FOUR_BY_FOUR:
-				renderer.DrawBoard(board, 2, 2);
+				renderer.DrawBoard(board, SQUARE_4X4, SQUARE_4X4);
 				break;
 			case SudokuType.SIX_BY_SIX:
-				renderer.DrawBoard(board, 3, 2);
+				renderer.DrawBoard(board, LENGTH_6X6, HEIGHT_6X6);
 				break;
 			case SudokuType.NINE_BY_NINE:
-				renderer.DrawBoard(board, 3, 3);
+				renderer.DrawBoard(board, SQUARE_9X9, SQUARE_9X9);
 				break;
 			case SudokuType.SAMURAI:
-				renderer.DrawBoard(board, 3, 3);
+				renderer.DrawBoard(board, SQUARE_9X9, SQUARE_9X9);
 				break;
 			case SudokuType.JIGSAW:
-				//TODO
-				renderer.DrawBoard(board, 0, 0);
+				renderer.DrawBoard(board, SQUARE_JIGSAW, SQUARE_JIGSAW);
 				break;
 		}
 
@@ -64,7 +71,7 @@ public class GameController
 
 	public void drawStart()
 	{
-        string line = new string('-', 70);
+        string line = new string('-', START_LINE_LENGTH);
         Console.WriteLine($"\n{line}\nLet the game begin!\n{line}");
 
         board.State.PrintState();

@@ -1,86 +1,158 @@
-﻿using Sudoku.models.BoardComponent;
+﻿using Sudoku.models.SudokuComponent;
 using System.Text;
 
 namespace Sudoku.renderers
 {
     public class SamuraiRenderer : iBoardRenderer
     {		
-		private static readonly int ROW_LENGTH = 9; //One sudoku row		
-		private static readonly int TWO_ROWS = ROW_LENGTH * 2; //Two sudoku rows
-		private static readonly int	TWO_ROWS_WITH_SPACE = TWO_ROWS + 3; //Two sudoku rows + 3 spaces
-		private static readonly int SIDE_SPACE = 8; //The amount of spaces on the side of the middle of the middle sudoku
-
-		private static readonly int START_MID_SUDOKU = TWO_ROWS * 6; //At what point the row with the middle sudoku starts
-		private static readonly int END_SIDE_SUDOKUS = START_MID_SUDOKU + TWO_ROWS_WITH_SPACE * 3; //At what point the side sudokus have ended and you only have to print the middle sudoku
-		private static readonly int START_SIDE_SUDOKUS = END_SIDE_SUDOKUS + ROW_LENGTH * 3; //At what point the side sudokus start again, while you also still have the middle sudoku that has to be printed
-		private static readonly int END_MID_SUDOKU = START_SIDE_SUDOKUS + TWO_ROWS_WITH_SPACE * 3; //At what point the rows with the middles sudoku have completely ended and you only have to print the last of the side sudokus
-
-		private int row_counter = 0;
+		private static readonly int NON_MID_ROWS = 6; //Amount of sudoku rows that don't have the middle sudoku in between
+		private static readonly int MID_ONLY_ROWS = 3; //Amount of sudoku rows that only have the middle sudoku
+		private static readonly int SIDE_SPACE = 8; //The amount of spaces on the side of the middle sudoku
 
 		public object Clone()
         {
             return new SamuraiRenderer();
         }
 
-		public void DrawBoard(SudokuBoard board, int squareLength, int squareHeight)
+		//board[0] = upper left, board[1] = upper right, board[2] = middle, board[3] = lower left, board[4] = lower right
+		public void DrawBoard(SudokuGroup board, int squareLength, int squareHeight)
 		{
-			DrawSeparator(ROW_LENGTH, squareLength, true);
+			int rowLength = Convert.ToInt32(Math.Sqrt(board.Components[0].Components.Count));
 
-			for (int i = 0; i < board.Cells.Count; i++)
+			DrawSeparator(rowLength, squareLength, true);		
+			
+			//Draw the first 9 rows -> entire upper sudokus and a little of the middle
+			for (int j = 0; j < rowLength; j++)
 			{
-				DrawOneCharacter(board, i, squareLength, squareHeight);
+				//Draw upper left sudoku
+				DrawSeparator();
+				for (int i = 0; i < rowLength; i++)
+				{
+					DrawCell(board.Components[0].Components[i + (rowLength * j)].Value);
+					DrawSquareSeparator(i, squareLength);
+				}
 
-				if (((i + 1) % (TWO_ROWS * squareLength) == 0 && (i < START_MID_SUDOKU)) && ((i + 1) % START_MID_SUDOKU == 0)) 
+				//Draw middle sudoku
+				if (j < NON_MID_ROWS)
 				{
-					DrawSeparator(TWO_ROWS_WITH_SPACE, squareLength, false);
+					DrawEmptyRow(squareLength);
+				}
+				else
+				{
+					for (int i = squareLength; i < (squareLength * 2); i++) 
+					{					
+						DrawCell(board.Components[2].Components[i + (rowLength * (j - (squareLength * 2)))].Value);
+					}
+				}
+
+				//Draw upper right sudoku
+				DrawSeparator();
+				for (int i = 0; i < rowLength; i++)
+				{
+					DrawCell(board.Components[1].Components[i + (rowLength * j)].Value);
+					DrawSquareSeparator(i, squareLength);
+				}
+
+				//Draw row separators
+				if ((j + 1) % squareLength != 0) 
+				{
+					DrawLine();
+					continue;
+				}
+
+				if ((j + 1) == squareLength)
+				{
+					DrawSeparator(rowLength, squareLength, true);
 					continue;
 				}
 				
-				if (((i + 1) % (TWO_ROWS * squareLength) == 0 && i < START_MID_SUDOKU) || 
-					((i - END_MID_SUDOKU + 1) % (TWO_ROWS * squareLength) == 0 && i > END_MID_SUDOKU))
+				DrawSeparator(rowLength, squareLength, false);
+			}
+
+			//Draw the middle of the middle sudoku
+			for (int j = 0; j < MID_ONLY_ROWS; j++)
+			{
+				DrawEmptyRow(SIDE_SPACE); 
+				DrawSeparator();
+
+				for (int i = 0; i < rowLength; i++)
+				{				
+					DrawCell(board.Components[2].Components[i + (rowLength * MID_ONLY_ROWS) + (rowLength * j)].Value);
+					DrawSquareSeparator(i, squareLength);
+				}
+
+				if ((j + 1) == squareLength) 
 				{
-					DrawSeparator(ROW_LENGTH, squareLength, true); 
+					DrawSeparator(rowLength, squareLength, false);
 					continue;
 				}
 				
-				if (((i + 1) % TWO_ROWS == 0 && (i + 1) != (START_MID_SUDOKU + TWO_ROWS))&& !(i >= START_MID_SUDOKU && i <= END_MID_SUDOKU))
+				DrawLine();
+			}
+
+			//Draw the last 9 rows -> entire lower sudokus and a little of the middle
+			for (int j = 0; j < rowLength; j++)
+			{
+				//Draw lower left sudoku
+				DrawSeparator();
+				for (int i = 0; i < rowLength; i++)
 				{
-					HandleGridLine(i, squareLength, '<');
+					DrawCell(board.Components[3].Components[i + (rowLength * j)].Value);
+					DrawSquareSeparator(i, squareLength);
+				}
+
+				//Draw middle sudoku
+				if (j >= MID_ONLY_ROWS)
+				{
+					DrawEmptyRow(squareLength);
+				}
+				else
+				{
+					for (int i = squareLength; i < (squareLength * 2); i++) 
+					{
+						DrawCell(board.Components[2].Components[i + (rowLength * NON_MID_ROWS) + (rowLength * j)].Value);
+					}
+				}
+
+				//Draw lower right sudoku
+				DrawSeparator();
+				for (int i = 0; i < rowLength; i++)
+				{
+					DrawCell(board.Components[4].Components[i + (rowLength * j)].Value);
+					DrawSquareSeparator(i, squareLength);
+				}
+
+				//Draw row separators
+				if ((j + 1) % squareLength != 0) 
+				{
+					DrawLine();
 					continue;
-                }
+				}
 				
-				if ((i + 1) % ROW_LENGTH == 0 && (i + 1) != (START_MID_SUDOKU + ROW_LENGTH) &&(i + 1) != (START_MID_SUDOKU + TWO_ROWS) && (i < START_MID_SUDOKU || i > END_MID_SUDOKU)) 
+				if ((j + 1) == squareLength) 
 				{
-                    HandleGridLine(i, squareLength, '>');
-                }
+					DrawSeparator(rowLength, squareLength, false);
+					continue;
+				}
+				
+				DrawSeparator(rowLength, squareLength, true);
 			}
 		}
 
-        private void HandleGridLine(int i, int squareLength, char type)
-        {
-            if ((type == '<' && i < END_MID_SUDOKU) || (type == '>' && i > END_MID_SUDOKU))
-            {
-                Console.WriteLine();
-                row_counter++;
-            }
-            else
-            {
-                DrawEmptyRow(squareLength);
-            }
-        }
-
-        private void DrawSeparator(double rowLength, int squareLength, bool middleEmpty)
+        private void DrawSeparator(int rowLength, int squareLength, bool middleEmpty)
 		{
-			row_counter++;
-
 			StringBuilder rowSeparator = new StringBuilder();
 			rowSeparator.AppendLine();
-			rowSeparator.Append(new string('-', (int)(rowLength + (rowLength / squareLength) + 1))); 
-
+			
 			if (middleEmpty)
 			{
+				rowSeparator.Append(new string('█', (rowLength + (rowLength / squareLength) + 1)));
 				rowSeparator.Append(new string(' ', squareLength));
-				rowSeparator.Append(new string('-', (int)(rowLength + (rowLength / squareLength) + 1))); 
+				rowSeparator.Append(new string('█', (rowLength + (rowLength / squareLength) + 1))); 
+			} 
+			else
+			{
+				rowSeparator.Append(new string('█', (rowLength * squareLength + 2)));
 			}
 			
 			Console.WriteLine(rowSeparator.ToString());
@@ -99,52 +171,22 @@ namespace Sudoku.renderers
 			Console.Write(value == 0 ? " " : value.ToString()); 
 		}
 
-        private void DrawOneCharacter(SudokuBoard board, int i, int squareLength, int squareHeight)
-        {
-            DrawEmptyRowIfNeeded(i);
-            DrawVerticalSeparatorStart(i, squareLength);
-            DrawCell(board.Cells[i].Value);
-            DrawVerticalSeperatorMidOrEnd(i, squareLength);
-            MoveToNextRowIfNeeded(i, squareLength);
-        }
+		private void DrawSquareSeparator(int i, int squareLength)
+		{
+			if ((i + 1) % squareLength == 0)
+			{
+				DrawSeparator();
+			}
+		}
 
-        private void DrawEmptyRowIfNeeded(int i)
-        {
-            if (row_counter >= 10 && row_counter <= 12 && (i % ROW_LENGTH == 0 || i % TWO_ROWS == 0))
-            {
-                DrawEmptyRow(SIDE_SPACE);
-            }
-        }
+		private void DrawSeparator()
+		{
+			Console.Write("█");
+		}
 
-        private void DrawVerticalSeparatorStart(int i, int squareLength)
-        {
-            if (((i < START_MID_SUDOKU || i > END_MID_SUDOKU) && (i % ROW_LENGTH == 0 || i % TWO_ROWS == 0)) || ((i >= START_MID_SUDOKU && i <= END_MID_SUDOKU) && (((i - START_MID_SUDOKU) % TWO_ROWS_WITH_SPACE == 0 && i < END_SIDE_SUDOKUS) || (i >= END_SIDE_SUDOKUS && i <= START_SIDE_SUDOKUS && (i - END_SIDE_SUDOKUS) % ROW_LENGTH == 0))) || ((i >= START_SIDE_SUDOKUS && i <= END_MID_SUDOKU) && ((i - START_SIDE_SUDOKUS) % TWO_ROWS_WITH_SPACE == 0)))
-            {
-                Console.Write("|");
-            }
-        }
-
-        private void DrawVerticalSeperatorMidOrEnd(int i, int squareLength)
-        {
-            if (((i < START_MID_SUDOKU || i > END_MID_SUDOKU) && ((i + 1) % squareLength == 0 && (i + 1) != (START_MID_SUDOKU + TWO_ROWS))) || ((i >= START_MID_SUDOKU && i <= END_MID_SUDOKU) && ((i + 1 - START_MID_SUDOKU) % squareLength == 0)))
-            {
-                Console.Write("|");
-            }
-        }
-
-        private void MoveToNextRowIfNeeded(int i, int squareLength)
-        {
-            if (((i + 1) % END_MID_SUDOKU == 0) || (((i + 1 >= END_SIDE_SUDOKUS && i + 1 <= START_SIDE_SUDOKUS) && (i + 1 - END_SIDE_SUDOKUS) % ROW_LENGTH == 0) && (row_counter == 9 || row_counter == 12)))
-            {
-                DrawSeparator(TWO_ROWS_WITH_SPACE, squareLength, false);
-                return;
-            }
-
-            if (((i + 1 >= END_SIDE_SUDOKUS && i + 1 <= START_SIDE_SUDOKUS) && (i + 1 - END_SIDE_SUDOKUS) % ROW_LENGTH == 0) || ((i >= START_MID_SUDOKU && i <= END_SIDE_SUDOKUS) && (i + 1 - START_MID_SUDOKU) % TWO_ROWS_WITH_SPACE == 0) || ((i >= START_SIDE_SUDOKUS && i <= END_MID_SUDOKU) && (i + 1 - START_SIDE_SUDOKUS) % TWO_ROWS_WITH_SPACE == 0 && (i + 1) % END_MID_SUDOKU != 0))
-            {
-                Console.WriteLine();
-                row_counter++;
-            }
-        }
+		private void DrawLine()
+		{
+			Console.WriteLine();
+		}
     }
 }

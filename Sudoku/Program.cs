@@ -16,7 +16,7 @@ public class Program
 
     static void WelcomePlayer()
     {
-        string line = new string('-', 70);
+        string line = new string('-', GameController.START_LINE_LENGTH);
         Console.WriteLine($"\n{line}\nWelcome to Sudoku!\n{line}\n");
     }
 

@@ -1,9 +1,4 @@
-﻿using Sudoku.models.BoardComponent;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Sudoku.models.SudokuComponent;
 
 namespace Sudoku.models.states
 {
@@ -13,27 +8,26 @@ namespace Sudoku.models.states
         {
             string message = "Board is now in definitive state. You can fill Sudoku cells." +
                 "\n--> Press [/] to go to the correction state or press [-] to go to the note state";
-            string line = new string('-', 70);
+            string line = new string('-', GameController.START_LINE_LENGTH);
             Console.WriteLine($"\n{line}\n{message}\n{line}");
         }
 
-        public void DoAction(SudokuBoard board)
+        public void DoAction(SudokuGroup board)
         {
-            Console.WriteLine($"\n{new string('-', 70)}\nFill a cell by typing row-column-value (seperated by -)\n{new string('-', 70)}");
+            Console.WriteLine($"\n{new string('-', GameController.START_LINE_LENGTH)}\n" +
+                $"Fill a cell by typing row-column-value (seperated by -)\n{new string('-', GameController.START_LINE_LENGTH)}");
             ReadInput(board);
         }
-
-        public void ReadInput(SudokuBoard board)
+        public void ReadInput(SudokuGroup board)
         {
             string input = Console.ReadLine() ?? "";
 
-            if(!CheckState(input, board))
+            if (!CheckState(input, board))
             {
                 CheckNumber(input, board);
             }
         }
-
-        public Boolean CheckState(string input, SudokuBoard board)
+        public Boolean CheckState(string input, SudokuGroup board)
         {
             if (input != null && (input.ToLower() == "/" || input == "-"))
             {
@@ -57,10 +51,10 @@ namespace Sudoku.models.states
             return false;
         }
 
-        public void CheckNumber(string input, SudokuBoard board)
+        public void CheckNumber(string input, SudokuGroup board)
         {
             string[] parts = input.Split('-');
-            int boardSize = (int)Math.Sqrt(board.Cells.Count);
+            int boardSize = (int)Math.Sqrt(board.Components.Count);
 
             if (parts.Length != 3)
             {
@@ -90,7 +84,7 @@ namespace Sudoku.models.states
                 return;
             }
 
-            if(!board.FillCell(row, col, value))
+            if (!board.FillCell(row, col, value))
             {
                 ReadInput(board);
             }
