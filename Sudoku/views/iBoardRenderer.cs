@@ -8,11 +8,5 @@ namespace Sudoku.renderers
         {
 
         }
-
-		public void clearBoard()
-        {
-            //TODO
-            Console.Clear();
-        }
     }
 }

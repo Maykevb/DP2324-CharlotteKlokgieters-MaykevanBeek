@@ -45,7 +45,12 @@ public class GameController
 		}
     }
 
-	public void displayBoard(SudokuType type)
+    public void ClearConsole()
+    {
+        Console.Clear();
+    }
+
+    public void displayBoard(SudokuType type)
 	{
         switch (type)
 		{
