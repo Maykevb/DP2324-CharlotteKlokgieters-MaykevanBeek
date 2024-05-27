@@ -19,7 +19,7 @@ namespace Sudoku.renderers
 			{
 				if ((i % rowLength == 0 || i % rowLength * 2 == 0))
 				{
-					DrawSeperator();
+					DrawVerticalSeperator();
 				}
 
 				DrawCell(board.Components[i].Value);
@@ -30,7 +30,7 @@ namespace Sudoku.renderers
 				}
 				else
 				{
-					DrawSeperator(); 
+					DrawVerticalSeperator(); 
 				}
 
 				if ((i + 1) % rowLength == 0 && (i + 1) < board.Components.Count)
@@ -42,9 +42,14 @@ namespace Sudoku.renderers
 			DrawHorizontalSeparatorEdge(rowLength * 2, 1); 
 		}
 
-		private void DrawSeperator()
+		private void DrawVerticalSeperator()
 		{
-			Console.Write("█");
+			Console.Write("|");
+		}
+
+		private void DrawHorizontalSeperator()
+		{
+			Console.Write("-");
 		}
 
 		private void DrawSpace()
@@ -59,7 +64,7 @@ namespace Sudoku.renderers
 
 		private void DrawHorizontalSeparatorEdge(int rowLength, int extraSeparators)
 		{
-			Console.WriteLine("\n" + new string('█', rowLength + extraSeparators)); 
+			Console.WriteLine("\n" + new string('-', rowLength + extraSeparators)); 
 		}
 
 		private void DrawCell(int value)
@@ -70,7 +75,7 @@ namespace Sudoku.renderers
 		private void DrawHorizontalSeparatorLine(int i, SudokuGroup board, int rowLength)
 		{
 			StartNewLine();
-			DrawSeperator();
+			DrawVerticalSeperator();
 
 			bool lastNumbersAlsoInBlock = false;
 			for (int j = rowLength; j > 0; j--)
@@ -87,35 +92,35 @@ namespace Sudoku.renderers
 
 					if (IfValidIndex(i, j, rowLength, board) && !IfBlockIsSame(i, j, rowLength, board) && (i + 2 + (rowLength - j)) % rowLength != 0)
 					{
-						DrawSeperator(); 
+						DrawVerticalSeperator(); 
 						lastNumbersAlsoInBlock = false;
 						continue;
 					}
 
 					if (IfValidIndex(i, j, rowLength, board) && IfBlockIsSame(i, j, rowLength, board) && !IfBlockIsSameAsPrevRow(i, j, board))
 					{
-						DrawSeperator(); 
+						DrawVerticalSeperator(); 
 					}
 				}
 				else
 				{
-					DrawSeperator(); 
+					DrawHorizontalSeperator(); 
 					lastNumbersAlsoInBlock = false;
 
 					if (IfValuesAreInSameRow(i, j, rowLength) && (IfNotEndOfBoard(i, rowLength, board) && !IfBlockIsSame(i, j, rowLength, board)))
 					{
-						DrawSeperator(); 
+						DrawVerticalSeperator(); 
 						continue;
 					}
 
 					if (!(IfNotEndOfBoard(i, rowLength, board) && !IfBlockIsSame(i, j, rowLength, board)) && IfValidIndex(i, j, rowLength, board))
 					{
-						DrawSeperator();
+						DrawHorizontalSeperator();
 					}
 				}
 			}
 
-			DrawSeperator();
+			DrawVerticalSeperator();
 			StartNewLine();
 		}
 
