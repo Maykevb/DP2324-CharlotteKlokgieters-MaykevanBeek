@@ -54,8 +54,10 @@ namespace Sudoku.renderers
 
 		private void DrawSpace()
 		{
+			Console.BackgroundColor = ConsoleColor.Magenta;
 			Console.Write(" ");
-		}
+			Console.BackgroundColor = ConsoleColor.Black;
+        }
 
 		private void StartNewLine()
 		{
