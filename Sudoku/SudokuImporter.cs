@@ -1,12 +1,13 @@
 ﻿namespace Sudoku
 {
-    using Sudoku.models.BoardComponent;
+    using Sudoku.models.SudokuComponent;
     using System;
     using System.IO;
 
     public class SudokuImporter
     {
-        public SudokuGroup? ReadSudokuFromFile(SudokuType type)
+        public SudokuGroup? ReadSudokuFromFile(SudokuType type, GameController gameController)
+
         {
             string folderPath = $"../../../resources/{type.ToString()}";
             if (Directory.Exists(folderPath))
@@ -17,17 +18,19 @@
                 {
                     Random random = new Random();
                     string sudokuFile = files[random.Next(files.Length)]; 
-					string sudoku = File.ReadAllText(sudokuFile);
-                    return CreateBoard(sudoku, type);
+
+                    string sudoku = File.ReadAllText(sudokuFile);
+                    return CreateBoard(gameController, sudoku, type);
                 }
             }
 
             return null;
         }
 
-        private SudokuGroup CreateBoard(string sudoku, SudokuType type)
+
+        private SudokuGroup CreateBoard(GameController gameController, string sudoku, SudokuType type)
         {
-			SudokuGroup board = new SudokuGroup();
+			SudokuGroup board = new SudokuGroup(gameController, type);
 
             switch (type)
             {
@@ -35,7 +38,7 @@
 					board.Components = CreateJigsawCells(sudoku);
 					break;
                 case SudokuType.SAMURAI:
-					board.Components = CreateSamuraiBoards(sudoku);
+					board.Components = CreateSamuraiBoards(sudoku, gameController, type);
 					break;
                 default:
 					board.Components = CreateCells(sudoku);
@@ -45,7 +48,7 @@
             return board;
         }
 
-		private List<iSudokuComponent> CreateSamuraiBoards(string sudoku)
+		private List<iSudokuComponent> CreateSamuraiBoards(string sudoku, GameController gameController, SudokuType type)
         {
 			string[] lines = sudoku.Split('\n');
 
@@ -53,7 +56,7 @@
 
 			for (int i = 0; i < lines.Length; i++)
             {
-				SudokuGroup board = new SudokuGroup();
+				SudokuGroup board = new SudokuGroup(gameController, type);
 				board.Components = CreateCells(lines[i]);
 				boards.Add(board);
 			}
@@ -68,12 +71,16 @@
 
             for (int i = 0; i < sudoku.Length; i++)
             {
-				// Convert the character to an integer
-				if (int.TryParse(sudoku[i].ToString(), out int cellValue))
+				if (int.TryParse(sudoku[i].ToString(), out int cellValue) && cellValue != 0)
 				{
 					SudokuCell cell = new SudokuCell(cellValue, true);
 					cells.Add(cell);
-				}
+				} 
+                else if (int.TryParse(sudoku[i].ToString(), out int cellValue2) && cellValue2 == 0)
+                {
+                    SudokuCell cell = new SudokuCell(cellValue2, false);
+                    cells.Add(cell);
+                }
 			}
 
 			return cells;

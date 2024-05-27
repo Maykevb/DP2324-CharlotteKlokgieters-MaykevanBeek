@@ -1,12 +1,11 @@
-﻿using Sudoku.models.BoardComponent;
+﻿using Sudoku.models.SudokuComponent;
 
 namespace Sudoku.models.states
 {
     public interface iBoardState
     {
-        public void Handle();
-        iBoardState goNext();
+        public void PrintState();
 
-        public void doAction(SudokuGroup board);
+        public void DoAction(SudokuGroup board);
     }
 }

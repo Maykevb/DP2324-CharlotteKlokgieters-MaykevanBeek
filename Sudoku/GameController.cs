@@ -1,5 +1,5 @@
 using Sudoku;
-using Sudoku.models.BoardComponent;
+using Sudoku.models.SudokuComponent;
 using Sudoku.renderers;
 
 public class GameController
@@ -37,7 +37,7 @@ public class GameController
 
 	public void loadBoard(SudokuType type)
 	{
-		board = importer.ReadSudokuFromFile(type);
+		board = importer.ReadSudokuFromFile(type, this);
 
 		if (board == null)
 		{
@@ -66,7 +66,7 @@ public class GameController
 				break;
 		}
 
-		board.State.doAction(board);
+		board.State.DoAction(board);
     }
 
 	public void drawStart()
@@ -74,7 +74,7 @@ public class GameController
         string line = new string('-', START_LINE_LENGTH);
         Console.WriteLine($"\n{line}\nLet the game begin!\n{line}");
 
-        board.State.Handle();
+        board.State.PrintState();
     }
 
     public void solveBoard()

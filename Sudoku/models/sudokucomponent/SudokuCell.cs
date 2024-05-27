@@ -1,6 +1,6 @@
 ﻿using Sudoku.models.visitors;
 
-namespace Sudoku.models.BoardComponent
+namespace Sudoku.models.SudokuComponent
 {
     public class SudokuCell : iSudokuComponent
     {

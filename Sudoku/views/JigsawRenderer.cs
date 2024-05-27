@@ -1,4 +1,4 @@
-﻿using Sudoku.models.BoardComponent;
+﻿using Sudoku.models.SudokuComponent;
 
 namespace Sudoku.renderers
 {

@@ -1,6 +1,6 @@
 ﻿using Sudoku.models.visitors;
 
-namespace Sudoku.models.BoardComponent
+namespace Sudoku.models.SudokuComponent
 {
 	public interface iSudokuComponent
     {
@@ -9,11 +9,19 @@ namespace Sudoku.models.BoardComponent
 		public int Value //TODO
 		{
 			get { return 0; }
+			set { }
 		}
 
 		public int? Block //TODO
 		{
 			get { return 0; }
+			set { }
+		}
+
+		public bool IsFixed //TODO
+		{
+			get { return true; }
+			set { }
 		}
 
 		public List<iSudokuComponent> Components

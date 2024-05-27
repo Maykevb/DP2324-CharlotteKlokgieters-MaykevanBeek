@@ -1,4 +1,4 @@
-﻿using Sudoku.models.BoardComponent;
+﻿using Sudoku.models.SudokuComponent;
 using System;
 using System.Collections.Generic;
 using System.Linq;
