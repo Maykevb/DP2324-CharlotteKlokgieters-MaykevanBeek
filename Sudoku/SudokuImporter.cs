@@ -103,16 +103,23 @@
 					value = cellValue;
 				}
 
-				// Convert the character to an integer
-				int block = -1;
+                // Convert the character to an integer
+                int block = -1;
 				if (int.TryParse(data[2].ToString(), out int cellValue2))
 				{
 					block = cellValue2;
 				}
 
-                SudokuCell cell = new SudokuCell(value, true, block);
-
-                cells.Add(cell);
+                if (int.TryParse(data[0].ToString(), out int cellValue3) && cellValue3 != 0)
+                {
+                    SudokuCell cell = new SudokuCell(value, true, block);
+                    cells.Add(cell);
+                }
+                else if (int.TryParse(data[0].ToString(), out int cellValue4) && cellValue4 == 0)
+                {
+                    SudokuCell cell = new SudokuCell(value, false, block);
+                    cells.Add(cell);
+                }
             }
 
             return cells;

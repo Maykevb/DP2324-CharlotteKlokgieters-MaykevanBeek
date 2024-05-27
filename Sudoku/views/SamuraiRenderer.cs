@@ -141,21 +141,14 @@ namespace Sudoku.renderers
 
         private void DrawSeparator(int rowLength, int squareLength, bool middleEmpty)
 		{
-			StringBuilder rowSeparator = new StringBuilder();
-			rowSeparator.AppendLine();
-			
 			if (middleEmpty)
 			{
-				rowSeparator.Append(new string('█', (rowLength + (rowLength / squareLength) + 1)));
-				rowSeparator.Append(new string(' ', squareLength));
-				rowSeparator.Append(new string('█', (rowLength + (rowLength / squareLength) + 1))); 
+				Console.Write("\n" + new string('-', rowLength + (rowLength / squareLength) + 1) +
+					new string(' ', squareLength) + new string('-', rowLength + (rowLength / squareLength) + 1) + "\n");
+				return;
 			} 
-			else
-			{
-				rowSeparator.Append(new string('█', (rowLength * squareLength + 2)));
-			}
-			
-			Console.WriteLine(rowSeparator.ToString());
+
+			Console.Write("\n" + new string('-', (rowLength * squareLength + 2)) + "\n");
 		}
 
 		private void DrawEmptyRow(int length)
@@ -181,7 +174,7 @@ namespace Sudoku.renderers
 
 		private void DrawSeparator()
 		{
-			Console.Write("█");
+			Console.Write("|");
 		}
 
 		private void DrawLine()

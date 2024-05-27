@@ -44,7 +44,7 @@ namespace Sudoku.renderers
 
 		private void DrawVerticalSeperator()
 		{
-            Console.Write("█");
+            Console.Write("|");
         }
 
 		private void DrawCell(int value)
@@ -54,7 +54,7 @@ namespace Sudoku.renderers
 
 		private void DrawHorizontalSeparator(int rowLength, int squareLength) 
 		{
-			Console.WriteLine("\n" + new string('█', rowLength + (rowLength / squareLength) + 1));
+			Console.Write("\n" + new string('-', rowLength + (rowLength / squareLength) + 1) + "\n");
 		}
 	}
 }
