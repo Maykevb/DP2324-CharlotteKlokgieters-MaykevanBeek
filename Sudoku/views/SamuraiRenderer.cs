@@ -57,15 +57,16 @@ namespace Sudoku.renderers
 				if ((j + 1) % squareLength != 0) 
 				{
 					DrawLine();
+					continue;
 				}
-				else if ((j + 1) == squareLength)
+
+				if ((j + 1) == squareLength)
 				{
 					DrawSeparator(rowLength, squareLength, true);
+					continue;
 				}
-				else
-				{
-					DrawSeparator(rowLength, squareLength, false);
-				}
+				
+				DrawSeparator(rowLength, squareLength, false);
 			}
 
 			//Draw the middle of the middle sudoku
@@ -83,11 +84,10 @@ namespace Sudoku.renderers
 				if ((j + 1) == squareLength) 
 				{
 					DrawSeparator(rowLength, squareLength, false);
+					continue;
 				}
-				else
-				{
-					DrawLine();
-				}
+				
+				DrawLine();
 			}
 
 			//Draw the last 9 rows -> entire lower sudokus and a little of the middle
@@ -126,15 +126,16 @@ namespace Sudoku.renderers
 				if ((j + 1) % squareLength != 0) 
 				{
 					DrawLine();
+					continue;
 				}
-				else if ((j + 1) == squareLength) 
+				
+				if ((j + 1) == squareLength) 
 				{
 					DrawSeparator(rowLength, squareLength, false);
+					continue;
 				}
-				else
-				{
-					DrawSeparator(rowLength, squareLength, true);
-				}
+				
+				DrawSeparator(rowLength, squareLength, true);
 			}
 		}
 
@@ -152,7 +153,7 @@ namespace Sudoku.renderers
 			else
 			{
 				rowSeparator.Append(new string('█', (rowLength * squareLength + 2)));
-			} 
+			}
 			
 			Console.WriteLine(rowSeparator.ToString());
 		}

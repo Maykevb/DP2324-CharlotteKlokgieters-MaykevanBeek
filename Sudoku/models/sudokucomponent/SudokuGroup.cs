@@ -3,10 +3,10 @@ using Sudoku.models.visitors;
 
 namespace Sudoku.models.BoardComponent
 {
-    public class SudokuGroup : iBoardComponent
+    public class SudokuGroup : iSudokuComponent
     {
         private iBoardState state;
-        private List<iBoardComponent> components = new List<iBoardComponent>();
+        private List<iSudokuComponent> components = new List<iSudokuComponent>();
 
         public SudokuGroup()
         {
@@ -28,7 +28,7 @@ namespace Sudoku.models.BoardComponent
             this.State = this.state.goNext();
         }
 
-        public List<iBoardComponent> Components
+        public List<iSudokuComponent> Components
         {
             get { return components; }
             set { this.components = value; }

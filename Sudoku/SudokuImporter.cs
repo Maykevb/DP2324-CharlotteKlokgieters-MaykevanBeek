@@ -45,11 +45,11 @@
             return board;
         }
 
-		private List<iBoardComponent> CreateSamuraiBoards(string sudoku)
+		private List<iSudokuComponent> CreateSamuraiBoards(string sudoku)
         {
 			string[] lines = sudoku.Split('\n');
 
-			List<iBoardComponent> boards = new List<iBoardComponent>();
+			List<iSudokuComponent> boards = new List<iSudokuComponent>();
 
 			for (int i = 0; i < lines.Length; i++)
             {
@@ -62,9 +62,9 @@
 		}
 
 
-		private List<iBoardComponent> CreateCells(string sudoku)
+		private List<iSudokuComponent> CreateCells(string sudoku)
         {
-			List<iBoardComponent> cells = new List<iBoardComponent>();
+			List<iSudokuComponent> cells = new List<iSudokuComponent>();
 
             for (int i = 0; i < sudoku.Length; i++)
             {
@@ -79,9 +79,9 @@
 			return cells;
         }
 
-        private List<iBoardComponent> CreateJigsawCells(string sudoku)
+        private List<iSudokuComponent> CreateJigsawCells(string sudoku)
         {
-			List<iBoardComponent> cells = new List<iBoardComponent>();
+			List<iSudokuComponent> cells = new List<iSudokuComponent>();
             string cleanedSudoku = sudoku.Replace("SumoCueV1=", "");
             string[] cellData = cleanedSudoku.Split('=');
 
