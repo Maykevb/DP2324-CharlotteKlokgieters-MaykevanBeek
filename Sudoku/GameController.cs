@@ -48,6 +48,7 @@ public class GameController
     public void ClearConsole()
     {
         Console.Clear();
+        Console.WriteLine("\x1b[3J");
     }
 
     public void displayBoard(SudokuType type)
