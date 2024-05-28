@@ -30,7 +30,7 @@ namespace Sudoku.models.states
             }
 
             board.State.PrintState();
-            ReadInput(board);
+            board.State.DoAction(board);
             return true;
         }
 

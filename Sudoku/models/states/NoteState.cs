@@ -6,9 +6,9 @@ namespace Sudoku.models.states
     {
         public override void PrintState()
         {
-            string message = "Board is now in note state. You can now add, remove and see all notes." +
-                "\n--> Press [/] to go to the correction state or press [+] to go to the definitive state";
+            string message = "Board is now in note state. You can now add, remove and see all notes." + "\n--> Press [/] to go to the correction state or press [+] to go to the definitive state";
             string line = new string('-', GameController.START_LINE_LENGTH);
+
             Console.WriteLine($"\n{line}\n{message}\n{line}");
         }
 
@@ -33,7 +33,7 @@ namespace Sudoku.models.states
                 CheckInput(parts, board, boardSize, data =>
                 {
                     return board.Type == SudokuType.SAMURAI
-                        ? board.FillSamuraiCell(data[0], data[1], data[2])
+                        ? board.HandleSamuraiCell(data[0], data[1], data[2], true)
                         : board.AddNormalNote(data[0], data[1], data[2]);
                 });
             }

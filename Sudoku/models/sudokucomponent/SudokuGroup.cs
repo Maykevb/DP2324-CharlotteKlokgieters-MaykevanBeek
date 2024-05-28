@@ -21,27 +21,32 @@ namespace Sudoku.models.SudokuComponent
         {
             int boardSize = (int)Math.Sqrt(components.Count);
             int index = (row - 1) * boardSize + (col - 1);
-
             SudokuCell cell = (SudokuCell)components[index];
 
-            if(!cell.Notes.Contains(value))
-            {
-                cell.Notes[value] = value;
-                return true;
-            } else
-            {
-                for (int i = 0; i < cell.Notes.Length; i++)
-                {
-                    if (cell.Notes[i] == value)
-                    {
-                        cell.Notes[i] = 0;
-                        return true;
-                    }
-                }
+            return AddNote(row,col, value, cell);
+        }
 
-                Console.WriteLine($"{value} is not valid.");
+        public bool AddNote(int row, int col, int value, SudokuCell cell)
+        {
+            if (cell.IsFixed)
+            {
+                Console.WriteLine($"The cell at row {row} and col {col} is not changable.");
                 return false;
             }
+
+            if (cell.Notes.Contains(value))
+            {
+                int noteIndex = Array.IndexOf(cell.Notes, value);
+                cell.Notes[noteIndex] = 0;
+                gameController.displayBoard(type);
+
+                return true;
+            }
+
+            cell.Notes[value - 1] = value;
+
+            gameController.displayBoard(type);
+            return true;
         }
 
         public bool FillNormalCell(int row, int col, int value)
@@ -52,7 +57,7 @@ namespace Sudoku.models.SudokuComponent
             return FillCell(index, row, col, components, value);
         }
 
-        public bool FillSamuraiCell(int row, int col, int value)
+        public bool HandleSamuraiCell(int row, int col, int value, bool note)
         {
             List<int> groupIndices = GetGroupIndex(row, col);
 
@@ -79,7 +84,12 @@ namespace Sudoku.models.SudokuComponent
                 }
 
                 int cellIndex = (rowWithinGroup - 1) * 9 + (colWithinGroup - 1);
-                return FillCell(cellIndex, row, col, group.components, value);
+                if(!note)
+                {
+                    return FillCell(cellIndex, row, col, group.components, value);
+                } 
+
+                return AddNote(row, col, value, (SudokuCell)group.components[cellIndex]);
             }
 
             return false;
@@ -99,8 +109,9 @@ namespace Sudoku.models.SudokuComponent
                 return false;
             }
 
-            cells[index].Value = value;
+            cells[index].Value = (cells[index].Value == value) ? 0 : value;
             gameController.displayBoard(type);
+
             return true;
         }
 
