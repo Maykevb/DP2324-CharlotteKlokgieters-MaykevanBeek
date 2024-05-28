@@ -17,6 +17,33 @@ namespace Sudoku.models.SudokuComponent
             this.type = type;
         }
 
+        public bool AddNormalNote(int row, int col, int value)
+        {
+            int boardSize = (int)Math.Sqrt(components.Count);
+            int index = (row - 1) * boardSize + (col - 1);
+
+            SudokuCell cell = (SudokuCell)components[index];
+
+            if(!cell.Notes.Contains(value))
+            {
+                cell.Notes[value] = value;
+                return true;
+            } else
+            {
+                for (int i = 0; i < cell.Notes.Length; i++)
+                {
+                    if (cell.Notes[i] == value)
+                    {
+                        cell.Notes[i] = 0;
+                        return true;
+                    }
+                }
+
+                Console.WriteLine($"{value} is not valid.");
+                return false;
+            }
+        }
+
         public bool FillNormalCell(int row, int col, int value)
         {
             int boardSize = (int)Math.Sqrt(components.Count);
@@ -52,9 +79,6 @@ namespace Sudoku.models.SudokuComponent
                 }
 
                 int cellIndex = (rowWithinGroup - 1) * 9 + (colWithinGroup - 1);
-
-                Console.WriteLine("info" + cellIndex + " " + rowWithinGroup + " " + colWithinGroup);
-
                 return FillCell(cellIndex, row, col, group.components, value);
             }
 
