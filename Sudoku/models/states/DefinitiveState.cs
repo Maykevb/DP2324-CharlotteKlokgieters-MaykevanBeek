@@ -1,5 +1,4 @@
 ﻿using Sudoku.models.SudokuComponent;
-using System.IO;
 
 namespace Sudoku.models.states
 {
@@ -7,9 +6,9 @@ namespace Sudoku.models.states
     {
         public void PrintState()
         {
-            string message = "Board is now in definitive state. You can fill Sudoku cells." +
-                "\n--> Press [/] to go to the correction state or press [-] to go to the note state";
+            string message = "Board is now in definitive state. You can fill Sudoku cells." + "\n--> Press [/] to go to the correction state or press [-] to go to the note state";
             string line = new string('-', GameController.START_LINE_LENGTH);
+
             Console.WriteLine($"\n{line}\n{message}\n{line}");
         }
 
@@ -26,65 +25,48 @@ namespace Sudoku.models.states
             if (!CheckState(input, board))
             {
                 string[] parts = input.Split('-');
-                int boardSize = (int)Math.Sqrt(board.Components.Count);
+                int boardSize = board.Type == SudokuType.SAMURAI ? 21 : (int)Math.Sqrt(board.Components.Count);
 
-                if (board.Type == SudokuType.SAMURAI)
+                CheckInput(parts, board, boardSize, data =>
                 {
-                    CheckSamuraiInput(parts, board, boardSize);
-                    return;
-                }
-
-                CheckNumber(parts, board, boardSize);
+                    return board.Type == SudokuType.SAMURAI
+                        ? board.FillSamuraiCell(data[0], data[1], data[2])
+                        : board.FillNormalCell(data[0], data[1], data[2]);
+                });
             }
         }
 
-        public Boolean CheckState(string input, SudokuGroup board)
+        private bool CheckState(string input, SudokuGroup board)
         {
-            if (input != null && (input.ToLower() == "/" || input == "-"))
-            {
+            if (input != null && (input != "/" || input != "-")) return false;
                 
-                if (input.ToLower() == "/")
-                {
-                    board.SwitchState(new CorrectionState());
-                    board.State.PrintState();
-                    return true;
-                }
+            if (input == "/")
+            {
+                board.SwitchState(new CorrectionState());
+            }
                 
-                if (input == "-")
-                {
-                    board.SwitchState(new NoteState());
-                    board.State.PrintState();
-                }
-
-                ReadInput(board);
-                return true;
+            if (input == "-")
+            {
+                board.SwitchState(new NoteState());
             }
-            return false;
+
+            board.State.PrintState();
+            ReadInput(board);
+            return true;
         }
 
-        public void CheckSamuraiInput(string[] parts, SudokuGroup board, int boardSize)
+        private void CheckInput(string[] parts, SudokuGroup board, int boardSize, Func<int[], bool> fillCellFunc)
         {
-            checkLength(parts, board, 3);
-            int[] data = validateInput(parts, board, 21);
+            CheckLength(parts, board, 3);
+            int[] data = ValidateInput(parts, board, boardSize);
 
-            if (!board.FillSamuraiCell(data[0], data[1], data[2]))
+            if (!fillCellFunc(data))
             {
                 ReadInput(board);
             }
         }
 
-        public void CheckNumber(string[] parts, SudokuGroup board, int boardSize)
-        {
-            checkLength(parts, board, 3);
-            int[] data = validateInput(parts, board, boardSize);
-
-            if (!board.FillCell(data[0], data[1], data[2]))
-            {
-                ReadInput(board);
-            }
-        }
-
-        public int[] validateInput(string[] parts, SudokuGroup board, int boardSize)
+        private int[] ValidateInput(string[] parts, SudokuGroup board, int boardSize)
         {
             if (!int.TryParse(parts[0], out int row) || !int.TryParse(parts[1], out int col) || !int.TryParse(parts[2], out int value))
             {
@@ -110,7 +92,7 @@ namespace Sudoku.models.states
             return [row, col, value];
         }
 
-        public void checkLength(string[] parts, SudokuGroup board, int length)
+        private void CheckLength(string[] parts, SudokuGroup board, int length)
         {
             if (parts.Length != length)
             {
