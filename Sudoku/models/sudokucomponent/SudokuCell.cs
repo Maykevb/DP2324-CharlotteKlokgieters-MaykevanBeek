@@ -7,8 +7,6 @@ namespace Sudoku.models.SudokuComponent
         private int value;
         private bool isFixed;
         private int[] notes;
-        // TODO: make notes shorter if 4x4 or 6x6
-        /*private int[] notes = new int[9];*/ //TODO from master ??
 		private int? block;
         private int correctValue = 0;
         private int[] autoSolveNotes;
