@@ -50,11 +50,15 @@ public class GameController
 		{
 			//TODO error file cant be found
 		}
-
-		board.Type = type;
 	}
 
-	public void DisplayBoard(SudokuType type)
+    public void ClearConsole()
+    {
+        Console.Clear();
+        Console.WriteLine("\x1b[3J");
+    }
+
+    public void DisplayBoard(SudokuType type)
 	{
 		SolveBoard(board, type, renderer); // TODO
 
