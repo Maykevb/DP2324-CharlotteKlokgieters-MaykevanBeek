@@ -6,25 +6,59 @@ namespace Sudoku.models.SudokuComponent
     {
         private int value;
         private bool isFixed;
-        private int[] notes = new int[9];
+        private int[] notes;
         private int? block;
+        private int correctValue = 0;
+        private int[] autoSolveNotes;
 
-        public SudokuCell(int value, bool isFixed)
+        public SudokuCell(int value, bool isFixed, int notes)
         {
             this.value = value;
             this.isFixed = isFixed;
-        }
+            this.notes = new int[notes];
+            this.autoSolveNotes = new int[notes];
 
-        public SudokuCell(int value, bool isFixed, int block)
+			SetCorrectValue(value, isFixed);
+            FillAutoNotes(notes, this.correctValue);
+		}
+
+        public SudokuCell(int value, bool isFixed, int notes, int block)
         {
             this.value = value;
             this.isFixed = isFixed;
             this.block = block;
+			this.autoSolveNotes = new int[notes];
+
+			SetCorrectValue(value, isFixed);
+            FillAutoNotes(notes, this.correctValue);
+		}
+
+        private void SetCorrectValue(int value, bool isFixed)
+        {
+			if (isFixed)
+			{
+				this.correctValue = value;
+			}
+		}
+
+        private void FillAutoNotes(int notes, int correctValue)
+        {
+            if (correctValue == 0)
+            {
+                for (int i = 0; i < notes; i++)
+                {
+                    this.autoSolveNotes[i] = (i + 1);
+			    }
+
+                return;
+            }
+
+            this.autoSolveNotes[0] = correctValue;
         }
 
         public void Accept(iBoardVisitor visitor)
         {
-            visitor.Visit(this);
+            visitor.VisitCell(this);
         }
 
         public int Value
@@ -50,5 +84,17 @@ namespace Sudoku.models.SudokuComponent
             get { return block; }
             set { block = value; }
         }
-    }
+
+        public int CorrectValue
+        {
+            get { return correctValue; }
+            set { correctValue = value; }
+        }
+
+		public int[] AutoSolveNotes 
+        { 
+            get { return autoSolveNotes; }
+            set { autoSolveNotes = value; }
+        }
+	}
 }

@@ -8,10 +8,10 @@ public class Program
         SudokuType selectedType = GetSudokuTypeFromUser();
 
         GameController gameController = new GameController();
-        gameController.loadRenderer(selectedType);
-        gameController.loadBoard(selectedType);
-        gameController.drawStart();
-        gameController.displayBoard(selectedType);
+        gameController.LoadRenderer(selectedType);
+        gameController.LoadBoard(selectedType);
+        gameController.DrawStart();
+        gameController.DisplayBoard(selectedType);
     }
 
     static void WelcomePlayer()

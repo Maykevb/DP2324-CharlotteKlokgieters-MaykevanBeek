@@ -4,7 +4,7 @@ namespace Sudoku.models.SudokuComponent
 {
 	public interface iSudokuComponent
     {
-        void Accept(iBoardVisitor visitor);
+		void Accept(iBoardVisitor visitor);
 
 		public int Value //TODO
 		{
@@ -21,6 +21,24 @@ namespace Sudoku.models.SudokuComponent
 		public bool IsFixed //TODO
 		{
 			get { return true; }
+			set { }
+		}
+
+		public int CorrectValue //TODO
+		{
+			get { return 0; }
+			set { }
+		}
+
+		public int[] AutoSolveNotes //TODO
+		{
+			get { return [0]; }
+			set { }
+		}
+
+		public SudokuType Type //TODO
+		{
+			get { return 0; }
 			set { }
 		}
 

@@ -19,7 +19,7 @@ namespace Sudoku.models.SudokuComponent
 
         public void Accept(iBoardVisitor visitor)
         {
-            visitor.Visit(this);
+            visitor.VisitBoard(this);
         }
 
         public void SwitchState(iBoardState newState)
@@ -42,7 +42,7 @@ namespace Sudoku.models.SudokuComponent
                 } 
 
                 components[index].Value = value;
-                gameController.displayBoard(type);
+                gameController.DisplayBoard(type);
                 return true;
             }
             else
@@ -62,6 +62,12 @@ namespace Sudoku.models.SudokuComponent
         {
             get { return state; }
             set { this.state = value; }
+        }
+
+        public SudokuType Type
+        {
+            get { return type; }
+            set {  type = value; }
         }
     }
 }

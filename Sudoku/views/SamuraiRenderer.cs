@@ -28,7 +28,7 @@ namespace Sudoku.renderers
 				DrawSeparator();
 				for (int i = 0; i < rowLength; i++)
 				{
-					DrawCell(board.Components[0].Components[i + (rowLength * j)].Value);
+					DrawCell(board.Components[0].Components[i + (rowLength * j)].CorrectValue);
 					DrawSquareSeparator(i, squareLength);
 				}
 
@@ -41,7 +41,7 @@ namespace Sudoku.renderers
 				{
 					for (int i = squareLength; i < (squareLength * 2); i++) 
 					{					
-						DrawCell(board.Components[2].Components[i + (rowLength * (j - (squareLength * 2)))].Value);
+						DrawCell(board.Components[2].Components[i + (rowLength * (j - (squareLength * 2)))].CorrectValue);
 					}
 				}
 
@@ -49,7 +49,7 @@ namespace Sudoku.renderers
 				DrawSeparator();
 				for (int i = 0; i < rowLength; i++)
 				{
-					DrawCell(board.Components[1].Components[i + (rowLength * j)].Value);
+					DrawCell(board.Components[1].Components[i + (rowLength * j)].CorrectValue);
 					DrawSquareSeparator(i, squareLength);
 				}
 
@@ -77,7 +77,7 @@ namespace Sudoku.renderers
 
 				for (int i = 0; i < rowLength; i++)
 				{				
-					DrawCell(board.Components[2].Components[i + (rowLength * MID_ONLY_ROWS) + (rowLength * j)].Value);
+					DrawCell(board.Components[2].Components[i + (rowLength * MID_ONLY_ROWS) + (rowLength * j)].CorrectValue);
 					DrawSquareSeparator(i, squareLength);
 				}
 
@@ -97,7 +97,7 @@ namespace Sudoku.renderers
 				DrawSeparator();
 				for (int i = 0; i < rowLength; i++)
 				{
-					DrawCell(board.Components[3].Components[i + (rowLength * j)].Value);
+					DrawCell(board.Components[3].Components[i + (rowLength * j)].CorrectValue);
 					DrawSquareSeparator(i, squareLength);
 				}
 
@@ -110,7 +110,7 @@ namespace Sudoku.renderers
 				{
 					for (int i = squareLength; i < (squareLength * 2); i++) 
 					{
-						DrawCell(board.Components[2].Components[i + (rowLength * NON_MID_ROWS) + (rowLength * j)].Value);
+						DrawCell(board.Components[2].Components[i + (rowLength * NON_MID_ROWS) + (rowLength * j)].CorrectValue);
 					}
 				}
 
@@ -118,7 +118,7 @@ namespace Sudoku.renderers
 				DrawSeparator();
 				for (int i = 0; i < rowLength; i++)
 				{
-					DrawCell(board.Components[4].Components[i + (rowLength * j)].Value);
+					DrawCell(board.Components[4].Components[i + (rowLength * j)].CorrectValue);
 					DrawSquareSeparator(i, squareLength);
 				}
 
