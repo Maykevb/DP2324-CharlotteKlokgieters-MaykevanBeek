@@ -3,16 +3,40 @@
   "WorkspaceRootPath": "C:\\Repositories\\DP2324-CharlotteKlokgieters-MaykevanBeek\\Sudoku\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{E18AF651-BCE1-4662-828B-6C2FD31C7FCE}|Sudoku.csproj|c:\\repositories\\dp2324-charlotteklokgieters-maykevanbeek\\sudoku\\views\\standardrenderer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E18AF651-BCE1-4662-828B-6C2FD31C7FCE}|Sudoku.csproj|solutionrelative:views\\standardrenderer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E18AF651-BCE1-4662-828B-6C2FD31C7FCE}|Sudoku.csproj|c:\\repositories\\dp2324-charlotteklokgieters-maykevanbeek\\sudoku\\gamecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E18AF651-BCE1-4662-828B-6C2FD31C7FCE}|Sudoku.csproj|solutionrelative:gamecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E18AF651-BCE1-4662-828B-6C2FD31C7FCE}|Sudoku.csproj|c:\\repositories\\dp2324-charlotteklokgieters-maykevanbeek\\sudoku\\models\\states\\notestate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E18AF651-BCE1-4662-828B-6C2FD31C7FCE}|Sudoku.csproj|solutionrelative:models\\states\\notestate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E18AF651-BCE1-4662-828B-6C2FD31C7FCE}|Sudoku.csproj|c:\\repositories\\dp2324-charlotteklokgieters-maykevanbeek\\sudoku\\models\\states\\correctionstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E18AF651-BCE1-4662-828B-6C2FD31C7FCE}|Sudoku.csproj|solutionrelative:models\\states\\correctionstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E18AF651-BCE1-4662-828B-6C2FD31C7FCE}|Sudoku.csproj|c:\\repositories\\dp2324-charlotteklokgieters-maykevanbeek\\sudoku\\models\\states\\abstractstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E18AF651-BCE1-4662-828B-6C2FD31C7FCE}|Sudoku.csproj|solutionrelative:models\\states\\abstractstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E18AF651-BCE1-4662-828B-6C2FD31C7FCE}|Sudoku.csproj|c:\\repositories\\dp2324-charlotteklokgieters-maykevanbeek\\sudoku\\models\\states\\iboardstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E18AF651-BCE1-4662-828B-6C2FD31C7FCE}|Sudoku.csproj|solutionrelative:models\\states\\iboardstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E18AF651-BCE1-4662-828B-6C2FD31C7FCE}|Sudoku.csproj|c:\\repositories\\dp2324-charlotteklokgieters-maykevanbeek\\sudoku\\models\\states\\definitivestate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E18AF651-BCE1-4662-828B-6C2FD31C7FCE}|Sudoku.csproj|solutionrelative:models\\states\\definitivestate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E18AF651-BCE1-4662-828B-6C2FD31C7FCE}|Sudoku.csproj|c:\\repositories\\dp2324-charlotteklokgieters-maykevanbeek\\sudoku\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E18AF651-BCE1-4662-828B-6C2FD31C7FCE}|Sudoku.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{E18AF651-BCE1-4662-828B-6C2FD31C7FCE}|Sudoku.csproj|c:\\repositories\\dp2324-charlotteklokgieters-maykevanbeek\\sudoku\\models\\sudokucomponent\\sudokugroup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E18AF651-BCE1-4662-828B-6C2FD31C7FCE}|Sudoku.csproj|solutionrelative:models\\sudokucomponent\\sudokugroup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E18AF651-BCE1-4662-828B-6C2FD31C7FCE}|Sudoku.csproj|c:\\repositories\\dp2324-charlotteklokgieters-maykevanbeek\\sudoku\\models\\sudokucomponent\\sudokucell.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E18AF651-BCE1-4662-828B-6C2FD31C7FCE}|Sudoku.csproj|solutionrelative:models\\sudokucomponent\\sudokucell.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E18AF651-BCE1-4662-828B-6C2FD31C7FCE}|Sudoku.csproj|c:\\repositories\\dp2324-charlotteklokgieters-maykevanbeek\\sudoku\\models\\sudokucomponent\\isudokucomponent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E18AF651-BCE1-4662-828B-6C2FD31C7FCE}|Sudoku.csproj|solutionrelative:models\\sudokucomponent\\isudokucomponent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,19 +46,58 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "iSudokuComponent.cs",
-              "DocumentMoniker": "C:\\Repositories\\DP2324-CharlotteKlokgieters-MaykevanBeek\\Sudoku\\models\\sudokucomponent\\iSudokuComponent.cs",
-              "RelativeDocumentMoniker": "models\\sudokucomponent\\iSudokuComponent.cs",
-              "ToolTip": "C:\\Repositories\\DP2324-CharlotteKlokgieters-MaykevanBeek\\Sudoku\\models\\sudokucomponent\\iSudokuComponent.cs",
-              "RelativeToolTip": "models\\sudokucomponent\\iSudokuComponent.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAuwAsAAAADAAAA",
+              "DocumentIndex": 0,
+              "Title": "StandardRenderer.cs",
+              "DocumentMoniker": "C:\\Repositories\\DP2324-CharlotteKlokgieters-MaykevanBeek\\Sudoku\\views\\StandardRenderer.cs",
+              "RelativeDocumentMoniker": "views\\StandardRenderer.cs",
+              "ToolTip": "C:\\Repositories\\DP2324-CharlotteKlokgieters-MaykevanBeek\\Sudoku\\views\\StandardRenderer.cs",
+              "RelativeToolTip": "views\\StandardRenderer.cs",
+              "ViewState": "AQIAAGcAAAAAAAAAAAAkwHcAAAA8AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-28T17:57:21.033Z",
+              "WhenOpened": "2024-05-30T09:58:15.681Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "CorrectionState.cs",
+              "DocumentMoniker": "C:\\Repositories\\DP2324-CharlotteKlokgieters-MaykevanBeek\\Sudoku\\models\\states\\CorrectionState.cs",
+              "RelativeDocumentMoniker": "models\\states\\CorrectionState.cs",
+              "ToolTip": "C:\\Repositories\\DP2324-CharlotteKlokgieters-MaykevanBeek\\Sudoku\\models\\states\\CorrectionState.cs",
+              "RelativeToolTip": "models\\states\\CorrectionState.cs",
+              "ViewState": "AQIAAAoAAAAAAAAAAAAQwBMAAAA+AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-30T09:38:57.536Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "DefinitiveState.cs",
+              "DocumentMoniker": "C:\\Repositories\\DP2324-CharlotteKlokgieters-MaykevanBeek\\Sudoku\\models\\states\\DefinitiveState.cs",
+              "RelativeDocumentMoniker": "models\\states\\DefinitiveState.cs",
+              "ToolTip": "C:\\Repositories\\DP2324-CharlotteKlokgieters-MaykevanBeek\\Sudoku\\models\\states\\DefinitiveState.cs",
+              "RelativeToolTip": "models\\states\\DefinitiveState.cs",
+              "ViewState": "AQIAABUAAAAAAAAAAAA4wCQAAAANAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-30T09:35:34Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "GameController.cs",
+              "DocumentMoniker": "C:\\Repositories\\DP2324-CharlotteKlokgieters-MaykevanBeek\\Sudoku\\GameController.cs",
+              "RelativeDocumentMoniker": "GameController.cs",
+              "ToolTip": "C:\\Repositories\\DP2324-CharlotteKlokgieters-MaykevanBeek\\Sudoku\\GameController.cs",
+              "RelativeToolTip": "GameController.cs",
+              "ViewState": "AQIAADMAAAAAAAAAAAAhwD8AAAAKAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-30T09:30:43.787Z",
               "EditorCaption": ""
             },
             {
@@ -51,28 +114,67 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "SudokuCell.cs",
-              "DocumentMoniker": "C:\\Repositories\\DP2324-CharlotteKlokgieters-MaykevanBeek\\Sudoku\\models\\sudokucomponent\\SudokuCell.cs",
-              "RelativeDocumentMoniker": "models\\sudokucomponent\\SudokuCell.cs",
-              "ToolTip": "C:\\Repositories\\DP2324-CharlotteKlokgieters-MaykevanBeek\\Sudoku\\models\\sudokucomponent\\SudokuCell.cs",
-              "RelativeToolTip": "models\\sudokucomponent\\SudokuCell.cs",
-              "ViewState": "AQIAAB4AAAAAAAAAAAAYwC0AAAALAAAA",
+              "DocumentIndex": 2,
+              "Title": "NoteState.cs",
+              "DocumentMoniker": "C:\\Repositories\\DP2324-CharlotteKlokgieters-MaykevanBeek\\Sudoku\\models\\states\\NoteState.cs",
+              "RelativeDocumentMoniker": "models\\states\\NoteState.cs",
+              "ToolTip": "C:\\Repositories\\DP2324-CharlotteKlokgieters-MaykevanBeek\\Sudoku\\models\\states\\NoteState.cs",
+              "RelativeToolTip": "models\\states\\NoteState.cs",
+              "ViewState": "AQIAABoAAAAAAAAAAAAvwCoAAAApAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-28T17:50:26.777Z",
+              "WhenOpened": "2024-05-30T09:26:42.962Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 5,
+              "Title": "iBoardState.cs",
+              "DocumentMoniker": "C:\\Repositories\\DP2324-CharlotteKlokgieters-MaykevanBeek\\Sudoku\\models\\states\\iBoardState.cs",
+              "RelativeDocumentMoniker": "models\\states\\iBoardState.cs",
+              "ToolTip": "C:\\Repositories\\DP2324-CharlotteKlokgieters-MaykevanBeek\\Sudoku\\models\\states\\iBoardState.cs",
+              "RelativeToolTip": "models\\states\\iBoardState.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAuwAkAAAAcAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-30T09:21:24.839Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Repositories\\DP2324-CharlotteKlokgieters-MaykevanBeek\\Sudoku\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Repositories\\DP2324-CharlotteKlokgieters-MaykevanBeek\\Sudoku\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAwAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-30T09:35:56.912Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "AbstractState.cs",
+              "DocumentMoniker": "C:\\Repositories\\DP2324-CharlotteKlokgieters-MaykevanBeek\\Sudoku\\models\\states\\AbstractState.cs",
+              "RelativeDocumentMoniker": "models\\states\\AbstractState.cs",
+              "ToolTip": "C:\\Repositories\\DP2324-CharlotteKlokgieters-MaykevanBeek\\Sudoku\\models\\states\\AbstractState.cs",
+              "RelativeToolTip": "models\\states\\AbstractState.cs",
+              "ViewState": "AQIAAAEAAAAAAAAAAAD4vyMAAAAwAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-30T09:25:31.883Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
               "Title": "SudokuGroup.cs",
               "DocumentMoniker": "C:\\Repositories\\DP2324-CharlotteKlokgieters-MaykevanBeek\\Sudoku\\models\\sudokucomponent\\SudokuGroup.cs",
               "RelativeDocumentMoniker": "models\\sudokucomponent\\SudokuGroup.cs",
               "ToolTip": "C:\\Repositories\\DP2324-CharlotteKlokgieters-MaykevanBeek\\Sudoku\\models\\sudokucomponent\\SudokuGroup.cs",
               "RelativeToolTip": "models\\sudokucomponent\\SudokuGroup.cs",
-              "ViewState": "AQIAAK4AAAAAAAAAAAA4wLQAAAAAAAAA",
+              "ViewState": "AQIAAGAAAAAAAAAAAAAqwHAAAAAsAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-28T09:50:39.236Z",
+              "WhenOpened": "2024-05-30T09:33:38.681Z",
               "EditorCaption": ""
             }
           ]
