@@ -1,4 +1,5 @@
-﻿using Sudoku.models.SudokuComponent;
+﻿using Sudoku.models.states;
+using Sudoku.models.SudokuComponent;
 
 namespace Sudoku.renderers
 {
@@ -17,9 +18,9 @@ namespace Sudoku.renderers
 
 			for (int i = 0; i < board.Components.Count; i++)
 			{
-				if (i % rowLength == 0)
-				{
-					DrawVerticalSeperator();
+                if(i % rowLength == 0)
+                {
+                    DrawVerticalSeperator();
                 }
 
 				DrawCell(board.Components[i].Value);
@@ -34,7 +35,7 @@ namespace Sudoku.renderers
 					DrawHorizontalSeparator(rowLength, squareLength);
 					continue;
 				}
-
+				
 				if ((i + 1) % rowLength == 0)
 				{
 					Console.WriteLine();
@@ -42,7 +43,68 @@ namespace Sudoku.renderers
 			}
 		}
 
-		private void DrawVerticalSeperator()
+        public void DrawNotes(SudokuGroup board, int squareLength, int squareHeight)
+        {
+            int rowLength = Convert.ToInt32(Math.Sqrt(board.Components.Count));
+            int boardWidth = rowLength * squareLength;
+            int boardHeight = rowLength * squareHeight;
+
+            DrawHorizontalNoteSeparator(boardWidth, squareHeight, squareLength);
+
+            string[,] notesMatrix = CalculateNotes(board, squareLength, squareHeight);
+
+            for (int i = 0; i < boardHeight; i++)
+            {
+                if (i % squareHeight == 0 && i != 0)
+                {
+                    DrawHorizontalNoteSeparator(boardWidth, squareHeight, squareLength);
+                }
+
+                DrawVerticalSeperator();
+
+                for (int j = 0; j < boardWidth; j++)
+                {
+                    if (j % squareLength == 0 && j != 0)
+                    {
+                        DrawVerticalSeperator();
+                    }
+
+                    DrawCell(int.Parse(notesMatrix[i, j]));
+                }
+
+                Console.WriteLine("|");
+            }
+
+            DrawHorizontalNoteSeparator(boardWidth, squareHeight, squareLength);
+        }
+
+        private string[,] CalculateNotes(SudokuGroup board, int squareLength, int squareHeight)
+        {
+            int rowLength = Convert.ToInt32(Math.Sqrt(board.Components.Count));
+            string[,] notesMatrix = new string[rowLength * squareHeight, rowLength * squareLength];
+
+            for (int row = 0; row < rowLength; row++)
+            {
+                for (int col = 0; col < rowLength; col++)
+                {
+                    for (int subRow = 0; subRow < squareHeight; subRow++)
+                    {
+                        for (int subCol = 0; subCol < squareLength; subCol++)
+                        {
+                            int matrixRow = row * squareHeight + subRow;
+                            int matrixCol = col * squareLength + subCol;
+                            int cellNoteIndex = subRow * squareLength + subCol;
+
+                            notesMatrix[matrixRow, matrixCol] = ((SudokuCell)board.Components[row * rowLength + col]).Notes[cellNoteIndex].ToString();
+                        }
+                    }
+                }
+            }
+
+            return notesMatrix;
+        }
+
+        private void DrawVerticalSeperator()
 		{
             Console.Write("|");
         }
@@ -52,7 +114,13 @@ namespace Sudoku.renderers
 			Console.Write(value == 0 ? " " : value.ToString());
 		}
 
-		private void DrawHorizontalSeparator(int rowLength, int squareLength) 
+        private void DrawHorizontalNoteSeparator(int boardWidth, int squareHeight, int squareLength)
+        {
+            int totalLength = boardWidth + 2 * (boardWidth / squareLength) - squareHeight * squareLength + 1;
+            Console.WriteLine(new string('-', totalLength));
+        }
+
+        private void DrawHorizontalSeparator(int rowLength, int squareLength) 
 		{
 			Console.Write("\n" + new string('-', rowLength + (rowLength / squareLength) + 1) + "\n");
 		}
