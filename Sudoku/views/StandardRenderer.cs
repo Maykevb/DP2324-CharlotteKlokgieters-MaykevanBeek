@@ -69,7 +69,7 @@ namespace Sudoku.renderers
                         DrawVerticalSeperator();
                     }
 
-                    Console.Write(notesMatrix[i, j] == "0" ? " " : notesMatrix[i, j]);
+                    DrawCell(int.Parse(notesMatrix[i, j]));
                 }
 
                 Console.WriteLine("|");

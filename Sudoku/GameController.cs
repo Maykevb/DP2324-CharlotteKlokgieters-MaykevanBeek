@@ -60,18 +60,16 @@ public class GameController
 				break;
 			case SudokuType.SIX_BY_SIX:
                 board.State.DisplayBoard(renderer, board, LENGTH_6X6, HEIGHT_6X6);
-               /* renderer.DrawBoard(board, LENGTH_6X6, HEIGHT_6X6);*/
 				break;
 			case SudokuType.NINE_BY_NINE:
                 board.State.DisplayBoard(renderer, board, SQUARE_9X9, SQUARE_9X9);
-               /* renderer.DrawBoard(board, SQUARE_9X9, SQUARE_9X9);*/
 				break;
 			case SudokuType.SAMURAI:
 				renderer.DrawBoard(board, SQUARE_9X9, SQUARE_9X9);
 				break;
 			case SudokuType.JIGSAW:
-				renderer.DrawBoard(board, SQUARE_JIGSAW, SQUARE_JIGSAW);
-				break;
+                board.State.DisplayBoard(renderer, board, SQUARE_9X9, SQUARE_9X9);
+                break;
 		}
 
 		board.State.DoAction(board, this);
