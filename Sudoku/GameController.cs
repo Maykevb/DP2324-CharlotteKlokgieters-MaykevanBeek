@@ -95,12 +95,12 @@ public class GameController
 				SolveJigsaw(board);
 				break;
 			default:
-				SolveStandard(board, type, renderer);
+				SolveStandard(board);
 				break;
 		}
 	}
 
-	public void SolveStandard(SudokuGroup board, SudokuType type, iBoardRenderer renderer)
+	public void SolveStandard(SudokuGroup board)
 	{
 		bool solved = false;
 
