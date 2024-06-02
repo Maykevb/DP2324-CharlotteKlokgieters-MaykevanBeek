@@ -6,6 +6,7 @@ namespace Sudoku.models.visitors
     {
         public void VisitCell(SudokuCell cell, bool isCorrect)
         {
+			Console.WriteLine(isCorrect); //TODO get rid off
 			cell.IsCorrect = isCorrect;
         }
 
