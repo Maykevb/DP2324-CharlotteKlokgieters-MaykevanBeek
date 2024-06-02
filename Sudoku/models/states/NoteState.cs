@@ -45,7 +45,7 @@ namespace Sudoku.models.states
                 CheckInput(parts, board, boardSize, controller, data =>
                 {
                     return board.Type == SudokuType.SAMURAI
-                        ? board.HandleSamuraiCell(data[0], data[1], data[2], true)
+                        ? board.AddSamuraiNote(data[0], data[1], data[2], true, block - 1)
                         : board.AddNormalNote(data[0], data[1], data[2]);
                 });
             }

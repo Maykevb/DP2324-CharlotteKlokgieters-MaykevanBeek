@@ -23,7 +23,10 @@ namespace Sudoku.models.SudokuComponent
             int index = (row - 1) * boardSize + (col - 1);
             SudokuCell cell = (SudokuCell)components[index];
 
-            return AddNote(row,col, value, cell);
+            AddNote(row,col, value, cell);
+            gameController.displayBoard(type);
+
+            return true;
         }
 
         public bool AddNote(int row, int col, int value, SudokuCell cell)
@@ -45,7 +48,6 @@ namespace Sudoku.models.SudokuComponent
 
             cell.Notes[value - 1] = value;
 
-            gameController.displayBoard(type);
             return true;
         }
 
@@ -59,30 +61,13 @@ namespace Sudoku.models.SudokuComponent
 
         public bool HandleSamuraiCell(int row, int col, int value, bool note)
         {
+            Console.WriteLine(row + " " + col);
             List<int> groupIndices = GetGroupIndex(row, col);
 
+            Console.WriteLine("count" + groupIndices.Count);
             foreach (int groupIndex in groupIndices)
             {
-                if (note)
-                {
-                    Console.WriteLine("hoi");
-                    if (groupIndex == 1 || groupIndex == 4)
-                    {
-                        col += 12; // Rechter subgroepen
-                    }
-
-                    if (groupIndex == 3 || groupIndex == 4)
-                    {
-                        row += 12; // Onderste subgroepen
-                    }
-
-                    if (groupIndex == 2)
-                    {
-                        col += 6;
-                        row += 6;// Middelste subgroep
-                    }
-                }
-
+                Console.WriteLine("index" + groupIndex);
                 SudokuGroup group = (SudokuGroup)components[groupIndex];
                 int rowWithinGroup = row;
                 int colWithinGroup = col;
@@ -106,15 +91,51 @@ namespace Sudoku.models.SudokuComponent
                 int cellIndex = (rowWithinGroup - 1) * 9 + (colWithinGroup - 1);
                 if(!note)
                 {
-                    return FillCell(cellIndex, row, col, group.components, value);
-                } 
-
-                Console.WriteLine(row + " " + col);
-                return AddNote(row, col, value, (SudokuCell)group.components[cellIndex]);
+                    Console.WriteLine("hoi");
+                    if(!FillCell(cellIndex, row, col, group.components, value))
+                    {
+                        return false;
+                    }
+                } else
+                {
+                    Console.WriteLine("test" + rowWithinGroup + " "+ colWithinGroup);
+                    if (!AddNote(rowWithinGroup, colWithinGroup, value, (SudokuCell)group.components[cellIndex]))
+                    {
+                        return false;
+                    }
+                }                
             }
 
-            return false;
+            if(note)
+            {
+                gameController.displayBoard(type);
+            }
+
+            return true;
         }
+
+        public bool AddSamuraiNote(int row, int col, int value, bool note, int group)
+        {
+            if (group == 1 || group == 4)
+            {
+                col += 12; // Rechter subgroepen
+            }
+
+            if (group == 3 || group == 4)
+            {
+                row += 12; // Onderste subgroepen
+            }
+
+            if (group == 2)
+            {
+                col += 6;
+                row += 6;// Middelste subgroep
+            }
+
+            return HandleSamuraiCell(row, col, value, note);
+        }
+
+
 
         private bool FillCell(int index, int row, int col, List<iSudokuComponent> cells, int value)
         {
@@ -161,7 +182,7 @@ namespace Sudoku.models.SudokuComponent
                 groupIndices.Add(2); // Centrale subgroep
             }
 
-            if ((row > 9 && row <= 12) || (col > 9 && col <= 12))
+            if ((row >= 7 && row <= 15) || (col >= 7 && col <= 15))
             {
                 groupIndices.Add(2); // Centrale subgroep
             }
