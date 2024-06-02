@@ -57,23 +57,23 @@ public class GameController
         switch (type)
 		{
 			case SudokuType.FOUR_BY_FOUR:
-				renderer.DrawBoard(board, SQUARE_4X4, SQUARE_4X4);
+				board.State.DisplayBoard(renderer, board, SQUARE_4X4, SQUARE_4X4);
 				break;
 			case SudokuType.SIX_BY_SIX:
-				renderer.DrawBoard(board, LENGTH_6X6, HEIGHT_6X6);
+                board.State.DisplayBoard(renderer, board, LENGTH_6X6, HEIGHT_6X6);
 				break;
 			case SudokuType.NINE_BY_NINE:
-				renderer.DrawBoard(board, SQUARE_9X9, SQUARE_9X9);
+                board.State.DisplayBoard(renderer, board, SQUARE_9X9, SQUARE_9X9);
 				break;
 			case SudokuType.SAMURAI:
 				renderer.DrawBoard(board, SQUARE_9X9, SQUARE_9X9);
 				break;
 			case SudokuType.JIGSAW:
-				renderer.DrawBoard(board, SQUARE_JIGSAW, SQUARE_JIGSAW);
-				break;
+                board.State.DisplayBoard(renderer, board, SQUARE_9X9, SQUARE_9X9);
+                break;
 		}
 
-		board.State.DoAction(board);
+		board.State.DoAction(board, this);
     }
 
 	public void DrawStart()

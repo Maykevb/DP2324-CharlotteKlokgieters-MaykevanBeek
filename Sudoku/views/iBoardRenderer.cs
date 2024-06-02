@@ -8,5 +8,10 @@ namespace Sudoku.renderers
         {
 
         }
+
+        void DrawNotes(SudokuGroup board, int sQUARE_4X41, int sQUARE_4X42)
+        {
+
+        }
     }
 }
