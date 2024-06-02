@@ -63,6 +63,26 @@ namespace Sudoku.models.SudokuComponent
 
             foreach (int groupIndex in groupIndices)
             {
+                if (note)
+                {
+                    Console.WriteLine("hoi");
+                    if (groupIndex == 1 || groupIndex == 4)
+                    {
+                        col += 12; // Rechter subgroepen
+                    }
+
+                    if (groupIndex == 3 || groupIndex == 4)
+                    {
+                        row += 12; // Onderste subgroepen
+                    }
+
+                    if (groupIndex == 2)
+                    {
+                        col += 6;
+                        row += 6;// Middelste subgroep
+                    }
+                }
+
                 SudokuGroup group = (SudokuGroup)components[groupIndex];
                 int rowWithinGroup = row;
                 int colWithinGroup = col;
@@ -89,6 +109,7 @@ namespace Sudoku.models.SudokuComponent
                     return FillCell(cellIndex, row, col, group.components, value);
                 } 
 
+                Console.WriteLine(row + " " + col);
                 return AddNote(row, col, value, (SudokuCell)group.components[cellIndex]);
             }
 

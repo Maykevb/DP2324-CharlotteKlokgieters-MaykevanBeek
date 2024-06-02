@@ -14,6 +14,11 @@ namespace Sudoku.models.SudokuComponent
         {
             this.value = value;
             this.isFixed = isFixed;
+
+            if(isFixed)
+            {
+                notes[value - 1] = value;
+            }
         }
 
         public SudokuCell(int value, bool isFixed, int block)

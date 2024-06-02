@@ -65,7 +65,7 @@ public class GameController
                 board.State.DisplayBoard(renderer, board, SQUARE_9X9, SQUARE_9X9);
 				break;
 			case SudokuType.SAMURAI:
-				renderer.DrawBoard(board, SQUARE_9X9, SQUARE_9X9);
+				board.State.DisplayBoard(renderer, board, SQUARE_9X9, SQUARE_9X9);
 				break;
 			case SudokuType.JIGSAW:
                 board.State.DisplayBoard(renderer, board, SQUARE_9X9, SQUARE_9X9);
