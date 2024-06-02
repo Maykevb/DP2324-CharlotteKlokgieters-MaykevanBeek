@@ -15,7 +15,7 @@ namespace Sudoku.renderers
 
 			for (int i = 0; i < board.Components.Count; i++)
 			{
-				DrawCell(board.Components[i].Value, board.Components[i].Block);
+				DrawCell(board.Components[i].Value, board.Components[i].Block, board.Components[i].IsCorrect);
 
 				if ((i + 1) % rowLength == 0 && (i + 1) < board.Components.Count)
 				{
@@ -24,11 +24,17 @@ namespace Sudoku.renderers
 			}
 		}
 
-		private void DrawCell(int value, int? Block)
+		private void DrawCell(int value, int? Block, bool isCorrect)
 		{
 			ChangeColor(Block);
+
+			if (!isCorrect)
+			{
+				Console.ForegroundColor = ConsoleColor.Red;
+			}
+
 			Console.Write(value == 0 ? " " : value.ToString());
-            ChangeColor(null);
+			ChangeColor(null);
         }
 
 		private void ChangeColor(int? Block)

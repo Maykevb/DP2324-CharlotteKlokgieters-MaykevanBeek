@@ -17,9 +17,9 @@
                 if (files.Length > 0)
                 {
                     Random random = new Random();
-                    string sudokuFile = files[random.Next(files.Length)]; 
+                    string sudokuFile = files[1]; //random.Next(files.Length)
 
-                    string sudoku = File.ReadAllText(sudokuFile);
+					string sudoku = File.ReadAllText(sudokuFile);
                     return CreateBoard(gameController, sudoku, type);
                 }
             }

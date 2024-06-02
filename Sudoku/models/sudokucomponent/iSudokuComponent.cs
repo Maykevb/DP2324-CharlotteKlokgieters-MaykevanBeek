@@ -24,15 +24,9 @@ namespace Sudoku.models.SudokuComponent
 			set { }
 		}
 
-		public int CorrectValue //TODO
+		public bool IsCorrect //TODO
 		{
-			get { return 0; }
-			set { }
-		}
-
-		public int[] AutoSolveNotes //TODO
-		{
-			get { return [0]; }
+			get { return true; }
 			set { }
 		}
 

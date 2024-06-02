@@ -17,17 +17,11 @@ public class GameController
 	private SudokuGroup board;
 	private iBoardRenderer renderer;
 	private BoardFactory boardFactory;
-	private RowVisitor rowVisitor;
-	private ColumnVisitor columnVisitor;
-	private SquareVisitor squareVisitor;
 
 	public GameController()
 	{
 		this.importer = new SudokuImporter();
 		this.boardFactory = new BoardFactory();
-		this.rowVisitor = new RowVisitor();
-		this.columnVisitor = new ColumnVisitor();
-		this.squareVisitor = new SquareVisitor();
 	}
 
 	public void LoadRenderer(SudokuType name)
@@ -60,8 +54,6 @@ public class GameController
 
     public void DisplayBoard(SudokuType type)
 	{
-		SolveBoard(board, type, renderer); // TODO
-
         switch (type)
 		{
 			case SudokuType.FOUR_BY_FOUR:
@@ -83,46 +75,6 @@ public class GameController
 
 		board.State.DoAction(board);
     }
-
-	public void SolveBoard(SudokuGroup board, SudokuType type, iBoardRenderer renderer)
-	{
-		switch (type)
-		{
-			case SudokuType.SAMURAI:
-				SolveSamurai(board);
-				break;
-			case SudokuType.JIGSAW:
-				SolveJigsaw(board);
-				break;
-			default:
-				SolveStandard(board);
-				break;
-		}
-	}
-
-	public void SolveStandard(SudokuGroup board)
-	{
-		bool solved = false;
-
-		do
-		{
-			board.Accept(rowVisitor);
-			board.Accept(columnVisitor);
-			board.Accept(squareVisitor);
-
-			solved = board.Components.All(c => c.CorrectValue != 0);
-		} 
-		while (!solved);
-	}
-	public void SolveSamurai(SudokuGroup board)
-	{
-		//TODO
-	}
-
-	public void SolveJigsaw(SudokuGroup board)
-	{
-		//TODO
-	}
 
 	public void DrawStart()
 	{

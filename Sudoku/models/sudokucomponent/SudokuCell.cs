@@ -8,57 +8,28 @@ namespace Sudoku.models.SudokuComponent
         private bool isFixed;
         private int[] notes;
 		private int? block;
-        private int correctValue = 0;
-        private int[] autoSolveNotes;
+        private bool isCorrect;
 
         public SudokuCell(int value, bool isFixed, int notes)
         {
             this.value = value;
             this.isFixed = isFixed;
             this.notes = new int[notes];
-            this.autoSolveNotes = new int[notes];
-
-			SetCorrectValue(value, isFixed);
-            FillAutoNotes(notes, this.correctValue);
+            this.isCorrect = true;
 		}
 
         public SudokuCell(int value, bool isFixed, int notes, int block)
         {
             this.value = value;
-            this.isFixed = isFixed;
-            this.block = block;
-			this.autoSolveNotes = new int[notes];
-
-			SetCorrectValue(value, isFixed);
-            FillAutoNotes(notes, this.correctValue);
+            this.isFixed = isFixed; 
+            this.notes = new int[notes];
+			this.block = block;
+			this.isCorrect = true;
 		}
 
-        private void SetCorrectValue(int value, bool isFixed)
+		public void Accept(iBoardVisitor visitor)
         {
-			if (isFixed)
-			{
-				this.correctValue = value;
-			}
-		}
-
-        private void FillAutoNotes(int notes, int correctValue)
-        {
-            if (correctValue == 0)
-            {
-                for (int i = 0; i < notes; i++)
-                {
-                    this.autoSolveNotes[i] = (i + 1);
-			    }
-
-                return;
-            }
-
-            this.autoSolveNotes[0] = correctValue;
-        }
-
-        public void Accept(iBoardVisitor visitor)
-        {
-            visitor.VisitCell(this);
+            visitor.VisitCell(this, true);
         }
 
         public int Value
@@ -85,16 +56,10 @@ namespace Sudoku.models.SudokuComponent
             set { block = value; }
         }
 
-        public int CorrectValue
+        public bool IsCorrect
         {
-            get { return correctValue; }
-            set { correctValue = value; }
-        }
-
-		public int[] AutoSolveNotes 
-        { 
-            get { return autoSolveNotes; }
-            set { autoSolveNotes = value; }
+            get { return isCorrect; }
+            set { isCorrect = value; }
         }
 	}
 }
