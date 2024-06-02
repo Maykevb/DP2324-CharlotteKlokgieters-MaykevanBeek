@@ -21,28 +21,39 @@ namespace Sudoku.models.states
 
         public override void DoAction(SudokuGroup board, GameController controller)
         {
-			VisitVisitors(board); //TODO placement ??
-
 			string message = "Red == incorrect";
             string line = new string('-', GameController.START_LINE_LENGTH);
             Console.WriteLine($"\n{line}\n{message}\n{line}");
-        }
 
-        private void VisitVisitors(SudokuGroup board)
+            ReadInput(board, controller);
+		}
+
+        public void VisitVisitors(SudokuGroup board)
         {
 			board.Accept(rowVisitor);
 			board.Accept(columnVisitor);
 			board.Accept(squareVisitor);
 		}
 
-        public override void ReadInput(SudokuGroup board, GameController controller)
+		public void VisitVisitorsSamurai(SudokuGroup board)
+		{
+            foreach (SudokuGroup b in board.Components)
+            {
+				b.Accept(rowVisitor);
+				b.Accept(columnVisitor);
+				b.Accept(squareVisitor);
+			}
+		}
+
+		public override void ReadInput(SudokuGroup board, GameController controller)
         {
-            throw new NotImplementedException();
+            string input = Console.ReadLine() ?? "";
+            CheckState(input, board, controller);
         }
 
         public override void DisplayBoard(iBoardRenderer renderer, SudokuGroup board, int length, int height)
         {
-            throw new NotImplementedException();
+            renderer.DrawBoard(board, length, height);
         }
     }
 }

@@ -23,7 +23,7 @@ namespace Sudoku.renderers
                     DrawVerticalSeperator();
                 }
 
-				DrawCell(board.Components[i].Value, board.Components[i].IsCorrect);
+				DrawCell(board.Components[i].Value, board.Components[i].IsCorrect, board.State);
 
 				if ((i + 1) % squareLength == 0 && !((i + 1) % rowLength == 0) || (i + 1) % (squareHeight * squareLength) == 0)
 				{
@@ -69,7 +69,7 @@ namespace Sudoku.renderers
                         DrawVerticalSeperator();
                     }
 
-                    DrawCell(int.Parse(notesMatrix[i, j]));
+                    DrawCell(int.Parse(notesMatrix[i, j]), true, board.State);
                 }
 
                 Console.WriteLine("|");
@@ -109,9 +109,9 @@ namespace Sudoku.renderers
             Console.Write("|");
         }
 
-		private void DrawCell(int value, bool isCorrect)
+		private void DrawCell(int value, bool isCorrect, iBoardState state)
 		{
-			if (!isCorrect)
+			if (!isCorrect && state is CorrectionState)
 			{
 				Console.ForegroundColor = ConsoleColor.Red;
 			}

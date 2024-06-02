@@ -1,4 +1,5 @@
 using Sudoku;
+using Sudoku.models.states;
 using Sudoku.models.SudokuComponent;
 using Sudoku.models.visitors;
 using Sudoku.renderers;
@@ -54,7 +55,9 @@ public class GameController
 
     public void DisplayBoard(SudokuType type)
 	{
-        switch (type)
+		CheckValuesPlacement(type);
+
+		switch (type)
 		{
 			case SudokuType.FOUR_BY_FOUR:
 				board.State.DisplayBoard(renderer, board, SQUARE_4X4, SQUARE_4X4);
@@ -75,6 +78,27 @@ public class GameController
 
 		board.State.DoAction(board, this);
     }
+
+	private void CheckValuesPlacement(SudokuType type)
+	{
+		if (board.State is CorrectionState)
+		{
+			CorrectionState boardState = (CorrectionState)board.State;
+
+			switch (type)
+			{
+				case SudokuType.SAMURAI:
+					boardState.VisitVisitorsSamurai(board);
+					break;
+				case SudokuType.JIGSAW:
+					boardState.VisitVisitors(board); //TODO
+					break;
+				default:
+					boardState.VisitVisitors(board);
+					break;
+			}
+		}
+	}
 
 	public void DrawStart()
 	{

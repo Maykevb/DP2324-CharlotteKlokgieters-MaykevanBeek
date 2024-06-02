@@ -13,7 +13,8 @@ namespace Sudoku.models.states
 
         public abstract void DisplayBoard(iBoardRenderer renderer, SudokuGroup board, int length, int height);
 
-        public bool CheckState(string input, SudokuGroup board, GameController controller)
+
+		public bool CheckState(string input, SudokuGroup board, GameController controller)
         {
             if (input != null && (input != "/" && input != "-" && input != "+")) return false;
 
@@ -33,7 +34,7 @@ namespace Sudoku.models.states
             }
 
             board.State.PrintState();
-            controller.displayBoard(board.Type);
+            controller.DisplayBoard(board.Type);
             return true;
         }
 

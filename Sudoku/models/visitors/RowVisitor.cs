@@ -35,18 +35,16 @@ namespace Sudoku.models.visitors
 			for (int k = 0; k < rowLength; k++)
 			{
 				int checkIndex = (i * rowLength) + k;
-				if (checkIndex < board.Components.Count && board.Components[index].Value == board.Components[checkIndex].Value)
+				if (checkIndex < board.Components.Count && board.Components[index].Value == board.Components[checkIndex].Value && index != checkIndex)
 				{
-					VisitCell((SudokuCell) board.Components[checkIndex], false);
+					VisitCell((SudokuCell) board.Components[index], false);
 					stf = true;
 					continue;
 				}
-				else if (!stf && !board.Components[index].IsCorrect && board.Components[index].Value != board.Components[checkIndex].Value)
+				else if (!stf && !board.Components[index].IsCorrect && board.Components[index].Value != board.Components[checkIndex].Value && index != checkIndex)
 				{
-					VisitCell((SudokuCell) board.Components[checkIndex], true);
-				}
-
-				stf = false;
+					VisitCell((SudokuCell) board.Components[index], true);
+				}				
 			}
 
 			return stf;

@@ -24,7 +24,7 @@ namespace Sudoku.models.visitors
 				squareWidth = 3;
 			}
 
-			int blocksPerRow = rowLength / squareHeight; //switch usage of length vs height with \/ ??
+			int blocksPerRow = rowLength / squareHeight; //TODO switch usage of length vs height with \/ ??
 			int blocksPerCol = rowLength / squareWidth;
 			bool setToFalse = false;
 
@@ -68,18 +68,16 @@ namespace Sudoku.models.visitors
 					int checkColIndex = baseColIndex + n;
 					int checkIndex = checkRowIndex * rowLength + checkColIndex;
 
-					if (checkIndex < board.Components.Count && board.Components[index].Value == board.Components[checkIndex].Value)
+					if (checkIndex < board.Components.Count && board.Components[index].Value == board.Components[checkIndex].Value && index != checkIndex)
 					{
-						VisitCell((SudokuCell)board.Components[checkIndex], false);
+						VisitCell((SudokuCell) board.Components[index], false);
 						stf = true;
 						continue;
 					}
-					else if (!stf && !board.Components[index].IsCorrect && board.Components[index].Value != board.Components[checkIndex].Value)
+					else if (!stf && !board.Components[index].IsCorrect && board.Components[index].Value != board.Components[checkIndex].Value && index != checkIndex)
 					{
-						VisitCell((SudokuCell)board.Components[checkIndex], true);
+						VisitCell((SudokuCell) board.Components[index], true);
 					}
-
-					stf = false;
 				}
 			}
 
