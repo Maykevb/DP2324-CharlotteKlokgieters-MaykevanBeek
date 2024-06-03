@@ -1,4 +1,5 @@
-﻿using Sudoku.models.SudokuComponent;
+﻿using Sudoku.models.states;
+using Sudoku.models.SudokuComponent;
 using Sudoku.renderers;
 
 namespace Sudoku.views
@@ -35,7 +36,7 @@ namespace Sudoku.views
                         DrawVerticalSeperator();
                     }
 
-                    DrawCell(int.Parse(notesMatrix[i, j]));
+                    DrawCell(int.Parse(notesMatrix[i, j]), true, board.State, false);
                 }
 
                 Console.WriteLine("|");
@@ -81,12 +82,23 @@ namespace Sudoku.views
             Console.Write("|");
         }
 
-        protected void DrawCell(int value)
-        {
-            Console.Write(value == 0 ? " " : value.ToString());
-        }
+		protected void DrawCell(int value, bool isCorrect, iBoardState state, bool isFixed)
+		{
+			if (!isCorrect && state is CorrectionState)
+			{
+				Console.ForegroundColor = ConsoleColor.Red;
+			}
 
-        protected void DrawLine()
+            if(isFixed && state is DefinitiveState)
+            {
+                Console.ForegroundColor = ConsoleColor.DarkBlue;
+            }
+
+			Console.Write(value == 0 ? " " : value.ToString());
+			Console.ForegroundColor = ConsoleColor.White;
+		}
+
+		protected void DrawLine()
         {
             Console.WriteLine();
         }

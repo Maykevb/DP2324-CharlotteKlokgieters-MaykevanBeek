@@ -1,4 +1,5 @@
 using Sudoku;
+using Sudoku.models.states;
 using Sudoku.models.SudokuComponent;
 using Sudoku.renderers;
 
@@ -21,16 +22,16 @@ public class GameController
 		this.importer = new SudokuImporter();
 		this.boardFactory = new BoardFactory();
 	}
-
 	public void startGame(SudokuType selectedType)
 	{
-        loadRenderer(selectedType);
-        loadBoard(selectedType);
-        drawStart();
-        displayBoard(selectedType);
+        AddRenderers();
+        LoadRenderer(selectedType);
+        LoadBoard(selectedType);
+        DrawStart();
+        DisplayBoard(selectedType);
     }
 
-	public void loadRenderer(SudokuType name)
+	public void LoadRenderer(SudokuType name)
 	{
 		string rendererName = name.ToString();
 
@@ -42,19 +43,28 @@ public class GameController
 		renderer = boardFactory.createRenderer(rendererName);
 	}
 
-	public void loadBoard(SudokuType type)
+	public void AddRenderers()
 	{
-		board = importer.ReadSudokuFromFile(type, this);
-
-		if (board == null)
-		{
-			//TODO error file cant be found
-		}
+        boardFactory.addRenderType("JIGSAW", new JigsawRenderer());
+        boardFactory.addRenderType("SAMURAI", new SamuraiRenderer());
+        boardFactory.addRenderType("STANDARD", new StandardRenderer());
     }
 
-    public void displayBoard(SudokuType type)
+	public void LoadBoard(SudokuType type)
 	{
-        switch (type)
+		board = importer.ReadSudokuFromFile(type, this);
+		
+		if (board == null)
+		{
+			Console.WriteLine("An error occurred. Please restart the application.");
+		}
+	}
+
+    public void DisplayBoard(SudokuType type)
+	{
+		CheckValuesPlacement(type);
+
+		switch (type)
 		{
 			case SudokuType.FOUR_BY_FOUR:
 				board.State.DisplayBoard(renderer, board, SQUARE_4X4, SQUARE_4X4);
@@ -72,11 +82,32 @@ public class GameController
 		board.State.DoAction(board, this);
     }
 
-	public void drawStart()
+	private void CheckValuesPlacement(SudokuType type)
 	{
-        string line = new string('-', START_LINE_LENGTH);
-        Console.WriteLine($"\n{line}\nLet the game begin!\n{line}");
+		if (board.State is CorrectionState)
+		{
+			CorrectionState boardState = (CorrectionState)board.State;
 
-        board.State.PrintState();
-    }
+			switch (type)
+			{
+				case SudokuType.SAMURAI:
+					boardState.VisitVisitorsSamurai(board);
+					break;
+				case SudokuType.JIGSAW:
+					boardState.VisitVisitors(board); //TODO
+					break;
+				default:
+					boardState.VisitVisitors(board);
+					break;
+			}
+		}
+	}
+
+	public void DrawStart()
+	{
+		string line = new string('-', START_LINE_LENGTH);
+		Console.WriteLine($"\n{line}\nLet the game begin!\n{line}");
+
+		board.State.PrintState();
+	}
 }

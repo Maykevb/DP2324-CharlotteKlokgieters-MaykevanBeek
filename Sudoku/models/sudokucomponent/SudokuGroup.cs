@@ -25,7 +25,7 @@ namespace Sudoku.models.SudokuComponent
             SudokuCell cell = (SudokuCell)components[index];
             AddNote(row,col, value, cell);
 
-            gameController.displayBoard(type);
+            gameController.DisplayBoard(type);
 
             return true;
         }
@@ -42,7 +42,7 @@ namespace Sudoku.models.SudokuComponent
             {
                 int noteIndex = Array.IndexOf(cell.Notes, value);
                 cell.Notes[noteIndex] = 0;
-                gameController.displayBoard(type);
+                gameController.DisplayBoard(type);
 
                 return true;
             }
@@ -104,7 +104,7 @@ namespace Sudoku.models.SudokuComponent
 
             if(note)
             {
-                gameController.displayBoard(type);
+                gameController.DisplayBoard(type);
             }
 
             return true;
@@ -146,7 +146,7 @@ namespace Sudoku.models.SudokuComponent
             }
 
             cells[index].Value = (cells[index].Value == value) ? 0 : value;
-            gameController.displayBoard(type);
+            gameController.DisplayBoard(type);
 
             return true;
         }
@@ -185,11 +185,17 @@ namespace Sudoku.models.SudokuComponent
         }
 
         // Visitors
-        public void Accept(iBoardVisitor visitor)
+		public void Accept(iBoardVisitor visitor, int boardIndex, SudokuGroup board)
         {
-            visitor.Visit(this);
+            visitor.VisitBoard(this, boardIndex, board);
         }
 
+		public void Accept(iBoardVisitor visitor, bool isCorrect, SudokuGroup board, int boardIndex, int celIndex, SudokuGroup fullBoard) //TODO
+		{
+
+		}
+
+        // State
         public void SwitchState(iBoardState newState)
         {
             this.State = newState;

@@ -1,4 +1,5 @@
-﻿using Sudoku.models.SudokuComponent;
+﻿using Sudoku.models.states;
+using Sudoku.models.SudokuComponent;
 using Sudoku.views;
 
 namespace Sudoku.renderers
@@ -16,7 +17,7 @@ namespace Sudoku.renderers
 
 			for (int i = 0; i < board.Components.Count; i++)
 			{
-				DrawCell(board.Components[i].Value, board.Components[i].Block);
+				DrawCell(board.Components[i].Value, board.Components[i].Block, board.Components[i].IsCorrect, board.State, board.Components[i].IsFixed);
 
 				if ((i + 1) % rowLength == 0 && (i + 1) < board.Components.Count)
 				{
@@ -52,7 +53,7 @@ namespace Sudoku.renderers
                     }
 
                     int? block = ((SudokuCell)board.Components[i / squareHeight * rowLength + j / squareLength]).Block;
-                    DrawCell(int.Parse(notesMatrix[i, j]), block);
+                    DrawCell(int.Parse(notesMatrix[i, j]), block, true, board.State, false);
                 }
 
                 Console.WriteLine("|");
@@ -61,11 +62,22 @@ namespace Sudoku.renderers
             DrawHorizontalNoteSeperator(boardWidth, squareHeight, squareLength);
         }
 
-        private void DrawCell(int value, int? Block)
+        private void DrawCell(int value, int? Block, bool isCorrect, iBoardState state, bool isFixed)
 		{
 			ChangeColor(Block);
-			Console.Write(value == 0 ? " " : value.ToString());
-            ChangeColor(null);
+
+			if (!isCorrect && state is CorrectionState)
+			{
+				Console.ForegroundColor = ConsoleColor.Red;
+			}
+
+            if (isFixed && state is DefinitiveState)
+            {
+                Console.ForegroundColor = ConsoleColor.DarkBlue;
+            }
+
+            Console.Write(value == 0 ? " " : value.ToString());
+			ChangeColor(null);
         }
 
         private void ChangeColor(int? Block)
@@ -76,13 +88,13 @@ namespace Sudoku.renderers
             {
                 0 => ConsoleColor.Yellow,
                 1 => ConsoleColor.Cyan,
-                2 => ConsoleColor.Magenta,
-                3 => ConsoleColor.Green,
-                4 => ConsoleColor.Red,
+                2 => ConsoleColor.DarkGray,
+                3 => ConsoleColor.DarkRed,
+                4 => ConsoleColor.DarkCyan,
                 5 => ConsoleColor.Blue,
                 6 => ConsoleColor.Gray,
-                7 => ConsoleColor.DarkYellow,
-                8 => ConsoleColor.DarkCyan,
+                7 => ConsoleColor.Magenta,
+                8 => ConsoleColor.White,
                 _ => ConsoleColor.Black 
             };
 
