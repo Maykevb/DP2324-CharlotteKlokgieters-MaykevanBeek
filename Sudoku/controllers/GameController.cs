@@ -25,13 +25,13 @@ public class GameController
 	public void startGame(SudokuType selectedType)
 	{
         AddRenderers();
-        loadRenderer(selectedType);
-        loadBoard(selectedType);
-        drawStart();
-        displayBoard(selectedType);
+        LoadRenderer(selectedType);
+        LoadBoard(selectedType);
+        DrawStart();
+        DisplayBoard(selectedType);
     }
 
-	public void loadRenderer(SudokuType name)
+	public void LoadRenderer(SudokuType name)
 	{
 		string rendererName = name.ToString();
 
@@ -50,7 +50,7 @@ public class GameController
         boardFactory.addRenderType("STANDARD", new StandardRenderer());
     }
 
-	public void loadBoard(SudokuType type)
+	public void LoadBoard(SudokuType type)
 	{
 		board = importer.ReadSudokuFromFile(type, this);
 		

@@ -26,13 +26,13 @@ namespace Sudoku.models.SudokuComponent
 			set { }
 		}
 
-		public bool IsCorrect //TODO
+		public bool IsCorrect 
 		{
 			get { return true; }
 			set { }
 		}
 
-		public SudokuType Type //TODO
+		public SudokuType Type 
 		{
 			get { return 0; }
 			set { }

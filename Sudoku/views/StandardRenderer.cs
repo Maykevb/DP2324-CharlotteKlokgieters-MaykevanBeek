@@ -1,5 +1,6 @@
 ﻿using Sudoku.models.SudokuComponent;
 using Sudoku.views;
+using System.Transactions;
 
 namespace Sudoku.renderers
 {
@@ -23,7 +24,7 @@ namespace Sudoku.renderers
                     DrawVerticalSeperator();
                 }
 
-				DrawCell(board.Components[i].Value, board.Components[i].IsCorrect, board.State);
+				DrawCell(board.Components[i].Value, board.Components[i].IsCorrect, board.State, board.Components[i].IsFixed);
 
 				if ((i + 1) % squareLength == 0 && !((i + 1) % rowLength == 0) || (i + 1) % (squareHeight * squareLength) == 0)
 				{
