@@ -8,7 +8,6 @@ public class GameController
 	private static readonly int LENGTH_6X6 = 3;
 	private static readonly int HEIGHT_6X6 = 2;
 	private static readonly int SQUARE_9X9 = 3;
-	private static readonly int SQUARE_JIGSAW = 0;
 
 	public static readonly int START_LINE_LENGTH = 70;
 
@@ -22,6 +21,14 @@ public class GameController
 		this.importer = new SudokuImporter();
 		this.boardFactory = new BoardFactory();
 	}
+
+	public void startGame(SudokuType selectedType)
+	{
+        loadRenderer(selectedType);
+        loadBoard(selectedType);
+        drawStart();
+        displayBoard(selectedType);
+    }
 
 	public void loadRenderer(SudokuType name)
 	{
@@ -45,12 +52,6 @@ public class GameController
 		}
     }
 
-    public void ClearConsole()
-    {
-        Console.Clear();
-        Console.WriteLine("\x1b[3J");
-    }
-
     public void displayBoard(SudokuType type)
 	{
         switch (type)
@@ -62,14 +63,10 @@ public class GameController
                 board.State.DisplayBoard(renderer, board, LENGTH_6X6, HEIGHT_6X6);
 				break;
 			case SudokuType.NINE_BY_NINE:
+            case SudokuType.SAMURAI:
+            case SudokuType.JIGSAW:
                 board.State.DisplayBoard(renderer, board, SQUARE_9X9, SQUARE_9X9);
 				break;
-			case SudokuType.SAMURAI:
-				board.State.DisplayBoard(renderer, board, SQUARE_9X9, SQUARE_9X9);
-				break;
-			case SudokuType.JIGSAW:
-                board.State.DisplayBoard(renderer, board, SQUARE_9X9, SQUARE_9X9);
-                break;
 		}
 
 		board.State.DoAction(board, this);
@@ -82,14 +79,4 @@ public class GameController
 
         board.State.PrintState();
     }
-
-    public void solveBoard()
-	{
-
-	}
-
-	public void fillCell(int row, int column, int value)
-	{
-
-	}
 }

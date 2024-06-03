@@ -1,6 +1,5 @@
 ﻿using Sudoku.models.SudokuComponent;
 using Sudoku.renderers;
-using System.Diagnostics;
 
 namespace Sudoku.models.states
 {

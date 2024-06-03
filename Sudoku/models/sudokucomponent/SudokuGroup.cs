@@ -21,9 +21,10 @@ namespace Sudoku.models.SudokuComponent
         {
             int boardSize = (int)Math.Sqrt(components.Count);
             int index = (row - 1) * boardSize + (col - 1);
-            SudokuCell cell = (SudokuCell)components[index];
 
+            SudokuCell cell = (SudokuCell)components[index];
             AddNote(row,col, value, cell);
+
             gameController.displayBoard(type);
 
             return true;
@@ -61,13 +62,10 @@ namespace Sudoku.models.SudokuComponent
 
         public bool HandleSamuraiCell(int row, int col, int value, bool note)
         {
-            Console.WriteLine(row + " " + col);
             List<int> groupIndices = GetGroupIndex(row, col);
 
-            Console.WriteLine("count" + groupIndices.Count);
             foreach (int groupIndex in groupIndices)
             {
-                Console.WriteLine("index" + groupIndex);
                 SudokuGroup group = (SudokuGroup)components[groupIndex];
                 int rowWithinGroup = row;
                 int colWithinGroup = col;
@@ -91,14 +89,12 @@ namespace Sudoku.models.SudokuComponent
                 int cellIndex = (rowWithinGroup - 1) * 9 + (colWithinGroup - 1);
                 if(!note)
                 {
-                    Console.WriteLine("hoi");
                     if(!FillCell(cellIndex, row, col, group.components, value))
                     {
                         return false;
                     }
                 } else
                 {
-                    Console.WriteLine("test" + rowWithinGroup + " "+ colWithinGroup);
                     if (!AddNote(rowWithinGroup, colWithinGroup, value, (SudokuCell)group.components[cellIndex]))
                     {
                         return false;
@@ -134,8 +130,6 @@ namespace Sudoku.models.SudokuComponent
 
             return HandleSamuraiCell(row, col, value, note);
         }
-
-
 
         private bool FillCell(int index, int row, int col, List<iSudokuComponent> cells, int value)
         {

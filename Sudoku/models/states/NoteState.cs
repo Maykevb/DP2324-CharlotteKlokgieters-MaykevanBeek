@@ -7,14 +7,14 @@ namespace Sudoku.models.states
     {
         private int block;
 
-        public NoteState(int block)
-        {
-            this.block = block;
-        }
-
         public NoteState()
         {
         }
+
+        public NoteState(int block)
+        {
+            this.block = block;
+        }        
 
         public override void PrintState()
         {

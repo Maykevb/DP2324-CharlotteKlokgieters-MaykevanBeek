@@ -1,5 +1,4 @@
-﻿using Sudoku.models.states;
-using Sudoku.models.SudokuComponent;
+﻿using Sudoku.models.SudokuComponent;
 using Sudoku.views;
 
 namespace Sudoku.renderers
@@ -43,41 +42,6 @@ namespace Sudoku.renderers
                 }
 			}
 		}
-
-        public override void DrawNotes(SudokuGroup board, int squareLength, int squareHeight)
-        {
-            int rowLength = Convert.ToInt32(Math.Sqrt(board.Components.Count));
-            int boardWidth = rowLength * squareLength;
-            int boardHeight = rowLength * squareHeight;
-
-            DrawHorizontalNoteSeperator(boardWidth, squareHeight, squareLength);
-
-            string[,] notesMatrix = CalculateNotes(board, squareLength, squareHeight);
-
-            for (int i = 0; i < boardHeight; i++)
-            {
-                if (i % squareHeight == 0 && i != 0)
-                {
-                    DrawHorizontalNoteSeperator(boardWidth, squareHeight, squareLength);
-                }
-
-                DrawVerticalSeperator();
-
-                for (int j = 0; j < boardWidth; j++)
-                {
-                    if (j % squareLength == 0 && j != 0)
-                    {
-                        DrawVerticalSeperator();
-                    }
-
-                    DrawCell(int.Parse(notesMatrix[i, j]));
-                }
-
-                Console.WriteLine("|");
-            }
-
-            DrawHorizontalNoteSeperator(boardWidth, squareHeight, squareLength);
-        }
 
         private void DrawHorizontalSeparator(int rowLength, int squareLength) 
 		{
