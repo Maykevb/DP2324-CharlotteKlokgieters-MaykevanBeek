@@ -35,9 +35,9 @@ namespace Sudoku.models.states
                 cell.IsCorrect = true;
             }
 
-			board.Accept(rowVisitor, -1, board);
-			board.Accept(columnVisitor, -1, board);
-			board.Accept(squareVisitor, -1, board);
+			board.Accept(rowVisitor, board, -1, -1, board);
+			board.Accept(columnVisitor, board, -1, -1, board);
+			board.Accept(squareVisitor, board, -1, -1, board);
 		}
 
 		public void VisitVisitorsSamurai(SudokuGroup board)
@@ -52,9 +52,9 @@ namespace Sudoku.models.states
 
 			for (int i = 0; i < board.Components.Count; i++)
             {
-                board.Components[i].Accept(rowVisitor, i, board);
-				board.Components[i].Accept(columnVisitor, i, board);
-				board.Components[i].Accept(squareVisitor, i, board);
+                board.Components[i].Accept(rowVisitor, (SudokuGroup) board.Components[i], i, -1, board);
+				board.Components[i].Accept(columnVisitor, (SudokuGroup)board.Components[i], i, -1, board);
+				board.Components[i].Accept(squareVisitor, (SudokuGroup)board.Components[i], i, -1, board);
 			}
 		}
 

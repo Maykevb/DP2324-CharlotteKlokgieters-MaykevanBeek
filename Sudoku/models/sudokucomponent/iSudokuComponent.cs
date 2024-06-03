@@ -4,23 +4,21 @@ namespace Sudoku.models.SudokuComponent
 {
 	public interface iSudokuComponent
     {
-		void Accept(iBoardVisitor visitor, int boardIndex, SudokuGroup board);
+		void Accept(iBoardVisitor visitor, SudokuGroup board, int boardIndex, int celIndex, SudokuGroup fullBoard);
 
-		void Accept(iBoardVisitor visitor, bool isCorrect, SudokuGroup board, int boardIndex, int celIndex, SudokuGroup fullBoard);
-
-		public int Value
+		public int Value 
 		{
 			get { return 0; }
 			set { }
 		}
 
-		public int? Block
+		public int? Block 
 		{
 			get { return 0; }
 			set { }
 		}
 
-		public bool IsFixed
+		public bool IsFixed 
 		{
 			get { return true; }
 			set { }
