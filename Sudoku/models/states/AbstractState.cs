@@ -1,4 +1,4 @@
-﻿using Sudoku.models.SudokuComponent;
+﻿﻿using Sudoku.models.SudokuComponent;
 using Sudoku.renderers;
 
 namespace Sudoku.models.states
@@ -40,7 +40,7 @@ namespace Sudoku.models.states
             }
 
             board.State.PrintState();
-            controller.displayBoard(board.Type);
+            controller.DisplayBoard(board.Type);
             return true;
         }
 

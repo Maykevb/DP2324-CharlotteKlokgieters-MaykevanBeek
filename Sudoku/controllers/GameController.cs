@@ -1,4 +1,5 @@
 using Sudoku;
+using Sudoku.models.states;
 using Sudoku.models.SudokuComponent;
 using Sudoku.renderers;
 
@@ -21,7 +22,6 @@ public class GameController
 		this.importer = new SudokuImporter();
 		this.boardFactory = new BoardFactory();
 	}
-
 	public void startGame(SudokuType selectedType)
 	{
         AddRenderers();
@@ -32,8 +32,8 @@ public class GameController
     }
 
 	public void loadRenderer(SudokuType name)
-    {
-        string rendererName = name.ToString();
+	{
+		string rendererName = name.ToString();
 
 		if (name == SudokuType.FOUR_BY_FOUR || name == SudokuType.SIX_BY_SIX || name == SudokuType.NINE_BY_NINE)
 		{
@@ -53,16 +53,18 @@ public class GameController
 	public void loadBoard(SudokuType type)
 	{
 		board = importer.ReadSudokuFromFile(type, this);
-
+		
 		if (board == null)
 		{
 			Console.WriteLine("An error occurred. Please restart the application.");
 		}
-    }
+	}
 
-    public void displayBoard(SudokuType type)
+    public void DisplayBoard(SudokuType type)
 	{
-        switch (type)
+		CheckValuesPlacement(type);
+
+		switch (type)
 		{
 			case SudokuType.FOUR_BY_FOUR:
 				board.State.DisplayBoard(renderer, board, SQUARE_4X4, SQUARE_4X4);
@@ -80,11 +82,32 @@ public class GameController
 		board.State.DoAction(board, this);
     }
 
-	public void drawStart()
+	private void CheckValuesPlacement(SudokuType type)
 	{
-        string line = new string('-', START_LINE_LENGTH);
-        Console.WriteLine($"\n{line}\nLet the game begin!\n{line}");
+		if (board.State is CorrectionState)
+		{
+			CorrectionState boardState = (CorrectionState)board.State;
 
-        board.State.PrintState();
-    }
+			switch (type)
+			{
+				case SudokuType.SAMURAI:
+					boardState.VisitVisitorsSamurai(board);
+					break;
+				case SudokuType.JIGSAW:
+					boardState.VisitVisitors(board); //TODO
+					break;
+				default:
+					boardState.VisitVisitors(board);
+					break;
+			}
+		}
+	}
+
+	public void DrawStart()
+	{
+		string line = new string('-', START_LINE_LENGTH);
+		Console.WriteLine($"\n{line}\nLet the game begin!\n{line}");
+
+		board.State.PrintState();
+	}
 }

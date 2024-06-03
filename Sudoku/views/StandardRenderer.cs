@@ -23,7 +23,7 @@ namespace Sudoku.renderers
                     DrawVerticalSeperator();
                 }
 
-				DrawCell(board.Components[i].Value);
+				DrawCell(board.Components[i].Value, board.Components[i].IsCorrect, board.State);
 
 				if ((i + 1) % squareLength == 0 && !((i + 1) % rowLength == 0) || (i + 1) % (squareHeight * squareLength) == 0)
 				{

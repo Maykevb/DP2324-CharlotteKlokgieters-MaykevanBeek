@@ -1,4 +1,5 @@
-﻿using Sudoku.models.SudokuComponent;
+﻿using Sudoku.models.states;
+using Sudoku.models.SudokuComponent;
 using Sudoku.views;
 
 namespace Sudoku.renderers
@@ -16,7 +17,7 @@ namespace Sudoku.renderers
 
 			for (int i = 0; i < board.Components.Count; i++)
 			{
-				DrawCell(board.Components[i].Value, board.Components[i].Block);
+				DrawCell(board.Components[i].Value, board.Components[i].Block, board.Components[i].IsCorrect, board.State);
 
 				if ((i + 1) % rowLength == 0 && (i + 1) < board.Components.Count)
 				{
@@ -51,8 +52,8 @@ namespace Sudoku.renderers
                         DrawVerticalSeperator();
                     }
 
-                    int? block = ((SudokuCell)board.Components[i / squareHeight * rowLength + j / squareLength]).Block;
-                    DrawCell(int.Parse(notesMatrix[i, j]), block);
+                    int? block = ((SudokuCell) board.Components[i / squareHeight * rowLength + j / squareLength]).Block;
+					DrawCell(int.Parse(notesMatrix[i, j]), block, true, board.State);
                 }
 
                 Console.WriteLine("|");
@@ -61,11 +62,17 @@ namespace Sudoku.renderers
             DrawHorizontalNoteSeperator(boardWidth, squareHeight, squareLength);
         }
 
-        private void DrawCell(int value, int? Block)
+        private void DrawCell(int value, int? Block, bool isCorrect, iBoardState state)
 		{
 			ChangeColor(Block);
+
+			if (!isCorrect && state is CorrectionState)
+			{
+				Console.ForegroundColor = ConsoleColor.Red;
+			}
+
 			Console.Write(value == 0 ? " " : value.ToString());
-            ChangeColor(null);
+			ChangeColor(null);
         }
 
         private void ChangeColor(int? Block)

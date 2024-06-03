@@ -1,4 +1,4 @@
-﻿using Sudoku.models.SudokuComponent;
+using Sudoku.models.SudokuComponent;
 using Sudoku.views;
 
 namespace Sudoku.renderers
@@ -32,7 +32,8 @@ namespace Sudoku.renderers
 
 				for (int i = 0; i < rowLength; i++)
 				{				
-					DrawCell(board.Components[2].Components[i + (rowLength * MID_ONLY_ROWS) + (rowLength * j)].Value);
+					DrawCell(board.Components[2].Components[i + (rowLength * MID_ONLY_ROWS) + (rowLength * j)].Value, 
+						board.Components[2].Components[i + (rowLength * MID_ONLY_ROWS) + (rowLength * j)].IsCorrect, board.State);
 					DrawSquareSeparator(i, squareLength);
 				}
 
@@ -57,7 +58,8 @@ namespace Sudoku.renderers
                 DrawVerticalSeperator();
                 for (int i = 0; i < rowLength; i++)
                 {
-                    DrawCell(board.Components[leftSudokuIndex].Components[i + (rowLength * j)].Value);
+                    DrawCell(board.Components[leftSudokuIndex].Components[i + (rowLength * j)].Value,
+						board.Components[leftSudokuIndex].Components[i + (rowLength * j)].IsCorrect, board.State);
                     DrawSquareSeparator(i, squareLength);
                 }
 
@@ -71,7 +73,8 @@ namespace Sudoku.renderers
                     for (int i = squareLength; i < (squareLength * 2); i++)
                     {
                         int indexOffset = isUpper ? 0 : (rowLength * NON_MID_ROWS);
-                        DrawCell(board.Components[middleSudokuIndex].Components[i + (rowLength * (j - (squareLength * 2))) + indexOffset].Value);
+                        DrawCell(board.Components[middleSudokuIndex].Components[i + (rowLength * (j - (squareLength * 2))) + indexOffset].Value, 
+                            board.Components[middleSudokuIndex].Components[i + (rowLength * (j - (squareLength * 2))) + indexOffset].IsCorrect, board.State);
                     }
                 }
 
@@ -79,7 +82,8 @@ namespace Sudoku.renderers
                 DrawVerticalSeperator();
                 for (int i = 0; i < rowLength; i++)
                 {
-                    DrawCell(board.Components[rightSudokuIndex].Components[i + (rowLength * j)].Value);
+                    DrawCell(board.Components[rightSudokuIndex].Components[i + (rowLength * j)].Value, 
+                        board.Components[rightSudokuIndex].Components[i + (rowLength * j)].IsCorrect, board.State);
                     DrawSquareSeparator(i, squareLength);
                 }
 

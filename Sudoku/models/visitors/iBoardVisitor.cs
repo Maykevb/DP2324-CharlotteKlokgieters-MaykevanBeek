@@ -4,7 +4,8 @@ namespace Sudoku.models.visitors
 {
     public interface iBoardVisitor
     {
-        void Visit(SudokuCell cell);
-        void Visit(SudokuGroup board);
+        void VisitCell(SudokuCell cell, bool isCorrect, SudokuGroup board, int boardIndex, int celIndex, SudokuGroup fullBoard);
+
+		void VisitBoard(SudokuGroup board, int boardIndex, SudokuGroup fullBoard);
     }
 }

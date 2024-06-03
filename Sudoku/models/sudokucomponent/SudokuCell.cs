@@ -6,34 +6,48 @@ namespace Sudoku.models.SudokuComponent
     {
         private int value;
         private bool isFixed;
-        // TODO: make notes shorter if 4x4 or 6x6
-        private int[] notes = new int[9];
-        private int? block;
+        private int[] notes;
+		private int? block;
+        private bool isCorrect;
 
-        public SudokuCell(int value, bool isFixed)
+        public SudokuCell(int value, bool isFixed, int notes)
         {
             this.value = value;
             this.isFixed = isFixed;
+            this.notes = new int[notes];
+            this.isCorrect = true;
 
-            if(isFixed)
-            {
-                notes[value - 1] = value;
-            }
-        }
+			if (isFixed)
+			{
+				this.notes[value - 1] = value;
+			}
+		}
 
-        public SudokuCell(int value, bool isFixed, int block)
+        public SudokuCell(int value, bool isFixed, int notes, int block)
         {
             this.value = value;
-            this.isFixed = isFixed;
-            this.block = block;
+            this.isFixed = isFixed; 
+            this.notes = new int[notes];
+			this.block = block;
+			this.isCorrect = true;
+
+			if (isFixed)
+			{
+				this.notes[value - 1] = value;
+			}
+		}
+
+		public void Accept(iBoardVisitor visitor, bool isCorrect, SudokuGroup board, int boardIndex, int celIndex, SudokuGroup fullBoard)
+		{
+            visitor.VisitCell(this, isCorrect, board, boardIndex, celIndex, fullBoard);
         }
 
-        public void Accept(iBoardVisitor visitor)
+		public void Accept(iBoardVisitor visitor, int boardIndex, SudokuGroup board) //TODO
         {
-            visitor.Visit(this);
+            
         }
 
-        public int Value
+		public int Value
         {
             get { return value; }
             set { this.value = value; }
@@ -56,5 +70,11 @@ namespace Sudoku.models.SudokuComponent
             get { return block; }
             set { block = value; }
         }
-    }
+
+        public bool IsCorrect
+        {
+            get { return isCorrect; }
+            set { isCorrect = value; }
+        }
+	}
 }
