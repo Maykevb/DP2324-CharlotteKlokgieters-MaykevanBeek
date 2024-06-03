@@ -27,12 +27,17 @@ namespace Sudoku.models.SudokuComponent
 			this.isCorrect = true;
 		}
 
-		public void Accept(iBoardVisitor visitor)
-        {
-            visitor.VisitCell(this, true);
+		public void Accept(iBoardVisitor visitor, bool isCorrect, SudokuGroup board, int boardIndex, int celIndex, SudokuGroup fullBoard)
+		{
+            visitor.VisitCell(this, isCorrect, board, boardIndex, celIndex, fullBoard);
         }
 
-        public int Value
+		public void Accept(iBoardVisitor visitor, int boardIndex, SudokuGroup board) //TODO
+        {
+            
+        }
+
+		public int Value
         {
             get { return value; }
             set { this.value = value; }

@@ -149,12 +149,17 @@ namespace Sudoku.models.SudokuComponent
 		}
 
 		// Visitors
-		public void Accept(iBoardVisitor visitor)
+		public void Accept(iBoardVisitor visitor, int boardIndex, SudokuGroup board)
         {
-            visitor.VisitBoard(this);
+            visitor.VisitBoard(this, boardIndex, board);
         }
 
-        public void SwitchState(iBoardState newState)
+		public void Accept(iBoardVisitor visitor, bool isCorrect, SudokuGroup board, int boardIndex, int celIndex, SudokuGroup fullBoard) //TODO
+		{
+
+		}
+
+		public void SwitchState(iBoardState newState)
         {
             this.State = newState;
         }

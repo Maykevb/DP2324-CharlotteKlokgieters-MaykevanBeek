@@ -30,18 +30,31 @@ namespace Sudoku.models.states
 
         public void VisitVisitors(SudokuGroup board)
         {
-			board.Accept(rowVisitor);
-			board.Accept(columnVisitor);
-			board.Accept(squareVisitor);
+            foreach (SudokuCell cell in board.Components)
+            {
+                cell.IsCorrect = true;
+            }
+
+			board.Accept(rowVisitor, -1, board);
+			board.Accept(columnVisitor, -1, board);
+			board.Accept(squareVisitor, -1, board);
 		}
 
 		public void VisitVisitorsSamurai(SudokuGroup board)
 		{
-            foreach (SudokuGroup b in board.Components)
+			for (int i = 0; i < board.Components.Count; i++)
+			{
+				foreach (SudokuCell cell in board.Components[i].Components)
+				{
+					cell.IsCorrect = true;
+				}
+			}
+
+			for (int i = 0; i < board.Components.Count; i++)
             {
-				b.Accept(rowVisitor);
-				b.Accept(columnVisitor);
-				b.Accept(squareVisitor);
+                board.Components[i].Accept(rowVisitor, i, board);
+				board.Components[i].Accept(columnVisitor, i, board);
+				board.Components[i].Accept(squareVisitor, i, board);
 			}
 		}
 

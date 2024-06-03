@@ -4,7 +4,9 @@ namespace Sudoku.models.SudokuComponent
 {
 	public interface iSudokuComponent
     {
-		void Accept(iBoardVisitor visitor);
+		void Accept(iBoardVisitor visitor, int boardIndex, SudokuGroup board);
+
+		void Accept(iBoardVisitor visitor, bool isCorrect, SudokuGroup board, int boardIndex, int celIndex, SudokuGroup fullBoard);
 
 		public int Value //TODO
 		{

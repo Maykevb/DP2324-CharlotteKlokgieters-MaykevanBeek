@@ -110,7 +110,7 @@ namespace Sudoku.renderers
         }
 
 		private void DrawCell(int value, bool isCorrect, iBoardState state)
-		{
+		{           
 			if (!isCorrect && state is CorrectionState)
 			{
 				Console.ForegroundColor = ConsoleColor.Red;
