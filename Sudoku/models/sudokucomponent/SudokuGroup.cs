@@ -17,138 +17,174 @@ namespace Sudoku.models.SudokuComponent
             this.type = type;
         }
 
-		public bool AddNormalNote(int row, int col, int value)
-		{
-			int boardSize = (int)Math.Sqrt(components.Count);
-			int index = (row - 1) * boardSize + (col - 1);
-			SudokuCell cell = (SudokuCell)components[index];
+        public bool AddNormalNote(int row, int col, int value)
+        {
+            int boardSize = (int)Math.Sqrt(components.Count);
+            int index = (row - 1) * boardSize + (col - 1);
 
-			return AddNote(row, col, value, cell);
-		}
+            SudokuCell cell = (SudokuCell)components[index];
+            AddNote(row,col, value, cell);
 
-		public bool AddNote(int row, int col, int value, SudokuCell cell)
-		{
-			if (cell.IsFixed)
-			{
-				Console.WriteLine($"The cell at row {row} and col {col} is not changable.");
-				return false;
-			}
+            gameController.DisplayBoard(type);
 
-			if (cell.Notes.Contains(value))
-			{
-				int noteIndex = Array.IndexOf(cell.Notes, value);
-				cell.Notes[noteIndex] = 0;
-				gameController.DisplayBoard(type);
+            return true;
+        }
 
-				return true;
-			}
+        public bool AddNote(int row, int col, int value, SudokuCell cell)
+        {
+            if (cell.IsFixed)
+            {
+                Console.WriteLine($"The cell at row {row} and col {col} is not changable.");
+                return false;
+            }
 
-			cell.Notes[value - 1] = value;
+            if (cell.Notes.Contains(value))
+            {
+                int noteIndex = Array.IndexOf(cell.Notes, value);
+                cell.Notes[noteIndex] = 0;
+                gameController.DisplayBoard(type);
 
-			gameController.DisplayBoard(type);
-			return true;
-		}
+                return true;
+            }
 
-		public bool FillNormalCell(int row, int col, int value)
-		{
-			int boardSize = (int)Math.Sqrt(components.Count);
-			int index = (row - 1) * boardSize + (col - 1);
+            cell.Notes[value - 1] = value;
 
-			return FillCell(index, row, col, components, value);
-		}
+            return true;
+        }
 
-		public bool HandleSamuraiCell(int row, int col, int value, bool note)
-		{
-			List<int> groupIndices = GetGroupIndex(row, col);
+        public bool FillNormalCell(int row, int col, int value)
+        {
+            int boardSize = (int)Math.Sqrt(components.Count);
+            int index = (row - 1) * boardSize + (col - 1);
 
-			foreach (int groupIndex in groupIndices)
-			{
-				SudokuGroup group = (SudokuGroup)components[groupIndex];
-				int rowWithinGroup = row;
-				int colWithinGroup = col;
+            return FillCell(index, row, col, components, value);
+        }
 
-				if (groupIndex == 1 || groupIndex == 4)
-				{
-					colWithinGroup -= 12; // Right subgroups
-				}
+        public bool HandleSamuraiCell(int row, int col, int value, bool note)
+        {
+            List<int> groupIndices = GetGroupIndex(row, col);
 
-				if (groupIndex == 3 || groupIndex == 4)
-				{
-					rowWithinGroup -= 12; // Bottom subgroups
-				}
+            foreach (int groupIndex in groupIndices)
+            {
+                SudokuGroup group = (SudokuGroup)components[groupIndex];
+                int rowWithinGroup = row;
+                int colWithinGroup = col;
 
-				if (groupIndex == 2)
-				{
-					colWithinGroup -= 6;
-					rowWithinGroup -= 6;// Middle subgroups
-				}
+                if (groupIndex == 1 || groupIndex == 4)
+                {
+                    colWithinGroup -= 12; // Rechter subgroepen
+                }
+                
+                if (groupIndex == 3 || groupIndex == 4)
+                {
+                    rowWithinGroup -= 12; // Onderste subgroepen
+                }
+                
+                if (groupIndex == 2)
+                {
+                    colWithinGroup -= 6;
+                    rowWithinGroup -= 6;// Middelste subgroep
+                }
 
-				int cellIndex = (rowWithinGroup - 1) * 9 + (colWithinGroup - 1);
-				if (!note)
-				{
-					return FillCell(cellIndex, row, col, group.components, value);
-				}
+                int cellIndex = (rowWithinGroup - 1) * 9 + (colWithinGroup - 1);
+                if(!note)
+                {
+                    if(!FillCell(cellIndex, row, col, group.components, value))
+                    {
+                        return false;
+                    }
+                } else
+                {
+                    if (!AddNote(rowWithinGroup, colWithinGroup, value, (SudokuCell)group.components[cellIndex]))
+                    {
+                        return false;
+                    }
+                }                
+            }
 
-				return AddNote(row, col, value, (SudokuCell)group.components[cellIndex]);
-			}
+            if(note)
+            {
+                gameController.DisplayBoard(type);
+            }
 
-			return false;
-		}
+            return true;
+        }
 
-		private bool FillCell(int index, int row, int col, List<iSudokuComponent> cells, int value)
-		{
-			if (index < 0 || index >= cells.Count)
-			{
-				Console.WriteLine($"Cell at row {row} and column {col} does not exist.");
-				return false;
-			}
+        public bool AddSamuraiNote(int row, int col, int value, bool note, int group)
+        {
+            if (group == 1 || group == 4)
+            {
+                col += 12; // Rechter subgroepen
+            }
 
-			if (cells[index].IsFixed)
-			{
-				Console.WriteLine($"Cell at row {row} and column {col} is not changable.");
-				return false;
-			}
+            if (group == 3 || group == 4)
+            {
+                row += 12; // Onderste subgroepen
+            }
 
-			cells[index].Value = (cells[index].Value == value) ? 0 : value;
-			gameController.DisplayBoard(type);
+            if (group == 2)
+            {
+                col += 6;
+                row += 6;// Middelste subgroep
+            }
 
-			return true;
-		}
+            return HandleSamuraiCell(row, col, value, note);
+        }
 
-		private List<int> GetGroupIndex(int row, int col)
-		{
-			List<int> groupIndices = new List<int>();
+        private bool FillCell(int index, int row, int col, List<iSudokuComponent> cells, int value)
+        {
+            if (index < 0 || index >= cells.Count)
+            {
+                Console.WriteLine($"Cell at row {row} and column {col} does not exist.");
+                return false;
+            }
 
-			if (row <= 9 && col <= 9)
-			{
-				groupIndices.Add(0); // Upper left subgroup
-			}
-			else if (row <= 9 && col > 12)
-			{
-				groupIndices.Add(1); // Upper right subgroup
-			}
-			else if (row > 12 && col <= 9)
-			{
-				groupIndices.Add(3); // Lower left subgroup
-			}
-			else if (row > 12 && col > 12)
-			{
-				groupIndices.Add(4); // Lower right subgroup
-			}
-			else
-			{
-				groupIndices.Add(2); // Middle subgroup
-			}
+            if (cells[index].IsFixed)
+            {
+                Console.WriteLine($"Cell at row {row} and column {col} is not changable.");
+                return false;
+            }
 
-			if ((row > 9 && row <= 12) || (col > 9 && col <= 12))
-			{
-				groupIndices.Add(2); // Middle subgroup
-			}
+            cells[index].Value = (cells[index].Value == value) ? 0 : value;
+            gameController.DisplayBoard(type);
 
-			return groupIndices;
-		}
+            return true;
+        }
 
-		// Visitors
+        private List<int> GetGroupIndex(int row, int col)
+        {
+            List<int> groupIndices = new List<int>();
+
+            if (row <= 9 && col <= 9)
+            {
+                groupIndices.Add(0); // Bovenste linker subgroep
+            }
+            else if (row <= 9 && col > 12)
+            {
+                groupIndices.Add(1); // Bovenste rechter subgroep
+            }
+            else if (row > 12 && col <= 9)
+            {
+                groupIndices.Add(3); // Onderste linker subgroep
+            }
+            else if (row > 12 && col > 12)
+            {
+                groupIndices.Add(4); // Onderste rechter subgroep
+            }
+            else
+            {
+                groupIndices.Add(2); // Centrale subgroep
+            }
+
+            if ((row >= 7 && row <= 15) || (col >= 7 && col <= 15))
+            {
+                groupIndices.Add(2); // Centrale subgroep
+            }
+
+            return groupIndices;
+        }
+
+        // Visitors
 		public void Accept(iBoardVisitor visitor, int boardIndex, SudokuGroup board)
         {
             visitor.VisitBoard(this, boardIndex, board);
@@ -159,13 +195,14 @@ namespace Sudoku.models.SudokuComponent
 
 		}
 
-		public void SwitchState(iBoardState newState)
+        // State
+        public void SwitchState(iBoardState newState)
         {
             this.State = newState;
         }
 
-		// Getters & Setters
-		public List<iSudokuComponent> Components
+        // Getters & Setters
+        public List<iSudokuComponent> Components
         {
             get { return components; }
             set { this.components = value; }

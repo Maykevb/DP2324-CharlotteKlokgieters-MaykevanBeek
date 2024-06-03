@@ -1,17 +1,13 @@
-﻿using System;
-
-public class Program
+﻿public class Program
 {
     static void Main(String[] args)
     {
         WelcomePlayer();
+                
         SudokuType selectedType = GetSudokuTypeFromUser();
 
         GameController gameController = new GameController();
-        gameController.LoadRenderer(selectedType);
-        gameController.LoadBoard(selectedType);
-        gameController.DrawStart();
-        gameController.DisplayBoard(selectedType);
+        gameController.startGame(selectedType);
     }
 
     static void WelcomePlayer()

@@ -16,6 +16,11 @@ namespace Sudoku.models.SudokuComponent
             this.isFixed = isFixed;
             this.notes = new int[notes];
             this.isCorrect = true;
+
+			if (isFixed)
+			{
+				this.notes[value - 1] = value;
+			}
 		}
 
         public SudokuCell(int value, bool isFixed, int notes, int block)
@@ -25,6 +30,11 @@ namespace Sudoku.models.SudokuComponent
             this.notes = new int[notes];
 			this.block = block;
 			this.isCorrect = true;
+
+			if (isFixed)
+			{
+				this.notes[value - 1] = value;
+			}
 		}
 
 		public void Accept(iBoardVisitor visitor, bool isCorrect, SudokuGroup board, int boardIndex, int celIndex, SudokuGroup fullBoard)

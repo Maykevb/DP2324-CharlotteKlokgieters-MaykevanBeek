@@ -1,4 +1,4 @@
-﻿using Sudoku.models.SudokuComponent;
+﻿﻿using Sudoku.models.SudokuComponent;
 using Sudoku.renderers;
 
 namespace Sudoku.models.states
@@ -13,8 +13,7 @@ namespace Sudoku.models.states
 
         public abstract void DisplayBoard(iBoardRenderer renderer, SudokuGroup board, int length, int height);
 
-
-		public bool CheckState(string input, SudokuGroup board, GameController controller)
+        public bool CheckState(string input, SudokuGroup board, GameController controller)
         {
             if (input != null && (input != "/" && input != "-" && input != "+")) return false;
 
@@ -25,7 +24,14 @@ namespace Sudoku.models.states
 
             if (input == "-")
             {
-                board.SwitchState(new NoteState());
+                if(board.Type == SudokuType.SAMURAI)
+                {
+                    int block = SamuraiNotes();
+                    board.SwitchState(new NoteState(block));
+                } else
+                {
+                    board.SwitchState(new NoteState());
+                }
             }
 
             if(input == "+")
@@ -36,6 +42,30 @@ namespace Sudoku.models.states
             board.State.PrintState();
             controller.DisplayBoard(board.Type);
             return true;
+        }
+
+        public int SamuraiNotes()
+        {
+            string message = "To show the notes of the sudoku please select a 9x9 square" +
+                      "\n1. Upper-Left" +
+                      "\n2. Upper-Right" +
+                      "\n3. Middle" +
+                      "\n4. Lower-Left" +
+                      "\n5. Lower-right";
+            string line = new string('-', GameController.START_LINE_LENGTH);
+            Console.WriteLine($"\n{line}\n{message}\n{line}");
+
+            string? input = Console.ReadLine();
+
+            if (int.TryParse(input, out int number) && number >= 1 && number <= 5)
+            {
+                return number; 
+            }
+            else
+            {
+                Console.WriteLine("Input was not a number between 1 and 5.");
+                return SamuraiNotes(); 
+            }
         }
 
         public int[] ValidateInput(string[] parts, SudokuGroup board, int boardSize, GameController controller)

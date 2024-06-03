@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Sudoku.renderers
+﻿namespace Sudoku.renderers
 {
     public class BoardFactory
     {
@@ -27,11 +20,6 @@ namespace Sudoku.renderers
         public iBoardRenderer createRenderer(String name)
         {
             return (iBoardRenderer)prototypes[name].Clone();
-        }
-
-        public Dictionary<String, iBoardRenderer> Prototypes
-        {
-            get { return prototypes; }
         }
     }
 }
