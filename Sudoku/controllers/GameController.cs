@@ -86,7 +86,7 @@ public class GameController
 					boardState.VisitVisitorsSamurai(board);
 					break;
 				case SudokuType.JIGSAW:
-					boardState.VisitVisitors(board); //TODO
+					boardState.VisitVisitors(board);
 					break;
 				default:
 					boardState.VisitVisitors(board);

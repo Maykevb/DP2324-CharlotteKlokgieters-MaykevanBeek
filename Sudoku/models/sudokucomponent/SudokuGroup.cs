@@ -185,15 +185,15 @@ namespace Sudoku.models.SudokuComponent
         }
 
         // Visitors
-		public void Accept(iBoardVisitor visitor, int boardIndex, SudokuGroup board)
-        {
+		public void Accept(iBoardVisitor visitor, SudokuGroup board, int boardIndex, int celIndex, SudokuGroup fullBoard)
+		{
+            if (board.type == SudokuType.JIGSAW)
+            {
+                visitor.VisitJigsaw(board);
+                return;
+			}
             visitor.VisitBoard(this, boardIndex, board);
         }
-
-		public void Accept(iBoardVisitor visitor, bool isCorrect, SudokuGroup board, int boardIndex, int celIndex, SudokuGroup fullBoard) //TODO
-		{
-
-		}
 
         // State
         public void SwitchState(iBoardState newState)

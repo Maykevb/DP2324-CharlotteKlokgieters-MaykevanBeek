@@ -37,14 +37,9 @@ namespace Sudoku.models.SudokuComponent
 			}
 		}
 
-		public void Accept(iBoardVisitor visitor, bool isCorrect, SudokuGroup board, int boardIndex, int celIndex, SudokuGroup fullBoard)
+		public void Accept(iBoardVisitor visitor, SudokuGroup board, int boardIndex, int celIndex, SudokuGroup fullBoard)
 		{
-            visitor.VisitCell(this, isCorrect, board, boardIndex, celIndex, fullBoard);
-        }
-
-		public void Accept(iBoardVisitor visitor, int boardIndex, SudokuGroup board) //TODO
-        {
-            
+            visitor.VisitCell(this, board, boardIndex, celIndex, fullBoard);
         }
 
 		public int Value

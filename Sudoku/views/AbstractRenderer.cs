@@ -36,7 +36,7 @@ namespace Sudoku.views
                         DrawVerticalSeperator();
                     }
 
-                    DrawCell(int.Parse(notesMatrix[i, j]));
+                    DrawCell(int.Parse(notesMatrix[i, j]), true, board.State);
                 }
 
                 Console.WriteLine("|");
