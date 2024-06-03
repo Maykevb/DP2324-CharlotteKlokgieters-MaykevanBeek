@@ -24,8 +24,9 @@ public class GameController
 	}
 	public void startGame(SudokuType selectedType)
 	{
-		LoadRenderer(selectedType);
-		LoadBoard(selectedType);
+        AddRenderers();
+        LoadRenderer(selectedType);
+        LoadBoard(selectedType);
         DrawStart();
         DisplayBoard(selectedType);
     }
@@ -42,13 +43,20 @@ public class GameController
 		renderer = boardFactory.createRenderer(rendererName);
 	}
 
+	public void AddRenderers()
+	{
+        boardFactory.addRenderType("JIGSAW", new JigsawRenderer());
+        boardFactory.addRenderType("SAMURAI", new SamuraiRenderer());
+        boardFactory.addRenderType("STANDARD", new StandardRenderer());
+    }
+
 	public void LoadBoard(SudokuType type)
 	{
 		board = importer.ReadSudokuFromFile(type, this);
 		
 		if (board == null)
 		{
-			//TODO error file cant be found
+			Console.WriteLine("An error occurred. Please restart the application.");
 		}
 	}
 

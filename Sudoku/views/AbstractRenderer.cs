@@ -36,7 +36,7 @@ namespace Sudoku.views
                         DrawVerticalSeperator();
                     }
 
-                    DrawCell(int.Parse(notesMatrix[i, j]), true, board.State);
+                    DrawCell(int.Parse(notesMatrix[i, j]), true, board.State, false);
                 }
 
                 Console.WriteLine("|");
@@ -82,12 +82,17 @@ namespace Sudoku.views
             Console.Write("|");
         }
 
-		protected void DrawCell(int value, bool isCorrect, iBoardState state)
+		protected void DrawCell(int value, bool isCorrect, iBoardState state, bool isFixed)
 		{
 			if (!isCorrect && state is CorrectionState)
 			{
 				Console.ForegroundColor = ConsoleColor.Red;
 			}
+
+            if(isFixed && state is DefinitiveState)
+            {
+                Console.ForegroundColor = ConsoleColor.DarkBlue;
+            }
 
 			Console.Write(value == 0 ? " " : value.ToString());
 			Console.ForegroundColor = ConsoleColor.White;
