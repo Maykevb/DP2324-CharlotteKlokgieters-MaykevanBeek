@@ -5,13 +5,11 @@ public class Program
     static void Main(String[] args)
     {
         WelcomePlayer();
+                
         SudokuType selectedType = GetSudokuTypeFromUser();
 
         GameController gameController = new GameController();
-        gameController.loadRenderer(selectedType);
-        gameController.loadBoard(selectedType);
-        gameController.drawStart();
-        gameController.displayBoard(selectedType);
+        gameController.startGame(selectedType);
     }
 
     static void WelcomePlayer()

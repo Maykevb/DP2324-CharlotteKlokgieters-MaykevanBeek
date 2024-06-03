@@ -21,9 +21,13 @@ namespace Sudoku.models.SudokuComponent
         {
             int boardSize = (int)Math.Sqrt(components.Count);
             int index = (row - 1) * boardSize + (col - 1);
-            SudokuCell cell = (SudokuCell)components[index];
 
-            return AddNote(row,col, value, cell);
+            SudokuCell cell = (SudokuCell)components[index];
+            AddNote(row,col, value, cell);
+
+            gameController.displayBoard(type);
+
+            return true;
         }
 
         public bool AddNote(int row, int col, int value, SudokuCell cell)
@@ -45,7 +49,6 @@ namespace Sudoku.models.SudokuComponent
 
             cell.Notes[value - 1] = value;
 
-            gameController.displayBoard(type);
             return true;
         }
 
@@ -86,13 +89,46 @@ namespace Sudoku.models.SudokuComponent
                 int cellIndex = (rowWithinGroup - 1) * 9 + (colWithinGroup - 1);
                 if(!note)
                 {
-                    return FillCell(cellIndex, row, col, group.components, value);
-                } 
-
-                return AddNote(row, col, value, (SudokuCell)group.components[cellIndex]);
+                    if(!FillCell(cellIndex, row, col, group.components, value))
+                    {
+                        return false;
+                    }
+                } else
+                {
+                    if (!AddNote(rowWithinGroup, colWithinGroup, value, (SudokuCell)group.components[cellIndex]))
+                    {
+                        return false;
+                    }
+                }                
             }
 
-            return false;
+            if(note)
+            {
+                gameController.displayBoard(type);
+            }
+
+            return true;
+        }
+
+        public bool AddSamuraiNote(int row, int col, int value, bool note, int group)
+        {
+            if (group == 1 || group == 4)
+            {
+                col += 12; // Rechter subgroepen
+            }
+
+            if (group == 3 || group == 4)
+            {
+                row += 12; // Onderste subgroepen
+            }
+
+            if (group == 2)
+            {
+                col += 6;
+                row += 6;// Middelste subgroep
+            }
+
+            return HandleSamuraiCell(row, col, value, note);
         }
 
         private bool FillCell(int index, int row, int col, List<iSudokuComponent> cells, int value)
@@ -140,7 +176,7 @@ namespace Sudoku.models.SudokuComponent
                 groupIndices.Add(2); // Centrale subgroep
             }
 
-            if ((row > 9 && row <= 12) || (col > 9 && col <= 12))
+            if ((row >= 7 && row <= 15) || (col >= 7 && col <= 15))
             {
                 groupIndices.Add(2); // Centrale subgroep
             }

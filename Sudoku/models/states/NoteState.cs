@@ -5,6 +5,17 @@ namespace Sudoku.models.states
 {
     public class NoteState : AbstractState
     {
+        private int block;
+
+        public NoteState()
+        {
+        }
+
+        public NoteState(int block)
+        {
+            this.block = block;
+        }        
+
         public override void PrintState()
         {
             string message = "Board is now in note state. You can now add, remove and see all notes." + "\n--> Press [/] to go to the correction state or press [+] to go to the definitive state";
@@ -34,7 +45,7 @@ namespace Sudoku.models.states
                 CheckInput(parts, board, boardSize, controller, data =>
                 {
                     return board.Type == SudokuType.SAMURAI
-                        ? board.HandleSamuraiCell(data[0], data[1], data[2], true)
+                        ? board.AddSamuraiNote(data[0], data[1], data[2], true, block - 1)
                         : board.AddNormalNote(data[0], data[1], data[2]);
                 });
             }
@@ -42,6 +53,12 @@ namespace Sudoku.models.states
 
         public override void DisplayBoard(iBoardRenderer renderer, SudokuGroup board, int length, int height)
         {
+            if(board.Type == SudokuType.SAMURAI)
+            {
+                renderer.DrawNotes((SudokuGroup)board.Components[block - 1], length, height);
+                return;
+            }
+
             renderer.DrawNotes(board, length, height);
         }
     }

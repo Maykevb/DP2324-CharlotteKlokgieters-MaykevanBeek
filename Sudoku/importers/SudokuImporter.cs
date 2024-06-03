@@ -1,9 +1,7 @@
-﻿namespace Sudoku
-{
-    using Sudoku.models.SudokuComponent;
-    using System;
-    using System.IO;
+﻿using Sudoku.models.SudokuComponent;
 
+namespace Sudoku
+{
     public class SudokuImporter
     {
         public SudokuGroup? ReadSudokuFromFile(SudokuType type, GameController gameController)
