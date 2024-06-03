@@ -24,6 +24,7 @@ public class GameController
 
 	public void startGame(SudokuType selectedType)
 	{
+        AddRenderers();
         loadRenderer(selectedType);
         loadBoard(selectedType);
         drawStart();
@@ -31,8 +32,8 @@ public class GameController
     }
 
 	public void loadRenderer(SudokuType name)
-	{
-		string rendererName = name.ToString();
+    {
+        string rendererName = name.ToString();
 
 		if (name == SudokuType.FOUR_BY_FOUR || name == SudokuType.SIX_BY_SIX || name == SudokuType.NINE_BY_NINE)
 		{
@@ -42,13 +43,20 @@ public class GameController
 		renderer = boardFactory.createRenderer(rendererName);
 	}
 
+	public void AddRenderers()
+	{
+        boardFactory.addRenderType("JIGSAW", new JigsawRenderer());
+        boardFactory.addRenderType("SAMURAI", new SamuraiRenderer());
+        boardFactory.addRenderType("STANDARD", new StandardRenderer());
+    }
+
 	public void loadBoard(SudokuType type)
 	{
 		board = importer.ReadSudokuFromFile(type, this);
 
 		if (board == null)
 		{
-			//TODO error file cant be found
+			Console.WriteLine("An error occurred. Please restart the application.");
 		}
     }
 

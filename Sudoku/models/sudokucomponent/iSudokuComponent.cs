@@ -6,19 +6,19 @@ namespace Sudoku.models.SudokuComponent
     {
         void Accept(iBoardVisitor visitor);
 
-		public int Value //TODO
+		public int Value
 		{
 			get { return 0; }
 			set { }
 		}
 
-		public int? Block //TODO
+		public int? Block
 		{
 			get { return 0; }
 			set { }
 		}
 
-		public bool IsFixed //TODO
+		public bool IsFixed
 		{
 			get { return true; }
 			set { }
