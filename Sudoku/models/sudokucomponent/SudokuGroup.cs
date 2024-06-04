@@ -42,8 +42,6 @@ namespace Sudoku.models.SudokuComponent
             {
                 int noteIndex = Array.IndexOf(cell.Notes, value);
                 cell.Notes[noteIndex] = 0;
-                gameController.DisplayBoard(type);
-
                 return true;
             }
 
@@ -89,7 +87,7 @@ namespace Sudoku.models.SudokuComponent
                 int cellIndex = (rowWithinGroup - 1) * 9 + (colWithinGroup - 1);
                 if (!note)
                 {
-                    if(!FillCell(cellIndex, row, col, group.components, value))
+                    if (!FillCell(cellIndex, row, col, group.components, value))
                     {
                         return false;
                     }
@@ -102,11 +100,7 @@ namespace Sudoku.models.SudokuComponent
                 }                
             }
 
-            if (note)
-            {
-                gameController.DisplayBoard(type);
-            }
-
+            gameController.DisplayBoard(type);
             return true;
         }
 
@@ -146,7 +140,6 @@ namespace Sudoku.models.SudokuComponent
             }
 
             cells[index].Value = (cells[index].Value == value) ? 0 : value;
-            gameController.DisplayBoard(type);
 
             return true;
         }
@@ -192,7 +185,7 @@ namespace Sudoku.models.SudokuComponent
                 visitor.VisitJigsaw(board);
                 return;
 			}
-            visitor.VisitBoard(this, boardIndex, board);
+            visitor.VisitBoard(this, boardIndex, fullBoard);
         }
 
         // State
