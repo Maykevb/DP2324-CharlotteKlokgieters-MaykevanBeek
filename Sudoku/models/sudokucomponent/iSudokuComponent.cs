@@ -39,6 +39,7 @@ namespace Sudoku.models.SudokuComponent
 		public List<iSudokuComponent> Components
 		{
 			get { return new List<iSudokuComponent>(); }
+			set { }
 		}
 	}
 }
