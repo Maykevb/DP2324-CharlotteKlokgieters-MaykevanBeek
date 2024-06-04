@@ -1,0 +1,244 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Sudoku.models.visitors.AbstractVisitor">
+    <Position X="20.75" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAIAAAAAAAABAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>controllers\visitors\AbstractVisitor.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Sudoku.models.visitors.ColumnVisitor">
+    <Position X="18.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEEAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>controllers\visitors\ColumnVisitor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sudoku.models.visitors.RowVisitor">
+    <Position X="20.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAIAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>controllers\visitors\RowVisitor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sudoku.models.visitors.SquareVisitor">
+    <Position X="23.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAAAAAAAAAQBAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>controllers\visitors\SquareVisitor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameController">
+    <Position X="11.75" Y="7" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAACAgAAAAAAQAAAgCQAAABAAAAAEEAIIAAAAAAAoAg=</HashCode>
+      <FileName>controllers\GameController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="importer" />
+      <Field Name="board" />
+      <Field Name="renderer" />
+      <Field Name="boardFactory" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Program">
+    <Position X="11.75" Y="4.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sudoku.SudokuImporter">
+    <Position X="11.75" Y="11.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAABAAAAAAAAgAAAAAAAAAAAAAoAAAAAAAAA=</HashCode>
+      <FileName>importers\SudokuImporter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sudoku.models.states.AbstractState">
+    <Position X="21.25" Y="13" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAEAAAAAAAiAAAAAAQAAAIAAAAAAICAAAgAAA=</HashCode>
+      <FileName>models\states\AbstractState.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Sudoku.models.states.CorrectionState">
+    <Position X="21.25" Y="9" Width="1.75" />
+    <AssociationLine Name="columnVisitor" Type="Sudoku.models.visitors.ColumnVisitor" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="21.25" Y="10.125" />
+        <Point X="20.875" Y="10.125" />
+        <Point X="20.875" Y="7.992" />
+        <Point X="19.25" Y="7.992" />
+        <Point X="19.25" Y="7.617" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="squareVisitor" Type="Sudoku.models.visitors.SquareVisitor" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="23" Y="10.187" />
+        <Point X="23.5" Y="10.187" />
+        <Point X="23.5" Y="8.75" />
+        <Point X="24" Y="8.75" />
+        <Point X="24" Y="7.617" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AQAAAACAAAAAAAAAggAAAAAQAgAIAAgAAAAAAAABAAA=</HashCode>
+      <FileName>models\states\CorrectionState.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="columnVisitor" />
+      <Field Name="squareVisitor" />
+      <Field Name="rowVisitor" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Sudoku.models.states.DefinitiveState">
+    <Position X="23.75" Y="9" Width="1.5" />
+    <InheritanceLine Type="Sudoku.models.states.AbstractState" ManuallyRouted="true">
+      <Path>
+        <Point X="22.125" Y="13" />
+        <Point X="22.125" Y="10.829" />
+        <Point X="24.5" Y="10.829" />
+        <Point X="24.5" Y="10.81" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAAAgAAAAAAQAAAIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>models\states\DefinitiveState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sudoku.models.states.NoteState">
+    <Position X="18.5" Y="9" Width="2" />
+    <InheritanceLine Type="Sudoku.models.states.AbstractState" ManuallyRouted="true" FixedFromPoint="true">
+      <Path>
+        <Point X="22.125" Y="13" />
+        <Point X="22.125" Y="11.829" />
+        <Point X="19.5" Y="11.829" />
+        <Point X="19.5" Y="11.454" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAAAgAAAAAAQAAAIAAAAAAAAAAAABAA=</HashCode>
+      <FileName>models\states\NoteState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sudoku.models.SudokuComponent.SudokuCell" BaseTypeListCollapsed="true">
+    <Position X="15.25" Y="11.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AIAkAAAAAAAAAAAAAAAAAIAAAACAAiAAAAIgAAAAJAA=</HashCode>
+      <FileName>models\sudokucomponent\SudokuCell.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Sudoku.models.SudokuComponent.SudokuGroup" BaseTypeListCollapsed="true">
+    <Position X="15.25" Y="6.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AIAEIAAAAAAAAIAQIACQAAAAAAABAAAUAQAEFAAIAAA=</HashCode>
+      <FileName>models\sudokucomponent\SudokuGroup.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="gameController" />
+      <Field Name="state" />
+      <Field Name="type" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Sudoku.views.AbstractRenderer">
+    <Position X="5" Y="7.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAFAEgAIAABA=</HashCode>
+      <FileName>views\AbstractRenderer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Sudoku.renderers.BoardFactory">
+    <Position X="8" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAACAACAAA=</HashCode>
+      <FileName>views\BoardFactory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sudoku.renderers.JigsawRenderer">
+    <Position X="2.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAEAAAAAAAAAAAAAEAAAAABA=</HashCode>
+      <FileName>views\JigsawRenderer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sudoku.renderers.SamuraiRenderer">
+    <Position X="2" Y="4.5" Width="2" />
+    <InheritanceLine Type="Sudoku.views.AbstractRenderer" ManuallyRouted="true" FixedToPoint="true">
+      <Path>
+        <Point X="6.125" Y="7.5" />
+        <Point X="6.125" Y="5.875" />
+        <Point X="4" Y="5.875" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAEAAAAAAAAEAAACAAAABAAgQAAAAAABA=</HashCode>
+      <FileName>views\SamuraiRenderer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sudoku.renderers.StandardRenderer">
+    <Position X="2" Y="10.25" Width="2" />
+    <InheritanceLine Type="Sudoku.views.AbstractRenderer" ManuallyRouted="true" FixedToPoint="true">
+      <Path>
+        <Point X="6.125" Y="9.95" />
+        <Point X="6.125" Y="11.062" />
+        <Point X="4" Y="11.062" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>views\StandardRenderer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="Sudoku.models.visitors.iBoardVisitor">
+    <Position X="20.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAIAAAAAAAABAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>controllers\visitors\iBoardVisitor.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Sudoku.models.states.iBoardState">
+    <Position X="18.75" Y="13.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAgAAAAAAQAAAIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>models\states\iBoardState.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Sudoku.models.SudokuComponent.iSudokuComponent">
+    <Position X="15.25" Y="4.25" Width="2.25" />
+    <Compartments>
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AIAEAAAAAAAAAIAAAAAAAAAAAACAAAAAAQIgAAAAAAA=</HashCode>
+      <FileName>models\sudokucomponent\iSudokuComponent.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Type" />
+    </ShowAsAssociation>
+  </Interface>
+  <Interface Name="Sudoku.renderers.iBoardRenderer">
+    <Position X="8" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAEAAAAAAA=</HashCode>
+      <FileName>views\iBoardRenderer.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="System.ICloneable">
+    <Position X="8" Y="6" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Enum Name="SudokuType">
+    <Position X="11.75" Y="2.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAYAAAAAAAAAAAAAAAAAAAAIAQAAAAAAAAAAAAA=</HashCode>
+      <FileName>enums\SudokuType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
