@@ -87,9 +87,7 @@ namespace Sudoku.views
 			if (!isCorrect && state is CorrectionState)
 			{
 				Console.ForegroundColor = ConsoleColor.Red;
-			}
-
-            if(isFixed && state is DefinitiveState)
+			} else if (isFixed && state is not NoteState)
             {
                 Console.ForegroundColor = ConsoleColor.DarkBlue;
             }
