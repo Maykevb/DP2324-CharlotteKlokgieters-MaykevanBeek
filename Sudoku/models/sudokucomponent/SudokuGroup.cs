@@ -87,7 +87,7 @@ namespace Sudoku.models.SudokuComponent
                 }
 
                 int cellIndex = (rowWithinGroup - 1) * 9 + (colWithinGroup - 1);
-                if(!note)
+                if (!note)
                 {
                     if(!FillCell(cellIndex, row, col, group.components, value))
                     {
@@ -102,7 +102,7 @@ namespace Sudoku.models.SudokuComponent
                 }                
             }
 
-            if(note)
+            if (note)
             {
                 gameController.DisplayBoard(type);
             }
