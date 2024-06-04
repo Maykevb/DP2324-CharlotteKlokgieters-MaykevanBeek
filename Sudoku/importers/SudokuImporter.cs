@@ -15,7 +15,7 @@ namespace Sudoku
                 if (files.Length > 0)
                 {
                     Random random = new Random();
-                    string sudokuFile = files[1]; //TODO random.Next(files.Length)
+                    string sudokuFile = files[random.Next(files.Length)]; 
 
 					string sudoku = File.ReadAllText(sudokuFile);
                     return CreateBoard(gameController, sudoku, type);
