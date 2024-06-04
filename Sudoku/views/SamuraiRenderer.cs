@@ -14,59 +14,26 @@ namespace Sudoku.renderers
             return new SamuraiRenderer();
         }
 
-		//board[0] = upper left, board[1] = upper right, board[2] = middle, board[3] = lower left, board[4] = lower right
-		public override void DrawBoard(SudokuGroup board, int squareLength, int squareHeight)
-		{
-			int rowLength = Convert.ToInt32(Math.Sqrt(board.Components[0].Components.Count));
+        //board[0] = upper left, board[1] = upper right, board[2] = middle, board[3] = lower left, board[4] = lower right
+        public override void DrawBoard(SudokuGroup board, int squareLength, int squareHeight)
+        {
+            int rowLength = Convert.ToInt32(Math.Sqrt(board.Components[0].Components.Count));
 
-			DrawSeperator(rowLength, squareLength, true);
+            DrawSeperator(rowLength, squareLength, true);
 
             //Draw the first 9 rows -> entire upper sudokus and a little of the middle
-            DrawSection(board, squareLength, rowLength, 0, 1, 2, true);
-
-            //Draw the middle of the middle sudoku
-            for (int j = 0; j < MID_ONLY_ROWS; j++)
-			{
-				DrawEmptyRow(SIDE_SPACE); 
-				DrawVerticalSeperator();
-
-				for (int i = 0; i < rowLength; i++)
-				{				
-					DrawCell(board.Components[2].Components[i + (rowLength * MID_ONLY_ROWS) + (rowLength * j)].Value, 
-						board.Components[2].Components[i + (rowLength * MID_ONLY_ROWS) + (rowLength * j)].IsCorrect,
-                        board.State, board.Components[2].Components[i + (rowLength * MID_ONLY_ROWS) + (rowLength * j)].IsFixed);
-					DrawSquareSeparator(i, squareLength);
-				}
-
-				if ((j + 1) == squareLength) 
-				{
-					DrawSeperator(rowLength, squareLength, false);
-					continue;
-				}
-				
-				DrawLine();
-			}
-
-            //Draw the last 9 rows -> entire lower sudokus and a little of the middle
-            DrawSection(board, squareLength, rowLength, 3, 4, 2, false);
-        }
-
-        private void DrawSection(SudokuGroup board, int squareLength, int rowLength, int leftSudokuIndex, int rightSudokuIndex, int middleSudokuIndex, bool isUpper)
-        {
             for (int j = 0; j < rowLength; j++)
             {
-                // Draw left sudoku
+                //Draw upper left sudoku
                 DrawVerticalSeperator();
                 for (int i = 0; i < rowLength; i++)
                 {
-                    DrawCell(board.Components[leftSudokuIndex].Components[i + (rowLength * j)].Value,
-						board.Components[leftSudokuIndex].Components[i + (rowLength * j)].IsCorrect, board.State,
-                        board.Components[leftSudokuIndex].Components[i + (rowLength * j)].IsFixed);
+                    DrawCell(board.Components[0].Components[i + (rowLength * j)].Value, board.Components[0].Components[i + (rowLength * j)].IsCorrect, board.State, board.Components[0].Components[i + (rowLength * j)].IsFixed);
                     DrawSquareSeparator(i, squareLength);
                 }
 
-                // Draw middle sudoku
-                if ((isUpper && j < NON_MID_ROWS) || (!isUpper && j >= MID_ONLY_ROWS))
+                //Draw middle sudoku
+                if (j < NON_MID_ROWS)
                 {
                     DrawEmptyRow(squareLength);
                 }
@@ -74,41 +41,95 @@ namespace Sudoku.renderers
                 {
                     for (int i = squareLength; i < (squareLength * 2); i++)
                     {
-                        int indexOffset = isUpper ? 0 : (rowLength * NON_MID_ROWS);
-                        DrawCell(board.Components[middleSudokuIndex].Components[i + (rowLength * (j - (squareLength * 2))) + indexOffset].Value, 
-                            board.Components[middleSudokuIndex].Components[i + (rowLength * (j - (squareLength * 2))) + indexOffset].IsCorrect, board.State,
-                            board.Components[middleSudokuIndex].Components[i + (rowLength * (j - (squareLength * 2))) + indexOffset].IsFixed);
+                        DrawCell(board.Components[2].Components[i + (rowLength * (j - (squareLength * 2)))].Value, board.Components[2].Components[i + (rowLength * (j - (squareLength * 2)))].IsCorrect, board.State, board.Components[2].Components[i + (rowLength * (j - (squareLength * 2)))].IsFixed);
                     }
                 }
 
-                // Draw right sudoku
+                //Draw upper right sudoku
                 DrawVerticalSeperator();
                 for (int i = 0; i < rowLength; i++)
                 {
-                    DrawCell(board.Components[rightSudokuIndex].Components[i + (rowLength * j)].Value, 
-                        board.Components[rightSudokuIndex].Components[i + (rowLength * j)].IsCorrect, board.State,
-                        board.Components[rightSudokuIndex].Components[i + (rowLength * j)].IsFixed);
+                    DrawCell(board.Components[1].Components[i + (rowLength * j)].Value, board.Components[1].Components[i + (rowLength * j)].IsCorrect, board.State, board.Components[1].Components[i + (rowLength * j)].IsFixed);
                     DrawSquareSeparator(i, squareLength);
                 }
 
-                // Draw row separators
+                //Draw row separators
                 if ((j + 1) % squareLength != 0)
                 {
                     DrawLine();
                     continue;
                 }
 
-                if ((j + 1) == squareLength && isUpper)
+                if ((j + 1) == squareLength)
                 {
                     DrawSeperator(rowLength, squareLength, true);
                     continue;
-                } else if((j + 1) == squareLength)
+                }
+
+                DrawSeperator(rowLength, squareLength, false);
+            }
+
+            //Draw the middle of the middle sudoku
+            for (int j = 0; j < MID_ONLY_ROWS; j++)
+            {
+                DrawEmptyRow(SIDE_SPACE);
+                DrawVerticalSeperator();
+
+                for (int i = 0; i < rowLength; i++)
+                {
+                    DrawCell(board.Components[2].Components[i + (rowLength * MID_ONLY_ROWS) + (rowLength * j)].Value, board.Components[2].Components[i + (rowLength * MID_ONLY_ROWS) + (rowLength * j)].IsCorrect, board.State, board.Components[2].Components[i + (rowLength * MID_ONLY_ROWS) + (rowLength * j)].IsFixed);
+                    DrawSquareSeparator(i, squareLength);
+                }
+
+                if ((j + 1) == squareLength)
                 {
                     DrawSeperator(rowLength, squareLength, false);
                     continue;
                 }
 
-                if(isUpper)
+                DrawLine();
+            }
+
+            //Draw the last 9 rows -> entire lower sudokus and a little of the middle
+            for (int j = 0; j < rowLength; j++)
+            {
+                //Draw lower left sudoku
+                DrawVerticalSeperator();
+                for (int i = 0; i < rowLength; i++)
+                {
+                    DrawCell(board.Components[3].Components[i + (rowLength * j)].Value, board.Components[3].Components[i + (rowLength * j)].IsCorrect, board.State, board.Components[3].Components[i + (rowLength * j)].IsFixed);
+                    DrawSquareSeparator(i, squareLength);
+                }
+
+                //Draw middle sudoku
+                if (j >= MID_ONLY_ROWS)
+                {
+                    DrawEmptyRow(squareLength);
+                }
+                else
+                {
+                    for (int i = squareLength; i < (squareLength * 2); i++)
+                    {
+                        DrawCell(board.Components[2].Components[i + (rowLength * NON_MID_ROWS) + (rowLength * j)].Value, board.Components[2].Components[i + (rowLength * NON_MID_ROWS) + (rowLength * j)].IsCorrect, board.State, board.Components[2].Components[i + (rowLength * NON_MID_ROWS) + (rowLength * j)].IsFixed);
+                    }
+                }
+
+                //Draw lower right sudoku
+                DrawVerticalSeperator();
+                for (int i = 0; i < rowLength; i++)
+                {
+                    DrawCell(board.Components[4].Components[i + (rowLength * j)].Value, board.Components[4].Components[i + (rowLength * j)].IsCorrect, board.State, board.Components[4].Components[i + (rowLength * j)].IsFixed);
+                    DrawSquareSeparator(i, squareLength);
+                }
+
+                //Draw row separators
+                if ((j + 1) % squareLength != 0)
+                {
+                    DrawLine();
+                    continue;
+                }
+
+                if ((j + 1) == squareLength)
                 {
                     DrawSeperator(rowLength, squareLength, false);
                     continue;
