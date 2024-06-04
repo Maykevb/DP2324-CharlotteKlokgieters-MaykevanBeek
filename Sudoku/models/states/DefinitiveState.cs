@@ -33,8 +33,8 @@ namespace Sudoku.models.states
                     return board.Type == SudokuType.SAMURAI
                         ? board.HandleSamuraiCell(data[0], data[1], data[2], false)
                         : board.FillNormalCell(data[0], data[1], data[2]);
-                });
-            }
+                });				
+			}
         }
 
         public override void DisplayBoard(iBoardRenderer renderer, SudokuGroup board, int length, int height)
