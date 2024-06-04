@@ -104,7 +104,12 @@ public class GameController
 
 	private bool CheckBoardSolved(SudokuGroup board)
 	{
-		board.SwitchState(new CorrectionState());
+		iBoardState state = board.State;
+		if (!(state is CorrectionState))
+		{
+			board.SwitchState(new CorrectionState());
+		}
+		
 		CorrectionState boardState = (CorrectionState)board.State;
 		bool solved = false;
 		int solveSamuraiCounter = 0;
@@ -129,7 +134,7 @@ public class GameController
 				break;
 		}
 
-		board.SwitchState(new DefinitiveState());
+		board.SwitchState(state);
 		return solved;
 	}
 
