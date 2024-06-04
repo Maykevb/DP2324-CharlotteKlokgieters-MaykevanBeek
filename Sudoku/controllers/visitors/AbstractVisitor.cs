@@ -1,72 +1,105 @@
 ﻿using Sudoku.models.SudokuComponent;
-using System;
 
 namespace Sudoku.models.visitors
 {
-	public abstract class AbstractVisitor : iBoardVisitor
-	{
-		public abstract void VisitBoard(SudokuGroup board, int boardIndex, SudokuGroup fullBoard);
+    public abstract class AbstractVisitor : iBoardVisitor
+    {
+        public abstract void VisitBoard(SudokuGroup board, int boardIndex, SudokuGroup fullBoard);
 
-		public abstract void VisitJigsaw(SudokuGroup board);
+        public abstract void VisitJigsaw(SudokuGroup board);
 
-        public void VisitCell(SudokuCell cell, SudokuGroup board, int boardIndex, int cellIndex, SudokuGroup fullBoard)
+        public void VisitCell(SudokuCell cell, SudokuGroup board, int boardIndex, int celIndex, SudokuGroup fullBoard)
         {
-            Console.WriteLine(boardIndex);
             if (boardIndex >= 0)
             {
                 int totalCells = board.Components.Count;
                 int rowLength = Convert.ToInt32(Math.Sqrt(totalCells));
                 int squareLength = Convert.ToInt32(Math.Sqrt(rowLength));
+                int index = -1;
 
-                int[][] boardRanges = SetBoardRanges(rowLength, squareLength, totalCells);
-
-                int adjustedIndex = -1;
-                int targetGroup = -1;
-
-                for (int i = 0; i < boardRanges.Length; i++)
+                switch (boardIndex)
                 {
-                    if (cellIndex >= boardRanges[i][0] && cellIndex < boardRanges[i][1])
-                    {
-                        adjustedIndex = cellIndex - boardRanges[i][0];
-                        targetGroup = boardRanges[i][2];
-                        if (targetGroup == 0) adjustedIndex += rowLength * 6 + squareLength * 2;
-                        else if (targetGroup == 1) adjustedIndex += rowLength * 6 - squareLength * 2;
-                        else if (targetGroup == 3) adjustedIndex -= rowLength * 6 - squareLength * 2;
+                    case 0: // Upper left
+                        if ((celIndex >= (rowLength * 6 + squareLength * 2) && celIndex < rowLength * 7) ||
+                            (celIndex >= (rowLength * 7 + squareLength * 2) && celIndex < rowLength * 8) ||
+                            (celIndex >= (rowLength * 8 + squareLength * 2) && celIndex < board.Components.Count))
+                        {
+                            index = celIndex - (rowLength * 6 + squareLength * 2);
+                            fullBoard.Components[2].Components[index].IsCorrect = false;
+                            break;
+                        }
                         break;
-                    }
-                }
+                    case 1: // Upper right
+                        if ((celIndex >= (rowLength * 6) && celIndex < (rowLength * 6 + squareLength)) ||
+                            (celIndex >= (rowLength * 7) && celIndex < (rowLength * 7 + squareLength)) ||
+                            (celIndex >= (rowLength * 8) && celIndex < (rowLength * 8 + squareLength)))
+                        {
+                            index = celIndex - rowLength * 6 + squareLength * 2;
+                            fullBoard.Components[2].Components[index].IsCorrect = false;
+                            break;
+                        }
+                        break;
+                    case 2: // Middle
+                        if ((celIndex >= 0 && celIndex < squareLength) ||
+                            (celIndex >= rowLength && celIndex < (rowLength * 1 + squareLength)) ||
+                            (celIndex >= (rowLength * 2) && celIndex < (rowLength * 2 + squareLength)))
+                        {
+                            index = celIndex + rowLength * 6 + squareLength * 2;
+                            fullBoard.Components[0].Components[index].IsCorrect = false;
+                            break;
+                        }
 
-                if (targetGroup >= 0 && adjustedIndex >= 0 && adjustedIndex < fullBoard.Components[targetGroup].Components.Count)
-                {
-                    fullBoard.Components[targetGroup].Components[adjustedIndex].IsCorrect = false;
-                    Console.WriteLine("target" + targetGroup + " " + fullBoard.Components[targetGroup].Components[adjustedIndex].IsCorrect + " " + adjustedIndex);
+                        if ((celIndex >= (squareLength * 2) && celIndex < rowLength * 1) ||
+                            (celIndex >= (rowLength + squareLength * 2) && celIndex < rowLength * 2) ||
+                            (celIndex >= (rowLength * 2 + squareLength * 2) && celIndex < (rowLength * 3)))
+                        {
+                            index = celIndex - squareLength * 2 + rowLength * 6;
+                            fullBoard.Components[1].Components[index].IsCorrect = false;
+                            break;
+                        }
+
+                        if ((celIndex >= (rowLength * 6) && celIndex < (rowLength * 6 + squareLength)) ||
+                            (celIndex >= (rowLength * 7) && celIndex < (rowLength * 7 + squareLength)) ||
+                            (celIndex >= (rowLength * 8) && celIndex < (rowLength * 8 + squareLength)))
+                        {
+                            index = celIndex - rowLength * 6 + squareLength * 2;
+                            fullBoard.Components[3].Components[index].IsCorrect = false;
+                            break;
+                        }
+
+                        if ((celIndex >= (rowLength * 6 + squareLength * 2) && celIndex < rowLength * 7) ||
+                            (celIndex >= (rowLength * 7 + squareLength * 2) && celIndex < rowLength * 8) ||
+                            (celIndex >= (rowLength * 8 + squareLength * 2) && celIndex < board.Components.Count))
+                        {
+                            index = celIndex - (rowLength * 6 + squareLength * 2);
+                            fullBoard.Components[4].Components[index].IsCorrect = false;
+                            break;
+                        }
+                        break;
+                    case 3: // Lower left
+                        if ((celIndex >= (squareLength * 2) && celIndex < rowLength * 1) ||
+                            (celIndex >= (rowLength + squareLength * 2) && celIndex < rowLength * 2) ||
+                            (celIndex >= (rowLength * 2 + squareLength * 2) && celIndex < (rowLength * 3)))
+                        {
+                            index = celIndex - squareLength * 2 + rowLength * 6;
+                            fullBoard.Components[2].Components[index].IsCorrect = false;
+                            break;
+                        }
+                        break;
+                    case 4: // Lower right
+                        if ((celIndex >= 0 && celIndex < squareLength) ||
+                            (celIndex >= rowLength && celIndex < (rowLength * 1 + squareLength)) ||
+                            (celIndex >= (rowLength * 2) && celIndex < (rowLength * 2 + squareLength)))
+                        {
+                            index = celIndex + rowLength * 6 + squareLength * 2;
+                            fullBoard.Components[2].Components[index].IsCorrect = false;
+                            break;
+                        }
+                        break;
                 }
             }
 
             cell.IsCorrect = false;
-
-            Console.WriteLine(fullBoard.Components[2].Components[19].IsCorrect + " " + fullBoard.Components[2].Components[19].Value);
         }
-
-        private int[][] SetBoardRanges(int rowLength, int squareLength, int totalCells)
-		{
-			return new int[][] {
-				new int[] { rowLength * 6 + squareLength * 2, rowLength * 7, 2 },
-				new int[] { rowLength * 7 + squareLength * 2, rowLength * 8, 2 },
-				new int[] { rowLength * 8 + squareLength * 2, totalCells, 2 },
-				new int[] { rowLength * 6, rowLength * 6 + squareLength, 2 },
-				new int[] { rowLength * 7, rowLength * 7 + squareLength, 2 },
-				new int[] { rowLength * 8, rowLength * 8 + squareLength, 2 },
-				new int[] { 0, squareLength, 0 },
-				new int[] { rowLength, rowLength + squareLength, 0 },
-				new int[] { rowLength * 2, rowLength * 2 + squareLength, 0 },
-				new int[] { squareLength * 2, rowLength, 1 },
-				new int[] { rowLength + squareLength * 2, rowLength * 2, 1 },
-				new int[] { rowLength * 2 + squareLength * 2, rowLength * 3, 1 },
-				new int[] { rowLength * 6, rowLength * 6 + squareLength, 3 },
-				new int[] { rowLength * 7, rowLength * 7 + squareLength, 3 },
-				new int[] { rowLength * 8, rowLength * 8 + squareLength, 3 }
-			};
-		}
-	}
+    }
 }
