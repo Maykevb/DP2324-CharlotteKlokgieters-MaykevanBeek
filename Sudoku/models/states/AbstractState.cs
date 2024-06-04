@@ -118,7 +118,7 @@ namespace Sudoku.models.states
             if (!fillCellFunc(data))
             {
                 ReadInput(board, controller);
-            }
+            } 
         }
     }
 }
