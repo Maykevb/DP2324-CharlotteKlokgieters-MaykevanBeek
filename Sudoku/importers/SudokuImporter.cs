@@ -5,7 +5,6 @@ namespace Sudoku
     public class SudokuImporter
     {
         public SudokuGroup? ReadSudokuFromFile(SudokuType type, GameController gameController)
-
         {
             string folderPath = $"../../../resources/{type.ToString()}";
             if (Directory.Exists(folderPath))
@@ -24,7 +23,6 @@ namespace Sudoku
 
             return null;
         }
-
 
         private SudokuGroup CreateBoard(GameController gameController, string sudoku, SudokuType type)
         {
