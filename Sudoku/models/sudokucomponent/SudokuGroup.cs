@@ -85,7 +85,7 @@ namespace Sudoku.models.SudokuComponent
                 }
 
                 int cellIndex = (rowWithinGroup - 1) * 9 + (colWithinGroup - 1);
-                if(!note)
+                if (!note)
                 {
                     if (!FillCell(cellIndex, row, col, group.components, value))
                     {
@@ -101,8 +101,6 @@ namespace Sudoku.models.SudokuComponent
             }
 
             gameController.DisplayBoard(type);
-            
-
             return true;
         }
 
@@ -143,7 +141,8 @@ namespace Sudoku.models.SudokuComponent
 
             cells[index].Value = (cells[index].Value == value) ? 0 : value;
 
-            return true;
+			gameController.DisplayBoard(type);
+			return true;
         }
 
         private List<int> GetGroupIndex(int row, int col)
@@ -182,7 +181,7 @@ namespace Sudoku.models.SudokuComponent
         // Visitors
 		public void Accept(iBoardVisitor visitor, SudokuGroup board, int boardIndex, int celIndex, SudokuGroup fullBoard)
 		{
-            if (board.type == SudokuType.JIGSAW)
+            if (board.type == SudokuType.JIGSAW && visitor is SquareVisitor)
             {
                 visitor.VisitJigsaw(board);
                 return;

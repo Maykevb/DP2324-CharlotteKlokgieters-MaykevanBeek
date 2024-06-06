@@ -9,6 +9,7 @@ public class GameController
 	private static readonly int LENGTH_6X6 = 3;
 	private static readonly int HEIGHT_6X6 = 2;
 	private static readonly int SQUARE_9X9 = 3;
+	private static readonly int SUDOKUS_IN_SAMURAI = 5;
 
 	public static readonly int START_LINE_LENGTH = 70;
 
@@ -76,15 +77,70 @@ public class GameController
                 board.State.DisplayBoard(renderer, board, SQUARE_9X9, SQUARE_9X9);
 				break;
 		}
-
-		board.State.DoAction(board, this);
+		
+		DisplayEnd(type);
     }
+
+	private bool CheckBoardFilled(SudokuGroup board)
+	{
+		int fillSamuraiCounter = 0;
+
+		if (board.Type == SudokuType.SAMURAI)
+		{
+			foreach (var b in board.Components)
+			{
+				if (b.Components.All(c => c.Value > 0))
+				{
+					fillSamuraiCounter++;
+				}
+			}
+			return (fillSamuraiCounter == SUDOKUS_IN_SAMURAI);
+		}
+
+		return board.Components.All(c => c.Value > 0);
+	}
+
+	private bool CheckBoardSolved(SudokuGroup board)
+	{
+		iBoardState state = board.State;
+		if (!(state is CorrectionState))
+		{
+			board.SwitchState(new CorrectionState());
+		}
+		
+		CorrectionState boardState = (CorrectionState)board.State;
+		bool solved = false;
+		int solveSamuraiCounter = 0;
+
+		switch (board.Type)
+		{
+			case SudokuType.SAMURAI:
+				boardState.VisitVisitorsSamurai(board);
+
+				foreach (var b in board.Components)
+				{
+					if (b.Components.All(c => c.IsCorrect))
+					{
+						solveSamuraiCounter++;
+					}
+				}
+				solved = (solveSamuraiCounter == SUDOKUS_IN_SAMURAI);
+				break;
+			default:
+				boardState.VisitVisitors(board);
+				solved = board.Components.All(c => c.IsCorrect);
+				break;
+		}
+
+		board.SwitchState(state);
+		return solved;
+	}
 
 	private void CheckValuesPlacement(SudokuType type)
 	{
 		if (board.State is CorrectionState)
 		{
-			CorrectionState boardState = (CorrectionState)board.State;
+			CorrectionState boardState = (CorrectionState) board.State;
 
 			switch (type)
 			{
@@ -107,5 +163,27 @@ public class GameController
 		Console.WriteLine($"\n{line}\nLet the game begin!\n{line}");
 
 		board.State.PrintState();
+	}
+
+	private void DrawEnd()
+	{
+		string line = new string('-', START_LINE_LENGTH);
+		Console.WriteLine($"\n{line}\nCongrats, you solved the sudoku!\n{line}");
+	}
+
+	private void DisplayEnd(SudokuType type)
+	{
+		bool filled = CheckBoardFilled(board);
+		bool solved = CheckBoardSolved(board);
+
+		if (filled && solved)
+		{
+			DrawEnd();
+			System.Environment.Exit(0);
+		}
+		else
+		{
+			board.State.DoAction(board, this);
+		}
 	}
 }
