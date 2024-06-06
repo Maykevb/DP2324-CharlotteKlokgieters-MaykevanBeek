@@ -1013,23 +1013,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\charl\\.nuget\\packages\\": {},
+    "C:\\Users\\Mayke\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\charl\\Documents\\GitHub\\DP2324-CharlotteKlokgieters-MaykevanBeek\\SudokuTest\\SudokuTest.csproj",
+      "projectUniqueName": "C:\\Repositories\\DP2324-CharlotteKlokgieters-MaykevanBeek\\SudokuTest\\SudokuTest.csproj",
       "projectName": "SudokuTest",
-      "projectPath": "C:\\Users\\charl\\Documents\\GitHub\\DP2324-CharlotteKlokgieters-MaykevanBeek\\SudokuTest\\SudokuTest.csproj",
-      "packagesPath": "C:\\Users\\charl\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\charl\\Documents\\GitHub\\DP2324-CharlotteKlokgieters-MaykevanBeek\\SudokuTest\\obj\\",
+      "projectPath": "C:\\Repositories\\DP2324-CharlotteKlokgieters-MaykevanBeek\\SudokuTest\\SudokuTest.csproj",
+      "packagesPath": "C:\\Users\\Mayke\\.nuget\\packages\\",
+      "outputPath": "C:\\Repositories\\DP2324-CharlotteKlokgieters-MaykevanBeek\\SudokuTest\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\charl\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Mayke\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -1045,8 +1045,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\charl\\Documents\\GitHub\\DP2324-CharlotteKlokgieters-MaykevanBeek\\Sudoku\\Sudoku.csproj": {
-              "projectPath": "C:\\Users\\charl\\Documents\\GitHub\\DP2324-CharlotteKlokgieters-MaykevanBeek\\Sudoku\\Sudoku.csproj"
+            "C:\\Repositories\\DP2324-CharlotteKlokgieters-MaykevanBeek\\Sudoku\\Sudoku.csproj": {
+              "projectPath": "C:\\Repositories\\DP2324-CharlotteKlokgieters-MaykevanBeek\\Sudoku\\Sudoku.csproj"
             }
           }
         }
@@ -1099,7 +1099,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.206/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

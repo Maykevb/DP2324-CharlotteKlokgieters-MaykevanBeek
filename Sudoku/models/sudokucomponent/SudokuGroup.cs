@@ -5,6 +5,12 @@ namespace Sudoku.models.SudokuComponent
 {
 	public class SudokuGroup : iSudokuComponent
     {
+        private static readonly int CORRECTION_SUBGROUPS = 12;
+        private static readonly int CORRECTION_SUBGROUPS_MIDDLE = 6;
+        private static readonly int INDEX_SUBGROUPS_LEFT = 9;
+        private static readonly int INDEX_SUBGROUPS_MIDDLE_LEFT = 7;
+        private static readonly int INDEX_SUBGROUPS_MIDDLE_RIGHT = 15;
+
         private iBoardState state;
         private List<iSudokuComponent> components = new List<iSudokuComponent>();
         private GameController gameController;
@@ -70,18 +76,18 @@ namespace Sudoku.models.SudokuComponent
 
                 if (groupIndex == 1 || groupIndex == 4)
                 {
-                    colWithinGroup -= 12; // Rechter subgroepen
+                    colWithinGroup -= CORRECTION_SUBGROUPS; // Right subgroups
                 }
                 
                 if (groupIndex == 3 || groupIndex == 4)
                 {
-                    rowWithinGroup -= 12; // Onderste subgroepen
+                    rowWithinGroup -= CORRECTION_SUBGROUPS; // Lower subgroups
                 }
                 
                 if (groupIndex == 2)
                 {
-                    colWithinGroup -= 6;
-                    rowWithinGroup -= 6;// Middelste subgroep
+                    colWithinGroup -= CORRECTION_SUBGROUPS_MIDDLE;
+                    rowWithinGroup -= CORRECTION_SUBGROUPS_MIDDLE; // Middle subgroups
                 }
 
                 int cellIndex = (rowWithinGroup - 1) * 9 + (colWithinGroup - 1);
@@ -108,18 +114,18 @@ namespace Sudoku.models.SudokuComponent
         {
             if (group == 1 || group == 4)
             {
-                col += 12; // Rechter subgroepen
+                col += CORRECTION_SUBGROUPS; // Right subgroups
             }
 
             if (group == 3 || group == 4)
             {
-                row += 12; // Onderste subgroepen
+                row += CORRECTION_SUBGROUPS; // Lower subgroups
             }
 
             if (group == 2)
             {
-                col += 6;
-                row += 6;// Middelste subgroep
+                col += CORRECTION_SUBGROUPS_MIDDLE;
+                row += CORRECTION_SUBGROUPS_MIDDLE; // Middle subgroups
             }
 
             return HandleSamuraiCell(row, col, value, note);
@@ -149,30 +155,30 @@ namespace Sudoku.models.SudokuComponent
         {
             List<int> groupIndices = new List<int>();
 
-            if (row <= 9 && col <= 9)
+            if (row <= INDEX_SUBGROUPS_LEFT && col <= INDEX_SUBGROUPS_LEFT)
             {
-                groupIndices.Add(0); // Bovenste linker subgroep
+                groupIndices.Add(0); // Upper left subgroup
             }
-            else if (row <= 9 && col > 12)
+            else if (row <= INDEX_SUBGROUPS_LEFT && col > CORRECTION_SUBGROUPS)
             {
-                groupIndices.Add(1); // Bovenste rechter subgroep
+                groupIndices.Add(1); // Upper right subgroup
             }
-            else if (row > 12 && col <= 9)
+            else if (row > CORRECTION_SUBGROUPS && col <= INDEX_SUBGROUPS_LEFT)
             {
-                groupIndices.Add(3); // Onderste linker subgroep
+                groupIndices.Add(3); // Lower left subgroup
             }
-            else if (row > 12 && col > 12)
+            else if (row > CORRECTION_SUBGROUPS && col > CORRECTION_SUBGROUPS)
             {
-                groupIndices.Add(4); // Onderste rechter subgroep
+                groupIndices.Add(4); // Lower right subgroup
             }
             else
             {
-                groupIndices.Add(2); // Centrale subgroep
+                groupIndices.Add(2); // Middle subgroup
             }
 
-            if ((row >= 7 && row <= 15) || (col >= 7 && col <= 15))
+            if ((row >= INDEX_SUBGROUPS_MIDDLE_LEFT && row <= INDEX_SUBGROUPS_MIDDLE_RIGHT) || (col >= INDEX_SUBGROUPS_MIDDLE_LEFT && col <= INDEX_SUBGROUPS_MIDDLE_RIGHT))
             {
-                groupIndices.Add(2); // Centrale subgroep
+                groupIndices.Add(2); // Middle subgroup
             }
 
             return groupIndices;
