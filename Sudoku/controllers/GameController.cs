@@ -72,9 +72,7 @@ public class GameController
 			case SudokuType.SIX_BY_SIX:
                 board.State.DisplayBoard(renderer, board, LENGTH_6X6, HEIGHT_6X6);
 				break;
-			case SudokuType.NINE_BY_NINE:
-            case SudokuType.SAMURAI:
-            case SudokuType.JIGSAW:
+			default:
                 board.State.DisplayBoard(renderer, board, SQUARE_9X9, SQUARE_9X9);
 				break;
 		}

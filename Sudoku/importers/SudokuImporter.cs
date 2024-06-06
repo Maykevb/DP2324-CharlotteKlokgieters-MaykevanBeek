@@ -98,19 +98,9 @@ namespace Sudoku
             {
                 if (data.Length < 3) continue;
 
-				// Convert the character to an integer
-				int value = -1;
-				if (int.TryParse(data[0].ToString(), out int cellValue))
-                {
-					value = cellValue;
-				}
-
-                // Convert the character to an integer
-                int block = -1;
-				if (int.TryParse(data[2].ToString(), out int cellValue2))
-				{
-					block = cellValue2;
-				}
+                // Convert the characters to integers
+                int value = int.TryParse(data[0].ToString(), out int cellValue) ? cellValue : -1;
+                int block = int.TryParse(data[2].ToString(), out int cellValue2) ? cellValue2 : -1;
 
                 if (int.TryParse(data[0].ToString(), out int cellValue3) && cellValue3 != 0)
                 {
